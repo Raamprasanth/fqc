@@ -663,7 +663,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const emptyRow = document.getElementById('emptyRow');
   const recordCount = document.getElementById('recordCount');
   const searchInput = document.getElementById('searchInput');
-  const API_BASE = 'http://localhost:3001/api/inward';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/inward';
 
   function getToken() { return localStorage.getItem('token') || ''; }
 

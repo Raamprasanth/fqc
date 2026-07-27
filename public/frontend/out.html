@@ -633,7 +633,7 @@ td.wrap-cell{white-space:normal;min-width:200px;}
     currentDivision = 'shipl-ganshorn';
   }
 
-  const API_BASE = 'http://localhost:3001/api/outward';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/outward';
   function getToken() { return localStorage.getItem('token') || ''; }
   let entries = [];
 

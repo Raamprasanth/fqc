@@ -650,7 +650,7 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 
   let currentDivision = 'vent-anesthesia';
   let entries = [];
-  const API_BASE = 'http://localhost:3001/api/aout';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/aout';
   function getToken() { return localStorage.getItem('token') || ''; }
 
   /* ═══ Division tabs ═══ */

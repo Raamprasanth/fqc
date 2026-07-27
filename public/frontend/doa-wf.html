@@ -622,7 +622,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     currentDivision = 'shipl';
   }
 
-  const API_BASE = 'http://localhost:3001/api/doa';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/doa';
   function getToken() { return localStorage.getItem('token') || ''; }
   let entries = [];
 

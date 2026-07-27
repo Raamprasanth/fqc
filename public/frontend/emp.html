@@ -521,7 +521,8 @@ body{
 
     // Fetch Stats
     try {
-      const res = await fetch('http://localhost:3001/api/emp/stats?division=' + encodeURIComponent(activeDivision), {
+      const API_HOST = window.location.protocol === 'file:' ? 'http://localhost:3001' : '';
+      const res = await fetch(API_HOST + '/api/emp/stats?division=' + encodeURIComponent(activeDivision), {
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
       });
       if (res.ok) {

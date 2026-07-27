@@ -614,7 +614,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   // Only applicable for Schiller AG / Monitors / Ganshorn
   const isApplicable = lDiv.includes('schiller') || lDiv.includes('monitor') || lDiv.includes('ganshorn');
 
-  const API_BASE = 'http://localhost:3001/api/medilog';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/medilog';
   function getToken() { return localStorage.getItem('token') || ''; }
   let entries = [];
 

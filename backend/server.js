@@ -5,9 +5,9 @@
 
 require('dotenv').config();
 
-const express   = require('express');
-const cors      = require('cors');
-const path      = require('path');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
 let connectDB;
 try {
@@ -36,7 +36,7 @@ const medilogRouter = require('./routes/medilog');
 const aoutRouter = require('./routes/aout');
 const ashortRouter = require('./routes/ashort');
 
-const app  = express();
+const app = express();
 const PORT = process.env.PORT || 3001;
 
 // ── CORS ──────────────────────────────────────────────────────────────────────

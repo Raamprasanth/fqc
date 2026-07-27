@@ -585,7 +585,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   if (activeDivision === 'SHIPL') currentDivision = 'shipl-ganshorn';
 
   let entries = [];
-  const API_BASE = 'http://localhost:3001/api/shortshipment';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shortshipment';
   function getToken() { return localStorage.getItem('token') || ''; }
 
   /* ═══ Table rendering ═══ */

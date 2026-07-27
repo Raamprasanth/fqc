@@ -613,7 +613,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     currentDivision = 'shipl';
   }
 
-  const API_BASE = 'http://localhost:3001/api/dod';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/dod';
   function getToken() { return localStorage.getItem('token') || ''; }
   let entries = [];
 
