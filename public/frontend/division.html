@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Division Management — SchillerIndia Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --sage:#5c7a63; --sage-dark:#3f5a46; --clay:#c67a52; --cream:#faf6ee; --card:#ffffff;
+  --border:rgba(92,122,99,0.18); --text:#5a6a5e; --dark:#2d3a30; --sidebar:#2d3a30;
+  --sidebar-hover:rgba(255,255,255,0.06); --sidebar-active:rgba(198,122,82,0.18);
+  --green:#4c8c5a; --red:#c0453a; --amber:#c68a3d; --purple:#7a5c9e; --muted:#96a599;
+}
+html,body{height:100%;}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);display:flex;min-height:100vh;overflow-x:hidden;}
+
+/* ═══ SIDEBAR (shared shell) ═══ */
+.sidebar{width:264px;flex-shrink:0;background:var(--sidebar);color:#eef2ea;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;transition:transform .3s;}
+.sidebar-brand{display:flex;align-items:center;gap:14px;padding:28px 24px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.logo-mark{width:42px;height:42px;border-radius:50%;background:var(--clay);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:16px;flex-shrink:0;}
+.sidebar-brand .name{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:#fff;}
+.sidebar-brand .sub{font-size:9.5px;color:#a9c2ad;letter-spacing:0.16em;text-transform:uppercase;margin-top:2px;}
+.sidebar-section-label{font-size:10.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#7d9682;padding:22px 24px 10px;}
+.nav-list{list-style:none;padding:0 14px;display:flex;flex-direction:column;gap:2px;}
+.nav-item a{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:12px;color:#d5e0d7;text-decoration:none;font-size:14px;font-weight:500;transition:background .2s,color .2s;position:relative;}
+.nav-item a:hover{background:var(--sidebar-hover);color:#fff;}
+.nav-item a.active{background:var(--sidebar-active);color:#fff;}
+.nav-item a.active::before{content:'';position:absolute;left:-14px;top:8px;bottom:8px;width:3px;background:var(--clay);border-radius:0 4px 4px 0;}
+.nav-icon{width:20px;text-align:center;font-size:16px;flex-shrink:0;}
+.sidebar-footer{margin-top:auto;padding:20px 24px 26px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:12px;}
+.user-avatar{width:38px;height:38px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:14px;flex-shrink:0;}
+.user-info .user-name{font-size:13.5px;font-weight:600;color:#fff;}
+.user-info .user-role{font-size:11px;color:#a9c2ad;}
+.logout-btn{margin-left:auto;background:none;border:none;color:#a9c2ad;cursor:pointer;font-size:16px;padding:6px;border-radius:8px;transition:background .2s,color .2s;}
+.logout-btn:hover{background:rgba(255,255,255,0.08);color:#fff;}
+
+/* ═══ MAIN ═══ */
+.main{margin-left:264px;flex:1;min-width:0;display:flex;flex-direction:column;}
+.topbar{min-height:76px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:14px 36px;position:sticky;top:0;z-index:40;gap:16px;flex-wrap:wrap;}
+.topbar h1{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--dark);}
+.topbar .breadcrumb{font-size:12px;color:var(--muted);margin-top:2px;}
+.menu-toggle{display:none;background:none;border:none;font-size:20px;color:var(--dark);cursor:pointer;margin-right:16px;}
+.topbar-left{display:flex;align-items:center;}
+.topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.content{padding:36px;flex:1;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(45,58,48,0.4);z-index:45;}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fbfaf6;color:var(--text);font-family:'Inter',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{border-color:var(--sage);color:var(--sage-dark);}
+.btn.primary{background:var(--clay);color:#fff;border-color:var(--clay);box-shadow:0 6px 18px rgba(198,122,82,0.25);}
+.btn.primary:hover{background:#b5613a;border-color:#b5613a;color:#fff;transform:translateY(-1px);}
+.btn.danger{background:transparent;color:var(--red);border-color:rgba(192,69,58,0.3);}
+.btn.danger:hover{background:rgba(192,69,58,0.06);border-color:var(--red);}
+.btn.xs{padding:5px 13px;font-size:11px;border-radius:16px;}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:28px;}
+.mini-stat{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 16px rgba(45,58,48,0.05);transition:transform .2s;}
+.mini-stat:hover{transform:translateY(-3px);}
+.mini-stat-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.mini-stat-val{font-family:'Fraunces',serif;font-size:27px;font-weight:600;}
+.mini-stat-lbl{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:2px;}
+
+/* Panel */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 16px rgba(45,58,48,0.05);}
+.panel-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:#fbfaf6;}
+.panel-title{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--dark);display:flex;align-items:center;gap:8px;}
+.panel-title .dot{width:8px;height:8px;border-radius:50%;background:var(--sage);}
+.panel-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.search-box{position:relative;}
+.search-box input{background:#fbfaf6;border:1.5px solid var(--border);border-radius:24px;padding:9px 14px 9px 36px;font-size:13px;color:var(--dark);font-family:'Inter',sans-serif;outline:none;width:230px;transition:border-color .2s;}
+.search-box input:focus{border-color:var(--sage);background:#fff;}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);}
+.show-select{background:#fbfaf6;border:1.5px solid var(--border);border-radius:24px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;outline:none;cursor:pointer;}
+
+/* Table */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;padding:14px 18px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;}
+thead th:hover{color:var(--sage-dark);}
+thead th.sorted{color:var(--sage-dark);}
+tbody td{padding:15px 18px;font-size:13.5px;border-bottom:1px solid rgba(92,122,99,0.08);vertical-align:middle;color:var(--text);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(92,122,99,0.04);}
+.table-footer{padding:14px 18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);}
+
+.action-group{display:flex;align-items:center;gap:6px;}
+.expand-btn{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:11px;padding:4px 10px;border-radius:14px;transition:all .2s;font-weight:600;}
+.expand-btn:hover{border-color:var(--sage);color:var(--sage-dark);}
+.sub-panel{background:#faf6ee;border-top:1px solid var(--border);}
+.sub-panel td{padding:16px 18px 16px 48px !important;font-size:12.5px;color:var(--text);}
+
+/* Pagination */
+.pagination{display:flex;align-items:center;gap:4px;}
+.page-btn{width:30px;height:30px;border-radius:10px;border:1px solid var(--border);background:none;color:var(--text);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;}
+.page-btn:hover{border-color:var(--sage);color:var(--sage-dark);}
+.page-btn.active{background:var(--sage);border-color:var(--sage);color:#fff;}
+.page-btn:disabled{opacity:0.3;cursor:not-allowed;}
+
+/* Badges/tags */
+.badge-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:14px;font-size:11px;font-weight:700;}
+.badge-pill::before{content:'';width:5px;height:5px;border-radius:50%;display:block;}
+.bp-sage{background:rgba(92,122,99,0.12);color:var(--sage-dark);}.bp-sage::before{background:var(--sage-dark);}
+.bp-clay{background:rgba(198,122,82,0.14);color:var(--clay);}.bp-clay::before{background:var(--clay);}
+.chip-sm{display:inline-flex;align-items:center;background:#f4efe3;border:1px solid var(--border);border-radius:10px;padding:3px 10px;font-size:11px;color:var(--text);font-weight:500;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(45,58,48,0.35);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border:1px solid var(--border);border-radius:24px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(45,58,48,0.16);}
+.modal-header{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1;}
+.modal-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--dark);}
+.modal-close{background:none;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.modal-close:hover{border-color:var(--red);color:var(--red);}
+.modal-body{padding:26px 28px;}
+.modal-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:#fff;}
+
+/* Form */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.field input,.field select{background:#fbfaf6;border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;font-size:13.5px;color:var(--dark);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;}
+.field input:focus,.field select:focus{border-color:var(--sage);box-shadow:0 0 0 4px rgba(92,122,99,0.08);background:#fff;}
+.required-star{color:var(--red);}
+
+/* Model editor */
+.model-editor{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:4px;}
+.model-editor-head{background:#f4efe3;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.model-editor-head span{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+.model-editor table{width:100%;}
+.model-editor thead th{background:#f4efe3;font-size:10px;padding:10px 12px;border-bottom:1px solid var(--border);}
+.model-editor tbody td{padding:7px 8px;border-bottom:1px solid rgba(92,122,99,0.08);}
+.model-editor tbody tr:last-child td{border-bottom:none;}
+.model-editor tbody td input{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:8px 10px;font-size:12.5px;color:var(--dark);font-family:'Inter',sans-serif;outline:none;width:100%;transition:border-color .2s;}
+.model-editor tbody td input:focus{border-color:var(--sage);}
+.model-editor-footer{padding:10px 12px;border-top:1px solid var(--border);background:#f4efe3;}
+.add-row-btn{background:none;border:1.5px dashed var(--border);color:var(--muted);border-radius:14px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;width:100%;transition:all .2s;font-family:'Inter',sans-serif;}
+.add-row-btn:hover{border-color:var(--sage);color:var(--sage-dark);}
+.del-row-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px 6px;border-radius:8px;transition:all .2s;}
+.del-row-btn:hover{color:var(--red);background:rgba(192,69,58,0.08);}
+
+/* Confirm */
+.confirm-box{background:#fff;border:1px solid rgba(192,69,58,0.3);border-radius:22px;width:100%;max-width:400px;padding:30px;text-align:center;box-shadow:0 24px 60px rgba(45,58,48,0.16);}
+.confirm-icon{font-size:38px;margin-bottom:14px;}
+.confirm-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px;color:var(--dark);}
+.confirm-msg{font-size:13.5px;color:var(--text);margin-bottom:22px;line-height:1.6;}
+.confirm-actions{display:flex;gap:10px;justify-content:center;}
+
+/* Toast */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:8px;}
+.toast{background:#fff;border:1px solid var(--border);border-radius:14px;padding:13px 18px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;min-width:260px;box-shadow:0 10px 28px rgba(45,58,48,0.14);color:var(--dark);}
+.toast.success{border-color:rgba(76,140,90,0.4);}.toast.success .toast-dot{background:var(--green);}
+.toast.error{border-color:rgba(192,69,58,0.4);}.toast.error .toast-dot{background:var(--red);}
+.toast-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* Loading / empty */
+.loading-row td{text-align:center;padding:44px;color:var(--muted);font-size:13px;}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--sage);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:60px 20px;}
+.empty-icon{font-size:44px;margin-bottom:14px;opacity:0.5;}
+.empty-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:6px;color:var(--dark);}
+.empty-sub{font-size:13px;color:var(--muted);}
+
+@media(max-width:960px){
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .menu-toggle{display:block;}
+  .overlay.visible{display:block;}
+}
+@media(max-width:700px){
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .content{padding:20px;}
+  .topbar{padding:14px 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-mark">S</div>
+    <div>
+      <div class="name">Schiller</div>
+      <div class="sub">Admin Panel</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section-label">Main</div>
+  <ul class="nav-list">
+    <li class="nav-item"><a href="admin-dashboard.html"><span class="nav-icon">&#127968;</span>Dashboard</a></li>
+  </ul>
+
+  <div class="sidebar-section-label">Management</div>
+  <ul class="nav-list">
+    <li class="nav-item"><a href="division.html" class="active" data-page="division"><span class="nav-icon">&#127760;</span>Division</a></li>
+    <li class="nav-item"><a href="user-management.html" data-page="user-management"><span class="nav-icon">&#128101;</span>User Management</a></li>
+  </ul>
+
+  
+  <div class="sidebar-section-label">Operations Oversight</div>
+  <ul class="nav-list">
+    <li class="nav-item"><a href="admin-in.html" data-page="admin-in"><span class="nav-icon">&#128229;</span>In</a></li>
+    <li class="nav-item"><a href="admin-out.html" data-page="admin-out"><span class="nav-icon">&#128228;</span>Out</a></li>
+    <li class="nav-item"><a href="ashort.html" data-page="admin-shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
+    <li class="nav-item"><a href="admin-dod.html" data-page="admin-dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
+    <li class="nav-item"><a href="admin-doa-wf.html" data-page="admin-doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+    <li class="nav-item"><a href="admin-acc-out.html" data-page="admin-acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+    <li class="nav-item"><a href="admin-battery-charging.html" data-page="admin-battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="user-avatar" id="admin-avatar">A</div>
+    <div class="user-info">
+      <div class="user-name" id="admin-name">Admin User</div>
+      <div class="user-role">Administrator</div>
+    </div>
+    <button class="logout-btn" onclick="logout()" title="Log out">&#9211;</button>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle">&#9776;</button>
+      <div>
+        <h1>Division Management</h1>
+        <div class="breadcrumb" id="page-date"></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn" onclick="exportCSV()">&#128228; Export</button>
+      <button class="btn primary" onclick="openAddDivision()">&#10133; Add Division</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="stats-row">
+      <div class="mini-stat">
+        <div class="mini-stat-icon" style="background:rgba(198,122,82,0.12);">&#127760;</div>
+        <div><div class="mini-stat-val" style="color:var(--clay);" id="stat-divisions">-</div><div class="mini-stat-lbl">Total Divisions</div></div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-icon" style="background:rgba(122,92,158,0.12);">&#128230;</div>
+        <div><div class="mini-stat-val" style="color:var(--purple);" id="stat-models">-</div><div class="mini-stat-lbl">Total Models</div></div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-icon" style="background:rgba(76,140,90,0.12);">&#127981;</div>
+        <div><div class="mini-stat-val" style="color:var(--green);" id="stat-suppliers">-</div><div class="mini-stat-lbl">Unique Suppliers</div></div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-icon" style="background:rgba(198,138,61,0.12);">&#128203;</div>
+        <div><div class="mini-stat-val" style="color:var(--amber);" id="stat-avg">-</div><div class="mini-stat-lbl">Avg Models/Division</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title"><span class="dot"></span> Division List</div>
+        <div class="panel-controls">
+          <div class="search-box">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" id="div-search" placeholder="Search divisions or models..." oninput="filterDivisions()"/>
+          </div>
+          <select class="show-select" id="div-per-page" onchange="renderDivisions()">
+            <option value="10">10 / page</option>
+            <option value="25">25 / page</option>
+            <option value="50">50 / page</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px;"></th>
+              <th onclick="sortDivisions('name')" class="sorted">Division Name &#8597;</th>
+              <th>Models</th>
+              <th>Suppliers</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="div-tbody">
+            <tr class="loading-row"><td colspan="5"><span class="spinner"></span>Loading divisions...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <span id="div-count-text"></span>
+        <div class="pagination" id="div-pagination"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADD / EDIT DIVISION MODAL -->
+<div class="modal-overlay" id="modal-division">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-div-title">Add Division</div>
+      <button class="modal-close" onclick="closeModal('modal-division')">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div style="margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="field">
+          <label>Division Name (Code) <span class="required-star">*</span></label>
+          <input type="text" id="d-name" placeholder=""/>
+        </div>
+        <div class="field">
+          <label>Display Name <span style="font-size:10px;color:var(--muted);text-transform:none;">(optional — shown in dropdowns)</span></label>
+          <input type="text" id="d-displayname" placeholder=""/>
+        </div>
+      </div>
+      <div class="field">
+        <label style="margin-bottom:8px;display:block;">Models for this Division</label>
+        <div class="model-editor">
+          <div class="model-editor-head">
+            <span>Enter the models for this division</span>
+            <button class="btn xs primary" onclick="addModelRow()">&#10133; Add Row</button>
+          </div>
+          <table>
+            <thead><tr><th>Supplier Name</th><th>Model Name</th><th>Model Description</th><th></th></tr></thead>
+            <tbody id="model-rows"></tbody>
+          </table>
+          <div class="model-editor-footer">
+            <button class="add-row-btn" onclick="addModelRow()">&#10133; Add another model</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-division')">Cancel</button>
+      <button class="btn primary" id="save-div-btn" onclick="saveDivision()">&#128190; Save Division</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-overlay" id="modal-confirm">
+  <div class="confirm-box">
+    <div class="confirm-icon">&#9888;&#65039;</div>
+    <div class="confirm-title" id="confirm-title">Delete Division?</div>
+    <div class="confirm-msg" id="confirm-msg">This action cannot be undone.</div>
+    <div class="confirm-actions">
+      <button class="btn" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn danger" id="confirm-ok-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+const API_BASE = 'http://localhost:3001/api/divisions';
+
+let divisions         = [];
+let filteredDivisions = [];
+let divPage           = 1;
+let divSortKey        = 'name';
+let divSortDir        = 1;
+let expandedRows      = new Set();
+let editingDivId      = null;
+
+async function apiFetch(path, options = {}) {
+  const token = localStorage.getItem('token') || '';
+  const res  = await fetch(API_BASE + path, {
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+    ...options,
+  });
+  if (res.status === 401) {
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+    throw new Error('Session expired — please log in again.');
+  }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || data.message || 'Request failed');
+  return data;
+}
+
+async function loadDivisions() {
+  document.getElementById('div-tbody').innerHTML =
+    `<tr class="loading-row"><td colspan="5"><span class="spinner"></span>Loading divisions...</td></tr>`;
+  try {
+    divisions = await apiFetch('/');
+    updateStats();
+    filterDivisions();
+  } catch (err) {
+    document.getElementById('div-tbody').innerHTML =
+      `<tr class="loading-row"><td colspan="5" style="color:var(--red);">&#9888;&#65039; Could not load divisions: ${err.message}</td></tr>`;
+  }
+}
+
+(document.getElementById('page-date')||{}).textContent = new Date().toLocaleDateString(
+  'en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' }
+);
+
+(function initUser() {
+  const token = localStorage.getItem('token');
+  const role  = ((JSON.parse(localStorage.getItem('user') || '{}').role) || '').toLowerCase();
+  if (!token || (role !== 'admin' && role !== 'superadmin')) {
+    window.location.href = 'login.html';
+    return;
+  }
+  const u    = JSON.parse(localStorage.getItem('user') || '{}');
+  const name = u.name || 'Admin';
+  (document.getElementById('admin-name')||{}).textContent = name;
+  (document.getElementById('admin-avatar')||{}).textContent = name.charAt(0).toUpperCase();
+})();
+
+loadDivisions();
+
+function updateStats() {
+  const totalModels  = divisions.reduce((s, d) => s + (d.models || []).length, 0);
+  const allSuppliers = [...new Set(
+    divisions.flatMap(d => (d.models || []).map(m => m.supplier)).filter(Boolean)
+  )];
+  const avg = divisions.length ? Math.round(totalModels / divisions.length) : 0;
+  (document.getElementById('stat-divisions')||{}).textContent = divisions.length;
+  (document.getElementById('stat-models')||{}).textContent = totalModels;
+  (document.getElementById('stat-suppliers')||{}).textContent = allSuppliers.length;
+  (document.getElementById('stat-avg')||{}).textContent = avg;
+}
+
+function filterDivisions() {
+  const q = document.getElementById('div-search').value.toLowerCase();
+  filteredDivisions = divisions.filter(d =>
+    (d.name || '').toLowerCase().includes(q) ||
+    (d.models || []).some(m =>
+      (m.model || '').toLowerCase().includes(q) ||
+      (m.supplier || '').toLowerCase().includes(q)
+    )
+  );
+  sortArr(filteredDivisions, divSortKey, divSortDir);
+  divPage = 1;
+  renderDivisions();
+}
+
+function sortDivisions(key) {
+  if (divSortKey === key) divSortDir *= -1; else { divSortKey = key; divSortDir = 1; }
+  filterDivisions();
+}
+
+function renderDivisions() {
+  const perPage = parseInt(document.getElementById('div-per-page').value);
+  const total   = filteredDivisions.length;
+  const pages   = Math.max(1, Math.ceil(total / perPage));
+  if (divPage > pages) divPage = pages;
+  const slice   = filteredDivisions.slice((divPage - 1) * perPage, divPage * perPage);
+  const tbody   = document.getElementById('div-tbody');
+
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state">
+      <div class="empty-icon">&#127760;</div>
+      <div class="empty-title">No divisions found</div>
+      <div class="empty-sub">Try adjusting your search or add a new division.</div>
+    </div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(d => {
+      const models     = d.models || [];
+      const suppliers  = [...new Set(models.map(m => m.supplier).filter(Boolean))];
+      const isExpanded = expandedRows.has(d._id);
+
+      let rows = `<tr id="row-${d._id}">
+        <td>${models.length > 0
+          ? `<button class="expand-btn" onclick="toggleExpand('${d._id}')">${isExpanded ? 'Hide' : 'Show'} ${models.length}</button>`
+          : `<span style="color:var(--muted);font-size:11px;">-</span>`
+        }</td>
+        <td><div style="font-weight:700;font-size:13.5px;color:var(--dark);">${esc(d.name)}</div></td>
+        <td><div style="max-width:220px;font-size:13px;font-weight:600;color:var(--text);line-height:1.55;">
+          ${models.length
+            ? `${models.slice(0, 3).map(m => esc(m.model)).join(', ')}${models.length > 3 ? `, +${models.length - 3} more` : ''}`
+            : `<span style="color:var(--muted);font-size:12px;">No models</span>`
+          }
+        </div></td>
+        <td><div style="font-size:13px;font-weight:600;color:var(--text);line-height:1.55;">
+          ${suppliers.length ? esc(suppliers.join(', ')) : `<span style="color:var(--muted);font-size:12px;">-</span>`}
+        </div></td>
+        <td><div class="action-group">
+          <button class="btn xs" onclick="openEditDivision('${d._id}')">&#9998; Edit</button>
+          <button class="btn xs" onclick="openAddModelQuick('${d._id}')">&#10133; Model</button>
+          <button class="btn xs danger" onclick="confirmDelete('${d._id}','${esc(d.name)}')">&#128465;</button>
+        </div></td>
+      </tr>`;
+
+      if (isExpanded && models.length > 0) {
+        rows += `<tr class="sub-panel"><td colspan="5">
+          <div style="padding:4px 0 8px;">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">&#128230; All Models in ${esc(d.name)}</div>
+            <table style="width:100%;border-collapse:collapse;">
+              <thead><tr>
+                <th style="font-size:10px;color:var(--muted);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.06em;">Supplier</th>
+                <th style="font-size:10px;color:var(--muted);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.06em;">Model Name</th>
+                <th style="font-size:10px;color:var(--muted);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:0.06em;">Description</th>
+                <th style="font-size:10px;color:var(--muted);padding:6px 10px;border-bottom:1px solid var(--border);"></th>
+              </tr></thead>
+              <tbody>${models.map((m, mi) => `<tr>
+                <td style="padding:8px 10px;font-size:13px;font-weight:700;border-bottom:1px solid rgba(92,122,99,0.08);color:var(--dark);">${esc(m.supplier || '-')}</td>
+                <td style="padding:8px 10px;font-size:12.5px;font-weight:600;border-bottom:1px solid rgba(92,122,99,0.08);color:var(--dark);">${esc(m.model)}</td>
+                <td style="padding:8px 10px;font-size:12.5px;color:var(--text);border-bottom:1px solid rgba(92,122,99,0.08);">${esc(m.desc || '-')}</td>
+                <td style="padding:8px 10px;border-bottom:1px solid rgba(92,122,99,0.08);">
+                  <button class="btn xs danger" onclick="deleteModel('${d._id}', ${mi})">&#128465;</button>
+                </td>
+              </tr>`).join('')}</tbody>
+            </table>
+          </div>
+        </td></tr>`;
+      }
+      return rows;
+    }).join('');
+  }
+
+  (document.getElementById('div-count-text')||{}).textContent =
+    total === 0 ? 'No divisions' :
+    `Showing ${(divPage - 1) * perPage + 1}-${Math.min(divPage * perPage, total)} of ${total} divisions`;
+  renderPagination('div-pagination', divPage, pages, p => { divPage = p; renderDivisions(); });
+}
+
+function toggleExpand(id) {
+  if (expandedRows.has(id)) expandedRows.delete(id); else expandedRows.add(id);
+  renderDivisions();
+}
+
+async function deleteModel(divId, modelIdx) {
+  try {
+    const updated = await apiFetch(`/${divId}/models/${modelIdx}`, { method: 'DELETE' });
+    const idx = divisions.findIndex(d => d._id === divId);
+    if (idx !== -1) divisions[idx] = updated;
+    updateStats(); filterDivisions();
+    showToast('Model removed.', 'success');
+  } catch (err) {
+    showToast('Error: ' + err.message, 'error');
+  }
+}
+
+function openAddDivision() {
+  editingDivId = null;
+  (document.getElementById('modal-div-title')||{}).textContent = 'Add New Division';
+  document.getElementById('d-name').value = '';
+  document.getElementById('d-displayname').value = '';
+  document.getElementById('model-rows').innerHTML = '';
+  addModelRow();
+  openModal('modal-division');
+}
+
+function openEditDivision(id) {
+  const d = divisions.find(x => x._id === id);
+  if (!d) return;
+  editingDivId = id;
+  (document.getElementById('modal-div-title')||{}).textContent = 'Edit Division — ' + d.name;
+  document.getElementById('d-name').value = d.name;
+  document.getElementById('d-displayname').value = d.displayName || '';
+  document.getElementById('model-rows').innerHTML = '';
+  (d.models || []).forEach(m => addModelRow(m));
+  if (!(d.models || []).length) addModelRow();
+  openModal('modal-division');
+}
+
+function openAddModelQuick(divId) { openEditDivision(divId); setTimeout(addModelRow, 300); }
+
+function addModelRow(data = {}) {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="text" placeholder="" value="${esc(data.supplier || '')}"/></td>
+    <td><input type="text" placeholder="" value="${esc(data.model || '')}"/></td>
+    <td><input type="text" placeholder="" value="${esc(data.desc || '')}"/></td>
+    <td><button class="del-row-btn" onclick="this.closest('tr').remove()">&#10005;</button></td>`;
+  document.getElementById('model-rows').appendChild(tr);
+}
+
+async function saveDivision() {
+  const name        = document.getElementById('d-name').value.trim();
+  const displayName = document.getElementById('d-displayname').value.trim();
+  if (!name) { showToast('Division name is required.', 'error'); return; }
+
+  const modelRows = document.getElementById('model-rows').querySelectorAll('tr');
+  const models    = [];
+  modelRows.forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const model  = inputs[1]?.value.trim();
+    if (model) models.push({ supplier: inputs[0].value.trim(), model, desc: inputs[2].value.trim() });
+  });
+
+  const btn = document.getElementById('save-div-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    if (editingDivId) {
+      const updated = await apiFetch(`/${editingDivId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ name, displayName, models }),
+      });
+      const idx = divisions.findIndex(d => d._id === editingDivId);
+      if (idx !== -1) divisions[idx] = updated;
+      showToast('Division updated successfully!', 'success');
+    } else {
+      const created = await apiFetch('/', {
+        method: 'POST',
+        body: JSON.stringify({ name, displayName, models }),
+      });
+      divisions.push(created);
+      showToast('Division added successfully!', 'success');
+    }
+    closeModal('modal-division');
+    updateStats(); filterDivisions();
+  } catch (err) {
+    showToast('Error: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '&#128190; Save Division';
+  }
+}
+
+function confirmDelete(id, name) {
+  (document.getElementById('confirm-title')||{}).textContent = 'Delete Division?';
+  (document.getElementById('confirm-msg')||{}).textContent = `"${name}" and all its models will be permanently removed.`;
+  document.getElementById('confirm-ok-btn').onclick = async () => {
+    try {
+      await apiFetch(`/${id}`, { method: 'DELETE' });
+      divisions = divisions.filter(d => d._id !== id);
+      expandedRows.delete(id);
+      updateStats(); filterDivisions();
+      closeModal('modal-confirm');
+      showToast('Division deleted.', 'success');
+    } catch (err) {
+      showToast('Error: ' + err.message, 'error');
+      closeModal('modal-confirm');
+    }
+  };
+  openModal('modal-confirm');
+}
+
+function exportCSV() {
+  const rows = [['Division Name', 'Supplier', 'Model Name', 'Model Description']];
+  divisions.forEach(d => {
+    if ((d.models || []).length)
+      d.models.forEach(m => rows.push([d.name, m.supplier || '', m.model, m.desc || '']));
+    else
+      rows.push([d.name, '', '', '']);
+  });
+  const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const a   = document.createElement('a');
+  a.href     = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'schillerindia-divisions.csv';
+  a.click();
+  showToast('CSV exported!', 'success');
+}
+
+function sortArr(arr, key, dir) {
+  arr.sort((a, b) => {
+    const av = (a[key] || '').toString().toLowerCase();
+    const bv = (b[key] || '').toString().toLowerCase();
+    return av < bv ? -dir : av > bv ? dir : 0;
+  });
+}
+function renderPagination(containerId, current, total, onPage) {
+  const el = document.getElementById(containerId);
+  if (total <= 1) { el.innerHTML = ''; return; }
+  let html = `<button class="page-btn" ${current === 1 ? 'disabled' : ''} onclick="(${onPage})(${current - 1})">&#8249;</button>`;
+  getPageRange(current, total).forEach(p => {
+    if (p === '...') html += `<button class="page-btn" disabled>...</button>`;
+    else html += `<button class="page-btn ${p === current ? 'active' : ''}" onclick="(${onPage})(${p})">${p}</button>`;
+  });
+  html += `<button class="page-btn" ${current === total ? 'disabled' : ''} onclick="(${onPage})(${current + 1})">&#8250;</button>`;
+  el.innerHTML = html;
+}
+function getPageRange(current, total) {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 4) return [1, 2, 3, 4, 5, '...', total];
+  if (current >= total - 3) return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+  return [1, '...', current - 1, current, current + 1, '...', total];
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+function showToast(msg, type = 'success') {
+  const wrap = document.getElementById('toast-wrap');
+  const el   = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span class="toast-dot"></span>${msg}`;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+function logout() { sessionStorage.clear(); localStorage.clear(); window.location.href = 'login.html'; }
+
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('visible'); }
+if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+</script>
+</body>
+</html>

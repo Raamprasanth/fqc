@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Login — SchillerIndia Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --sage:#5c7a63; --sage-dark:#3f5a46; --clay:#c67a52; --cream:#faf6ee; --card:#ffffff;
+  --border:rgba(92,122,99,0.18); --text:#5a6a5e; --dark:#2d3a30; --error:#c0453a;
+}
+html,body{height:100%;}
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(160deg,#faf6ee 0%,#f0ead9 100%);
+  color:var(--text);
+  overflow-x:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  position:relative;
+  padding:24px;
+}
+
+.hero-blob{position:absolute;top:-120px;right:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(92,122,99,0.14),transparent 70%);}
+.hero-blob2{position:absolute;bottom:-160px;left:-120px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(198,122,82,0.12),transparent 70%);}
+
+.login-wrap{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:420px;
+}
+
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:var(--text);
+  text-decoration:none;
+  margin-bottom:28px;
+  transition:color .2s;
+}
+.back-link:hover{color:var(--sage-dark);}
+
+.login-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:36px;
+  justify-content:center;
+}
+.logo-mark{width:48px;height:48px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:18px;flex-shrink:0;}
+.login-brand .name{font-family:'Fraunces',serif;font-size:23px;font-weight:600;color:var(--dark);}
+.login-brand .sub{font-size:10.5px;color:var(--clay);letter-spacing:0.16em;text-transform:uppercase;margin-top:2px;}
+
+.login-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:44px 40px;
+  box-shadow:0 20px 60px rgba(45,58,48,0.1);
+}
+
+.login-card h1{
+  font-family:'Fraunces',serif;
+  font-size:26px;
+  font-weight:600;
+  color:var(--dark);
+  margin-bottom:8px;
+  text-align:center;
+}
+.login-card .subtitle{
+  font-size:13.5px;
+  color:var(--text);
+  text-align:center;
+  margin-bottom:30px;
+  font-weight:300;
+}
+
+/* Role toggle */
+.role-toggle{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:28px;
+}
+.role-option{
+  position:relative;
+}
+.role-option input{
+  position:absolute;
+  opacity:0;
+  width:100%;
+  height:100%;
+  margin:0;
+  cursor:pointer;
+}
+.role-option label{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding:18px 12px;
+  border:1.5px solid var(--border);
+  border-radius:16px;
+  cursor:pointer;
+  transition:border-color .2s, background .2s, transform .15s;
+  background:#fbfaf6;
+}
+.role-option label .role-icon{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:rgba(92,122,99,0.1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  transition:background .2s;
+}
+.role-option label .role-name{
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--dark);
+}
+.role-option input:checked + label{
+  border-color:var(--sage);
+  background:rgba(92,122,99,0.06);
+  transform:translateY(-2px);
+}
+.role-option input:checked + label .role-icon{
+  background:var(--sage);
+  color:#fff;
+}
+.role-option label:hover{border-color:var(--sage);}
+
+/* Form fields */
+.field{margin-bottom:20px;}
+.field label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--dark);
+  margin-bottom:8px;
+  letter-spacing:0.02em;
+}
+.input-wrap{
+  position:relative;
+}
+.input-wrap .field-icon{
+  position:absolute;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:15px;
+  opacity:0.55;
+  pointer-events:none;
+}
+.input-wrap input{
+  width:100%;
+  padding:14px 16px 14px 44px;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  font-family:'Inter',sans-serif;
+  font-size:14.5px;
+  color:var(--dark);
+  background:#fbfaf6;
+  transition:border-color .2s, box-shadow .2s;
+  outline:none;
+}
+.input-wrap input:focus{
+  border-color:var(--sage);
+  box-shadow:0 0 0 4px rgba(92,122,99,0.1);
+  background:#fff;
+}
+.input-wrap input::placeholder{color:#a9b6ac;}
+
+.toggle-pwd{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:15px;
+  opacity:0.55;
+  padding:4px;
+  transition:opacity .2s;
+}
+.toggle-pwd:hover{opacity:0.9;}
+
+.form-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+  font-size:12.5px;
+}
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--text);
+  cursor:pointer;
+}
+.remember input{
+  accent-color:var(--sage);
+  width:14px;
+  height:14px;
+  cursor:pointer;
+}
+.forgot{
+  color:var(--sage-dark);
+  text-decoration:none;
+  font-weight:500;
+}
+.forgot:hover{text-decoration:underline;}
+
+.btn-login{
+  width:100%;
+  padding:15px;
+  background:var(--clay);
+  color:#fff;
+  font-size:14.5px;
+  font-weight:600;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  transition:background .25s, transform .15s, box-shadow .25s;
+  box-shadow:0 8px 24px rgba(198,122,82,0.28);
+}
+.btn-login:hover{
+  background:#b5613a;
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(198,122,82,0.36);
+}
+.btn-login:active{transform:translateY(0);}
+
+.error-msg{
+  display:none;
+  align-items:center;
+  gap:8px;
+  background:rgba(192,69,58,0.08);
+  border:1px solid rgba(192,69,58,0.25);
+  color:var(--error);
+  font-size:12.5px;
+  padding:11px 14px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+.error-msg.visible{display:flex;}
+
+.login-footer{
+  text-align:center;
+  margin-top:28px;
+  font-size:12px;
+  color:#96a599;
+}
+
+@media (max-width:480px){
+  .login-card{padding:32px 24px;}
+  .role-toggle{gap:8px;}
+}
+
+.div-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 58, 48, 0.6);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.div-modal-overlay.visible { display: flex; }
+.div-modal {
+  background: var(--card);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+  text-align: center;
+}
+.div-modal h2 { font-family: 'Fraunces', serif; color: var(--dark); margin-bottom: 8px; }
+.div-modal p { font-size: 13.5px; color: var(--text); margin-bottom: 24px; }
+.div-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #fbfaf6;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.div-btn:hover {
+  background: var(--sage);
+  color: #fff;
+  border-color: var(--sage);
+}
+</style>
+
+</head>
+<body>
+
+<div class="hero-blob"></div>
+<div class="hero-blob2"></div>
+
+<div class="login-wrap">
+  <a href="index.html" class="back-link">&larr; Back to home</a>
+
+  <div class="login-brand">
+    <div class="logo-mark">S</div>
+    <div>
+      <div class="name">Schiller</div>
+      <div class="sub">India Services</div>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to access your portal</p>
+
+    <div class="error-msg" id="errorMsg">
+      <span>&#9888;&#65039;</span>
+      <span id="errorText">Invalid username or password.</span>
+    </div>
+
+    <form id="loginForm">
+      <div class="role-toggle">
+        <div class="role-option">
+          <input type="radio" name="role" id="roleAdmin" value="admin" checked>
+          <label for="roleAdmin">
+            <span class="role-icon">&#128081;</span>
+            <span class="role-name">Admin</span>
+          </label>
+        </div>
+        <div class="role-option">
+          <input type="radio" name="role" id="roleEmployee" value="employee">
+          <label for="roleEmployee">
+            <span class="role-icon">&#128100;</span>
+            <span class="role-name">Employee</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="username">Username</label>
+        <div class="input-wrap">
+          <span class="field-icon">&#128100;</span>
+          <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <span class="field-icon">&#128274;</span>
+          <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" class="toggle-pwd" id="togglePwd">&#128065;</button>
+        </div>
+      </div>
+
+      <div class="form-meta">
+        <label class="remember">
+          <input type="checkbox" id="remember">
+          Remember me
+        </label>
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-login">Sign In</button>
+    </form>
+  </div>
+
+  <p class="login-footer">&copy; 2024 SchillerIndia Services. All rights reserved.</p>
+</div>
+
+<script>
+  // ── Toggle password visibility ────────────────────────────────────────────
+  const togglePwd = document.getElementById('togglePwd');
+  const passwordInput = document.getElementById('password');
+  togglePwd.addEventListener('click', () => {
+    const isPwd = passwordInput.type === 'password';
+    passwordInput.type = isPwd ? 'text' : 'password';
+    togglePwd.textContent = isPwd ? '\u{1F648}' : '\u{1F441}\u{FE0F}';
+  });
+
+  // ── Login form submission ─────────────────────────────────────────────────
+  const form       = document.getElementById('loginForm');
+  const errorMsg   = document.getElementById('errorMsg');
+  const errorText  = document.getElementById('errorText');
+  const loginBtn   = form.querySelector('.btn-login');
+
+  // The backend runs on port 5000 when served via Node.
+  // When the HTML is opened directly from disk (file://) use the absolute URL.
+  const API_BASE = window.location.protocol === 'file:'
+    ? 'http://localhost:3001'
+    : '';
+
+  function showError(msg) {
+    errorText.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+
+  function setLoading(loading) {
+    loginBtn.disabled = loading;
+    loginBtn.textContent = loading ? 'Signing in…' : 'Sign In';
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    errorMsg.classList.remove('visible');
+
+    const role     = document.querySelector('input[name="role"]:checked').value;
+    const username = document.getElementById('username').value.trim();
+    const pwd      = passwordInput.value;
+
+    if (!username || !pwd) {
+      showError('Please enter both username and password.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password: pwd, role }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success && data.token) {
+        // ── Store auth token and user info ──────────────────────────────────
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        // Handle Division Selection & Redirect 
+        if (data.user.role === 'admin') {
+          window.location.href = 'admin.html';
+        } else {
+          // Employee flow
+          const divs = data.user.divisions || [];
+          if (divs.length === 0) {
+            // No divisions assigned, just go in with Default
+            localStorage.setItem('activeDivision', 'Default');
+            window.location.href = 'emp.html';
+          } else {
+            // ALWAYS show popup if they have at least 1 division assigned
+            const overlay = document.getElementById('divModalOverlay');
+            const container = document.getElementById('divisionButtons');
+            container.innerHTML = '';
+            divs.forEach(divName => {
+              const btn = document.createElement('button');
+              btn.className = 'div-btn';
+              btn.textContent = divName;
+              btn.onclick = () => {
+                localStorage.setItem('activeDivision', divName);
+                window.location.href = 'emp.html';
+              };
+              container.appendChild(btn);
+            });
+            overlay.classList.add('visible');
+          }
+        }
+      } else {
+        showError(data.message || 'Invalid username or password.');
+      }
+    } catch (err) {
+      console.error('[Login fetch error]', err);
+      showError('Unable to reach the server. Make sure the backend is running.');
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
+
+<div class="div-modal-overlay" id="divModalOverlay">
+  <div class="div-modal">
+    <h2>Select Division</h2>
+    <p>You have access to multiple divisions. Choose one to enter its dashboard.</p>
+    <div id="divisionButtons"></div>
+  </div>
+</div>
+</body>
+
+</html>
