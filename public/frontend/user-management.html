@@ -416,8 +416,8 @@ body{
           <tr>
             <th style="width:44px;">#</th>
             <th>Name</th>
-            <th>User Name</th>
-            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
             <th>Type</th>
             <th>Division</th>
             <th>Status</th>
@@ -638,15 +638,7 @@ function renderRows(users) {
     const isRepair = u._collection === 'repair';
     const isSC     = u._collection === 'service_coordinator';
     const isFQC    = u._collection === 'fqc';
-    const resolvedDisplayId = isAdmin
-      ? (u.adminId || '')
-      : isRepair
-        ? (u.repairTeamId || '')
-        : isSC
-          ? (u.userId || '')
-          : isFQC
-            ? (u.userId || '')
-            : (u.employeeId || '');
+    const resolvedDisplayId = u.username || u.adminId || u.employeeId || u.repairTeamId || u.userId || '-';
 
     const divVals = getDivisions(u);
     const divisionCell = (isAdmin || isRepair || isSC || isFQC)
@@ -663,8 +655,8 @@ function renderRows(users) {
           <strong style="color:var(--dark);">${esc(u.name||'-')}${isMe ? ' <span style="font-size:10px;color:var(--muted);font-weight:400;">(you)</span>' : ''}</strong>
         </div>
       </td>
+      <td style="color:var(--muted);font-size:12px;"><code style="background:#f4efe3;padding:3px 8px;border-radius:8px;font-size:11px;font-weight:600;color:var(--dark);">${esc(resolvedDisplayId)}</code></td>
       <td>${esc(u.email||'-')}</td>
-      <td style="color:var(--muted);font-size:12px;"><code style="background:#f4efe3;padding:3px 8px;border-radius:8px;font-size:11px;">${esc(resolvedDisplayId || '-')}</code></td>
       <td><span class="role-chip role-${esc(u._collection||'employee')}">${esc(roleLabel(u.role))}</span></td>
       <td>${divisionCell}</td>
       <td><span class="status-chip" style="color:${active ? 'var(--green)' : 'var(--muted)'};">${active ? 'Active' : 'Inactive'}</span></td>
@@ -715,7 +707,7 @@ async function submitAddUser() {
       if (!name || !email || !adminId || !pass) throw new Error('Please fill all required fields.');
       if (pass.length < 6) throw new Error('Password must be at least 6 characters.');
       endpoint = '/users';
-      payload  = { name, email, adminId, password: pass, role: 'admin' };
+      payload  = { name, username: adminId, email, adminId, password: pass, role: 'admin' };
 
     } else if (addType === 'employee') {
       const name     = document.getElementById('e-name').value.trim();
@@ -726,11 +718,11 @@ async function submitAddUser() {
       const desig    = document.getElementById('e-desig').value.trim();
       const divisions = getSelectedDivisions('e-division');
       const division = divisions[0] || '';
-      if (!name || !email || !empId || !pass) throw new Error('Please fill all required fields.');
+      if (!name || !empId || !pass) throw new Error('Please fill all required fields (Name, Username ID, Password).');
       if (!divisions.length) throw new Error('At least one division is required for service team.');
       if (pass.length < 6) throw new Error('Password must be at least 6 characters.');
       endpoint = '/users';
-      payload  = { name, email, employeeId: empId, password: pass, department: dept, designation: desig, division, divisions, role: 'employee' };
+      payload  = { name, username: empId, email, employeeId: empId, password: pass, department: dept, designation: desig, division, divisions, role: 'employee' };
 
     } else if (addType === 'repair') {
       const name     = document.getElementById('r-name').value.trim();
