@@ -36,6 +36,7 @@ const batteryRouter = require('./routes/battery');
 const medilogRouter = require('./routes/medilog');
 const aoutRouter = require('./routes/aout');
 const ashortRouter = require('./routes/ashort');
+const suboutRouter = require('./routes/subout');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -76,6 +77,7 @@ app.use('/api/battery', batteryRouter);
 app.use('/api/medilog', medilogRouter);
 app.use('/api/aout', aoutRouter);
 app.use('/api/ashort', ashortRouter);
+app.use('/api/subout', suboutRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {

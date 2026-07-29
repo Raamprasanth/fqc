@@ -268,7 +268,7 @@ tbody tr:hover td{background:rgba(92,122,99,0.04);}
         <div class="panel-controls">
           <div class="search-box">
             <span class="search-icon">&#128269;</span>
-            <input type="text" id="div-search" placeholder="Search divisions or models..." oninput="filterDivisions()"/>
+            <input type="text" id="div-search" oninput="filterDivisions()"/>
           </div>
           <select class="show-select" id="div-per-page" onchange="renderDivisions()">
             <option value="10">10 / page</option>
@@ -313,11 +313,11 @@ tbody tr:hover td{background:rgba(92,122,99,0.04);}
       <div style="margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div class="field">
           <label>Division Name (Code) <span class="required-star">*</span></label>
-          <input type="text" id="d-name" placeholder=""/>
+          <input type="text" id="d-name"/>
         </div>
         <div class="field">
           <label>Display Name <span style="font-size:10px;color:var(--muted);text-transform:none;">(optional — shown in dropdowns)</span></label>
-          <input type="text" id="d-displayname" placeholder=""/>
+          <input type="text" id="d-displayname"/>
         </div>
       </div>
       <div class="field">
@@ -569,9 +569,9 @@ function openAddModelQuick(divId) { openEditDivision(divId); setTimeout(addModel
 function addModelRow(data = {}) {
   const tr = document.createElement('tr');
   tr.innerHTML = `
-    <td><input type="text" placeholder="" value="${esc(data.supplier || '')}"/></td>
-    <td><input type="text" placeholder="" value="${esc(data.model || '')}"/></td>
-    <td><input type="text" placeholder="" value="${esc(data.desc || '')}"/></td>
+    <td><input type="text" value="${esc(data.supplier || '')}"/></td>
+    <td><input type="text" value="${esc(data.model || '')}"/></td>
+    <td><input type="text" value="${esc(data.desc || '')}"/></td>
     <td><button class="del-row-btn" onclick="this.closest('tr').remove()">&#10005;</button></td>`;
   document.getElementById('model-rows').appendChild(tr);
 }

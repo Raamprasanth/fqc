@@ -755,7 +755,7 @@
                         class="nav-icon">&#128203;</span>ACC-IN</a></li>
             <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span
                         class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-            <li class="nav-item"><a href="sub-out.html" class="active" data-page="sub-out"><span
+            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" class="active" data-page="sub-out"><span
                         class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
                         class="nav-icon">&#128267;</span>Battery Charging</a></li>
@@ -799,7 +799,7 @@
             <div class="toolbar-row">
                 <div class="search-box">
                     <span>&#128269;</span>
-                    <input type="text" id="searchInput" placeholder="Search this division's records..." />
+                    <input type="text" id="searchInput" />
                 </div>
                 <div class="record-count" id="recordCount">0 records</div>
             </div>
@@ -987,11 +987,11 @@
                 if (isSerialKey(f.key, f.label)) {
                     return `<div class="form-field">
           <label for="f_${f.key}_from">${f.label} (From)</label>
-          <input type="text" id="f_${f.key}_from" placeholder="e.g. SN1001"/>
+          <input type="text" id="f_${f.key}_from"/>
         </div>
         <div class="form-field">
           <label for="f_${f.key}_to">${f.label} (To)</label>
-          <input type="text" id="f_${f.key}_to" placeholder="e.g. SN1005 (optional)"/>
+          <input type="text" id="f_${f.key}_to"/>
         </div>`;
                 }
                 const isFull = f.type === 'textarea';
@@ -1108,6 +1108,11 @@
             const agSection = document.getElementById('agSidebarSection');
             const agNav = document.getElementById('agSidebarNav');
             const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+            const subOutNav = document.getElementById('subOutSidebarItem');
+            if (subOutNav) {
+                subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            }
             if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
                 if (agSection) agSection.style.display = 'block';
                 if (agNav) agNav.style.display = 'flex';

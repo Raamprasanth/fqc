@@ -217,24 +217,24 @@ body{
   <div class="modal-box">
     <div class="modal-title">&#9998; Edit User</div>
     <div class="form-grid">
-      <div class="form-group"><label>Full Name *</label><input type="text" id="edit-name" placeholder="Full name"/></div>
-      <div class="form-group"><label>User Name *</label><input type="text" id="edit-email" placeholder=""/></div>
-      <div class="form-group" id="edit-adminid-group" style="display:none;"><label>Admin ID</label><input type="text" id="edit-adminid" placeholder=""/></div>
-      <div class="form-group" id="edit-empid-group" style="display:none;"><label>Employee ID</label><input type="text" id="edit-empid" placeholder=""/></div>
-      <div class="form-group" id="edit-repairid-group" style="display:none;"><label>Repair Team ID</label><input type="text" id="edit-repairid" placeholder=""/></div>
-      <div class="form-group" id="edit-userid-group" style="display:none;"><label>Service Coordinator ID</label><input type="text" id="edit-userid" placeholder=""/></div>
-      <div class="form-group" id="edit-fqcid-group" style="display:none;"><label>FQC ID</label><input type="text" id="edit-fqcid" placeholder=""/></div>
-      <div class="form-group" id="edit-ptid-group" style="display:none;"><label>PT ID</label><input type="text" id="edit-ptid" placeholder=""/></div>
+      <div class="form-group"><label>Full Name *</label><input type="text" id="edit-name"/></div>
+      <div class="form-group"><label>User Name *</label><input type="text" id="edit-email"/></div>
+      <div class="form-group" id="edit-adminid-group" style="display:none;"><label>Admin ID</label><input type="text" id="edit-adminid"/></div>
+      <div class="form-group" id="edit-empid-group" style="display:none;"><label>Employee ID</label><input type="text" id="edit-empid"/></div>
+      <div class="form-group" id="edit-repairid-group" style="display:none;"><label>Repair Team ID</label><input type="text" id="edit-repairid"/></div>
+      <div class="form-group" id="edit-userid-group" style="display:none;"><label>Service Coordinator ID</label><input type="text" id="edit-userid"/></div>
+      <div class="form-group" id="edit-fqcid-group" style="display:none;"><label>FQC ID</label><input type="text" id="edit-fqcid"/></div>
+      <div class="form-group" id="edit-ptid-group" style="display:none;"><label>PT ID</label><input type="text" id="edit-ptid"/></div>
       <div class="form-group division-field" id="edit-division-group" style="display:none;">
         <label>Divisions *</label>
         <select id="edit-division" multiple>
           <option value="">- Select Division -</option>
         </select>
       </div>
-      <div class="form-group" id="edit-dept-group" style="display:none;"><label>Department</label><input type="text" id="edit-dept" placeholder=""/></div>
-      <div class="form-group" id="edit-desig-group" style="display:none;"><label>Designation</label><input type="text" id="edit-desig" placeholder=""/></div>
+      <div class="form-group" id="edit-dept-group" style="display:none;"><label>Department</label><input type="text" id="edit-dept"/></div>
+      <div class="form-group" id="edit-desig-group" style="display:none;"><label>Designation</label><input type="text" id="edit-desig"/></div>
       <div class="form-group"><label>Status</label><select id="edit-active"><option value="true">Active</option><option value="false">Inactive</option></select></div>
-      <div class="form-group" style="grid-column:1 / -1;"><label>New Password <span style="text-transform:none;font-weight:400;">(leave blank to keep current)</span></label><input type="password" id="edit-pass" placeholder="Min. 6 characters"/></div>
+      <div class="form-group" style="grid-column:1 / -1;"><label>New Password <span style="text-transform:none;font-weight:400;">(leave blank to keep current)</span></label><input type="password" id="edit-pass"/></div>
     </div>
     <div id="edit-form-msg" class="form-msg"></div>
     <div class="modal-actions">
@@ -355,22 +355,22 @@ body{
       <!-- ADMIN FIELDS -->
       <div id="add-admin-fields">
         <div class="form-grid">
-          <div class="form-group"><label>Full Name *</label><input type="text" id="a-name" placeholder=""/></div>
-          <div class="form-group"><label>User Name *</label><input type="text" id="a-email" placeholder=""/></div>
-          <div class="form-group"><label>Admin ID *</label><input type="text" id="a-adminid" placeholder=""/><span class="hint">Unique ID used to log in</span></div>
-          <div class="form-group"><label>Password *</label><input type="password" id="a-pass" placeholder="Min. 6 characters"/></div>
+          <div class="form-group"><label>Full Name *</label><input type="text" id="a-name"/></div>
+          <div class="form-group"><label>User Name *</label><input type="text" id="a-email"/></div>
+          <div class="form-group"><label>Admin ID *</label><input type="text" id="a-adminid"/><span class="hint">Unique ID used to log in</span></div>
+          <div class="form-group"><label>Password *</label><input type="password" id="a-pass"/></div>
         </div>
       </div>
 
       <!-- EMPLOYEE FIELDS -->
       <div id="add-employee-fields" style="display:none;">
         <div class="form-grid">
-          <div class="form-group"><label>Full Name *</label><input type="text" id="e-name" placeholder=""/></div>
-          <div class="form-group"><label>User Name *</label><input type="text" id="e-email" placeholder=""/></div>
-          <div class="form-group"><label>Employee ID *</label><input type="text" id="e-empid" placeholder=""/><span class="hint">Unique ID used to log in</span></div>
-          <div class="form-group"><label>Password *</label><input type="password" id="e-pass" placeholder="Min. 6 characters"/></div>
-          <div class="form-group"><label>Department</label><input type="text" id="e-dept" placeholder=""/></div>
-          <div class="form-group"><label>Designation</label><input type="text" id="e-desig" placeholder=""/></div>
+          <div class="form-group"><label>Full Name *</label><input type="text" id="e-name"/></div>
+          <div class="form-group"><label>User Name *</label><input type="text" id="e-email"/></div>
+          <div class="form-group"><label>Employee ID *</label><input type="text" id="e-empid"/><span class="hint">Unique ID used to log in</span></div>
+          <div class="form-group"><label>Password *</label><input type="password" id="e-pass"/></div>
+          <div class="form-group"><label>Department</label><input type="text" id="e-dept"/></div>
+          <div class="form-group"><label>Designation</label><input type="text" id="e-desig"/></div>
           <div class="form-group division-field" style="grid-column:1 / -1;">
             <label>Divisions *</label>
             <select id="e-division" required multiple>
@@ -394,7 +394,7 @@ body{
     <div class="toolbar">
       <div class="search-wrap">
         <span class="search-icon">&#128269;</span>
-        <input type="text" id="um-search" placeholder="Search by name, user name or division..." oninput="filterTable()"/>
+        <input type="text" id="um-search" oninput="filterTable()"/>
       </div>
       <select class="filter-select" id="type-filter" onchange="filterTable()">
         <option value="">All Types</option>

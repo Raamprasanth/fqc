@@ -512,7 +512,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     <div class="toolbar-row">
       <div class="search-box">
         <span>&#128269;</span>
-        <input type="text" id="searchInput" placeholder="Search by model, description, supplier, invoice..."/>
+        <input type="text" id="searchInput"/>
       </div>
       <div class="record-count" id="recordCount">0 records</div>
     </div>
@@ -560,47 +560,43 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           </div>
           <div class="form-field">
             <label for="fModel">MODEL</label>
-            <input type="text" id="fModel" placeholder="e.g. Vent-100"/>
+            <input type="text" id="fModel"/>
           </div>
           <div class="form-field">
             <label for="fRecdQty">REC'D QTY</label>
-            <input type="number" id="fRecdQty" placeholder="0"/>
+            <input type="number" id="fRecdQty"/>
           </div>
           <div class="form-field">
             <label for="fPasdQty">PAS'D QTY</label>
-            <input type="number" id="fPasdQty" placeholder="0"/>
+            <input type="number" id="fPasdQty"/>
           </div>
           <div class="form-field">
             <label for="fRejdQty">REJ'D QTY</label>
-            <input type="number" id="fRejdQty" placeholder="0"/>
+            <input type="number" id="fRejdQty"/>
           </div>
           <div class="form-field">
             <label for="fInvoiceNoDate">INVOICE NO &amp; DATE</label>
-            <input type="text" id="fInvoiceNoDate" placeholder="e.g. INV-10024 & 2026-07-29"/>
+            <input type="text" id="fInvoiceNoDate"/>
           </div>
           <div class="form-field">
             <label for="fSupplierName">SUPPLIER NAME</label>
-            <input type="text" id="fSupplierName" placeholder="Supplier / Vendor name"/>
+            <input type="text" id="fSupplierName"/>
           </div>
           <div class="form-field">
-            <label for="fBatchLotExpFrom">BATCH/LOT NO &amp; EXP.DATE (From)</label>
-            <input type="text" id="fBatchLotExpFrom" placeholder="e.g. LOT-010"/>
-          </div>
-          <div class="form-field">
-            <label for="fBatchLotExpTo">BATCH/LOT NO &amp; EXP.DATE (To)</label>
-            <input type="text" id="fBatchLotExpTo" placeholder="e.g. LOT-019 (optional)"/>
+            <label for="fBatchLotExp">BATCH/LOT NO &amp; EXP.DATE</label>
+            <input type="text" id="fBatchLotExp"/>
           </div>
           <div class="form-field full">
             <label for="fDescription">DESCRIPTION</label>
-            <textarea id="fDescription" placeholder="Description of goods/accessories..."></textarea>
+            <textarea id="fDescription"></textarea>
           </div>
           <div class="form-field full">
             <label for="fProblemDetails">PROBLEM DETAILS</label>
-            <textarea id="fProblemDetails" placeholder="Any defect / problem details..."></textarea>
+            <textarea id="fProblemDetails"></textarea>
           </div>
           <div class="form-field full">
             <label for="fRemarks">REMARKS</label>
-            <textarea id="fRemarks" placeholder="Final remarks..."></textarea>
+            <textarea id="fRemarks"></textarea>
           </div>
         </div>
       </div>
@@ -613,45 +609,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 </div>
 
 <script>
-  function generateSerialSequence(fromStr, toStr) {
-    fromStr = (fromStr || '').trim();
-    toStr = (toStr || '').trim();
-
-    if (!fromStr) return [];
-    if (!toStr || fromStr.toLowerCase() === toStr.toLowerCase()) return [fromStr];
-
-    const matchFrom = fromStr.match(/^(.*?)(0*\d+)$/);
-    if (!matchFrom) return [fromStr, toStr];
-
-    const prefix = matchFrom[1];
-    const digitsFromStr = matchFrom[2];
-    const numFrom = parseInt(digitsFromStr, 10);
-
-    const matchTo = toStr.match(/^(.*?)(0*\d+)$/);
-    if (!matchTo) return [fromStr, toStr];
-
-    const toPrefix = matchTo[1];
-    const digitsToStr = matchTo[2];
-    const numTo = parseInt(digitsToStr, 10);
-
-    const prefixMatches = !toPrefix || prefix.toLowerCase() === toPrefix.toLowerCase();
-
-    if (prefixMatches && !isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
-      const count = Math.min(numTo - numFrom + 1, 1000);
-      const padLength = Math.max(digitsFromStr.length, digitsToStr.length);
-
-      const seq = [];
-      for (let i = 0; i < count; i++) {
-        const currentNum = numFrom + i;
-        const paddedNum = String(currentNum).padStart(padLength, '0');
-        seq.push(prefix + paddedNum);
-      }
-      return seq;
-    }
-
-    return [fromStr, toStr];
-  }
-
   /* ═══ Sidebar ═══ */
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
@@ -746,11 +703,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     const oldText = btn ? btn.textContent : 'Save Entry';
     if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
-    const fromVal = document.getElementById('fBatchLotExpFrom').value.trim();
-    const toVal = document.getElementById('fBatchLotExpTo').value.trim();
-    const batchList = generateSerialSequence(fromVal, toVal);
-
-    const baseData = {
+    const data = {
       division: activeDivision,
       configKey: 'vent-anesthesia',
       date: document.getElementById('fDate').value.trim(),
@@ -761,23 +714,10 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       rejdQty: escapeHtml(document.getElementById('fRejdQty').value.trim()),
       invoiceNoDate: escapeHtml(document.getElementById('fInvoiceNoDate').value.trim()),
       supplierName: escapeHtml(document.getElementById('fSupplierName').value.trim()),
+      batchLotExp: escapeHtml(document.getElementById('fBatchLotExp').value.trim()),
       problemDetails: escapeHtml(document.getElementById('fProblemDetails').value.trim()),
       remarks: escapeHtml(document.getElementById('fRemarks').value.trim()),
     };
-
-    const finalBatchList = batchList.length ? batchList : [fromVal];
-    const payloadList = finalBatchList.map(b => {
-      const vals = {
-        ...baseData,
-        batchLotExp: escapeHtml(b)
-      };
-      return {
-        division: activeDivision,
-        configKey: 'vent-anesthesia',
-        ...vals,
-        values: vals
-      };
-    });
 
     try {
       const res = await fetch(API_BASE, {
@@ -786,13 +726,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
+        body: JSON.stringify({ ...data, values: data })
       });
       if (!res.ok) throw new Error('Failed to save');
       
       const saved = await res.json();
-      const savedArray = Array.isArray(saved) ? saved : [saved];
-      entries.unshift(...savedArray);
+      entries.unshift(saved);
       renderTable(entries);
       closeModal();
     } catch (err) {

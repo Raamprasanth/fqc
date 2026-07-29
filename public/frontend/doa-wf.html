@@ -494,7 +494,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     <div class="toolbar-row">
       <div class="search-box">
         <span>&#128269;</span>
-        <input type="text" id="searchInput" placeholder="Search this division's records..."/>
+        <input type="text" id="searchInput"/>
       </div>
       <div class="record-count" id="recordCount">0 records</div>
     </div>
@@ -738,11 +738,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       if (isSerialKey(f.key, f.label)) {
         return `<div class="form-field">
           <label for="f_${f.key}_from">${f.label} (From)</label>
-          <input type="text" id="f_${f.key}_from" placeholder="e.g. SN1001"/>
+          <input type="text" id="f_${f.key}_from"/>
         </div>
         <div class="form-field">
           <label for="f_${f.key}_to">${f.label} (To)</label>
-          <input type="text" id="f_${f.key}_to" placeholder="e.g. SN1005 (optional)"/>
+          <input type="text" id="f_${f.key}_to"/>
         </div>`;
       }
       const isFull = f.type === 'textarea';
