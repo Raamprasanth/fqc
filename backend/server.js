@@ -37,6 +37,8 @@ const medilogRouter = require('./routes/medilog');
 const aoutRouter = require('./routes/aout');
 const ashortRouter = require('./routes/ashort');
 const suboutRouter = require('./routes/subout');
+const shipoutRouter = require('./routes/shipout');
+const codesRouter = require('./routes/codes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -78,6 +80,8 @@ app.use('/api/medilog', medilogRouter);
 app.use('/api/aout', aoutRouter);
 app.use('/api/ashort', ashortRouter);
 app.use('/api/subout', suboutRouter);
+app.use('/api/shipout', shipoutRouter);
+app.use('/api/codes', codesRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {

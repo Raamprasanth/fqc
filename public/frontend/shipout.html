@@ -755,9 +755,9 @@
                         class="nav-icon">&#128203;</span>ACC-IN</a></li>
             <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span
                         class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-            <li class="nav-item"><a href="sub-out.html" data-page="sub-out"><span
+            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
                         class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item"><a href="ship-out.html" class="active" data-page="ship-out"><span
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" class="active" data-page="ship-out"><span
                         class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
             <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
                         class="nav-icon">&#128267;</span>Battery Charging</a></li>
@@ -790,7 +790,6 @@
                 </div>
             </div>
             <div class="topbar-right">
-                <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
         </div>
@@ -1037,6 +1036,12 @@
             const agSection = document.getElementById('agSidebarSection');
             const agNav = document.getElementById('agSidebarNav');
             const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const subOutNav = document.getElementById('subOutSidebarItem');
+            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
             if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
                 if (agSection) agSection.style.display = 'block';
                 if (agNav) agNav.style.display = 'flex';
