@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DOA+WF — SchillerIndia Services</title>
+<title>ACC-IN — SchillerIndia Services</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -52,6 +52,7 @@ body{
 }
 .sidebar-brand .name{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:#fff;}
 .sidebar-brand .sub{font-size:9.5px;color:#a9c2ad;letter-spacing:0.16em;text-transform:uppercase;margin-top:2px;}
+
 .sidebar-section-label{
   font-size:10.5px;
   font-weight:600;
@@ -60,6 +61,7 @@ body{
   color:#7d9682;
   padding:22px 24px 10px;
 }
+
 .nav-list{list-style:none;padding:0 14px;display:flex;flex-direction:column;gap:2px;}
 .nav-item a{
   display:flex;
@@ -86,7 +88,13 @@ body{
   background:var(--clay);
   border-radius:0 4px 4px 0;
 }
-.nav-icon{width:20px;text-align:center;font-size:16px;flex-shrink:0;}
+.nav-icon{
+  width:20px;
+  text-align:center;
+  font-size:16px;
+  flex-shrink:0;
+}
+
 .sidebar-footer{
   margin-top:auto;
   padding:20px 24px 26px;
@@ -118,14 +126,21 @@ body{
 .logout-btn:hover{background:rgba(255,255,255,0.08);color:#fff;}
 
 /* ═══ MAIN AREA ═══ */
-.main{margin-left:264px;flex:1;min-width:0;display:flex;flex-direction:column;}
+.main{
+  margin-left:264px;
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
 .topbar{
   min-height:76px;
   background:#fff;
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-space-between;
   padding:14px 36px;
   position:sticky;
   top:0;
@@ -133,11 +148,29 @@ body{
   gap:16px;
   flex-wrap:wrap;
 }
-.topbar h1{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--dark);}
-.topbar .breadcrumb{font-size:12px;color:#96a599;margin-top:2px;}
-.menu-toggle{display:none;background:none;border:none;font-size:20px;color:var(--dark);cursor:pointer;margin-right:16px;}
+.topbar h1{
+  font-family:'Fraunces',serif;
+  font-size:21px;
+  font-weight:600;
+  color:var(--dark);
+}
+.topbar .breadcrumb{
+  font-size:12px;
+  color:#96a599;
+  margin-top:2px;
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  font-size:20px;
+  color:var(--dark);
+  cursor:pointer;
+  margin-right:16px;
+}
 .topbar-left{display:flex;align-items:center;}
 .topbar-right{display:flex;align-items:center;gap:12px;}
+
 .btn{
   display:inline-flex;
   align-items:center;
@@ -151,10 +184,18 @@ body{
   cursor:pointer;
   transition:background .2s, transform .15s, box-shadow .2s;
 }
-.btn-primary{background:var(--clay);color:#fff;box-shadow:0 6px 16px rgba(198,122,82,0.28);}
+.btn-primary{
+  background:var(--clay);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(198,122,82,0.28);
+}
 .btn-primary:hover{background:#b56a44;transform:translateY(-1px);}
-.btn-ghost{background:#f4efe3;color:var(--dark);}
+.btn-ghost{
+  background:#f4efe3;
+  color:var(--dark);
+}
 .btn-ghost:hover{background:rgba(92,122,99,0.14);}
+
 .icon-btn{
   width:38px;height:38px;
   border-radius:50%;
@@ -168,38 +209,9 @@ body{
 }
 .icon-btn:hover{background:rgba(92,122,99,0.12);}
 
-.content{padding:36px;flex:1;}
-
-/* ═══ DIVISION TABS ═══ */
-.division-tabs{
-  display:flex;
-  gap:8px;
-  background:#f4efe3;
-  padding:6px;
-  border-radius:14px;
-  margin-bottom:22px;
-  flex-wrap:wrap;
-  width:fit-content;
-  max-width:100%;
-}
-.division-tab{
-  border:none;
-  background:transparent;
-  color:var(--text);
-  font-family:'Inter',sans-serif;
-  font-size:13px;
-  font-weight:600;
-  padding:10px 18px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:background .2s, color .2s, box-shadow .2s;
-  white-space:nowrap;
-}
-.division-tab:hover{color:var(--dark);}
-.division-tab.active{
-  background:#fff;
-  color:var(--clay);
-  box-shadow:0 4px 12px rgba(45,58,48,0.08);
+.content{
+  padding:36px;
+  flex:1;
 }
 
 .toolbar-row{
@@ -231,7 +243,11 @@ body{
   width:100%;
   background:transparent;
 }
-.record-count{font-size:12.5px;color:#96a599;font-weight:500;}
+.record-count{
+  font-size:12.5px;
+  color:#96a599;
+  font-weight:500;
+}
 
 /* ═══ TABLE ═══ */
 .table-wrap{
@@ -241,15 +257,20 @@ body{
   box-shadow:0 4px 16px rgba(45,58,48,0.05);
   overflow:auto;
 }
-table{border-collapse:collapse;width:100%;min-width:1500px;font-size:12.7px;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:1100px;
+  font-size:12.8px;
+}
 thead th{
   background:#f4efe3;
   color:var(--dark);
   font-family:'Inter',sans-serif;
   font-weight:600;
   text-transform:uppercase;
-  letter-spacing:0.03em;
-  font-size:10.5px;
+  letter-spacing:0.04em;
+  font-size:10.8px;
   text-align:left;
   padding:14px 16px;
   white-space:nowrap;
@@ -257,8 +278,9 @@ thead th{
   top:0;
   border-bottom:1px solid var(--border);
 }
+thead th:first-child{border-top-left-radius:20px;}
 tbody td{
-  padding:13px 16px;
+  padding:14px 16px;
   border-bottom:1px solid var(--border);
   color:var(--text);
   white-space:nowrap;
@@ -277,19 +299,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   font-weight:600;
   font-size:11.5px;
 }
-.status-pill{
-  display:inline-flex;
-  align-items:center;
-  padding:4px 11px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:600;
+
+.empty-row td{
+  text-align:center;
+  padding:56px 20px;
+  color:#96a599;
 }
-.status-open{background:rgba(198,122,82,0.14);color:var(--clay);}
-.status-inprogress{background:rgba(45,58,48,0.08);color:var(--dark);}
-.status-closed{background:rgba(92,122,99,0.14);color:var(--sage-dark);}
-.status-onhold{background:rgba(45,58,48,0.08);color:var(--dark);}
-.empty-row td{text-align:center;padding:56px 20px;color:#96a599;}
 .empty-row .empty-icon{font-size:30px;display:block;margin-bottom:10px;}
 
 /* ═══ MODAL ═══ */
@@ -451,8 +466,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     <li class="nav-item"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
     <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
     <li class="nav-item"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
-    <li class="nav-item"><a href="doa-wf.html" class="active" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
-    <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
+    <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+    <li class="nav-item"><a href="acc-in.html" class="active" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
     <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
     <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
   </ul>
@@ -478,8 +493,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     <div class="topbar-left">
       <button class="menu-toggle" id="menuToggle">&#9776;</button>
       <div>
-        <h1>DOA+WF</h1>
-        <div class="breadcrumb">Home / Operations / DOA+WF</div>
+        <h1>ACC-IN (Accessories Inward)</h1>
+        <div class="breadcrumb">Home / Operations / ACC-IN</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -489,18 +504,16 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   </div>
 
   <div class="content">
-    <div class="division-tabs" id="divisionTabs"></div>
-
     <div class="toolbar-row">
       <div class="search-box">
         <span>&#128269;</span>
-        <input type="text" id="searchInput" placeholder="Search this division's records..."/>
+        <input type="text" id="searchInput" placeholder="Search by model, serial no, supplier..."/>
       </div>
       <div class="record-count" id="recordCount">0 records</div>
     </div>
 
     <div class="table-wrap">
-      <table id="doawfTable">
+      <table id="accInTable">
         <thead><tr id="tableHeadRow"></tr></thead>
         <tbody id="tableBody"></tbody>
       </table>
@@ -513,12 +526,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   <div class="modal">
     <div class="modal-head">
       <div>
-        <h2 id="modalTitle">Add New DOA+WF Entry</h2>
-        <p id="modalSubtitle">Fill in the details below to log a new defective / wrong fitment unit.</p>
+        <h2 id="modalTitle">Add New ACC-IN Entry</h2>
+        <p id="modalSubtitle">Fill in details for incoming accessories.</p>
       </div>
       <button class="modal-close" id="closeModalBtn">&#10005;</button>
     </div>
-    <form id="doawfForm">
+    <form id="accInForm">
       <div class="modal-body">
         <div class="form-grid" id="formGrid"></div>
       </div>
@@ -531,7 +544,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 </div>
 
 <script>
-  
   function isSerialKey(key, label) {
     const k = (key || '').trim().toLowerCase();
     const l = (label || '').trim().toLowerCase();
@@ -578,8 +590,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     return [fromStr, toStr];
   }
 
-
-
   /* ═══ Sidebar ═══ */
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
@@ -594,89 +604,35 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   });
 
   /* ═══ Division field configs ═══ */
-  const STATUS_OPTIONS = ['Pending', 'Completed', 'In Progress'];
+  const STATUS_OPTIONS = ['Received', 'Pending', 'Under Inspection', 'Completed'];
   const divisions = {
     'vent-anesthesia': {
       label: 'Ventilator & Anesthesia',
       fields: [
-        {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
-        {key:'product', label:'Product', type:'text'},
-        {key:'defectUnitSn', label:'Defect Unit S/N', type:'text'},
-        {key:'configuration', label:'Configuration', type:'text'},
-        {key:'customerDetails', label:'Customer Details', type:'textarea'},
-        {key:'region', label:'Region', type:'text'},
-        {key:'reportedProblemDetails', label:'Reported Problem Details', type:'textarea'},
-        {key:'observedByFqc', label:'Observed by FQC', type:'textarea'},
-        {key:'rootCause', label:'Root Cause', type:'textarea'},
-        {key:'actionTaken', label:'Action Taken', type:'textarea'},
-        {key:'replUnitSendDate', label:'Repl.Unit.Send.Date', type:'date'},
-        {key:'replUnitSn', label:'Repl.Unit.S/N', type:'text'},
-        {key:'replacedUnitModel', label:'Replaced Unit Model', type:'text'},
-      ]
-    },
-    'shipl': {
-      label: 'SHIPL',
-      fields: [
-        {key:'defRecdDate', label:'Def.Recd.Date', type:'date'},
+        {key:'fqcEngr', label:'FQC Engr', type:'text'},
+        {key:'inwardDate', label:'Inward Date', type:'date'},
         {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
         {key:'model', label:'Model', type:'text'},
-        {key:'defectiveUnitSlNo', label:'Defective Unit Sl.No', type:'text'},
-        {key:'config', label:'Config', type:'text'},
-        {key:'customerNameAddress', label:'Customer Name, Address', type:'textarea'},
-        {key:'region', label:'Region', type:'text'},
-        {key:'reportedFieldProblem', label:'Reported Field Problem', type:'textarea'},
-        {key:'observedProblem', label:'Observed Problem', type:'textarea'},
-        {key:'receivedPhysicalCondition', label:'Received Physical Condition', type:'textarea'},
-        {key:'causeOfProblem', label:'Cause of the Problem', type:'textarea'},
-        {key:'actionTaken', label:'Action Taken', type:'textarea'},
-        {key:'unitReturnDateFromProduction', label:'Unit Return Date From Production / Service', type:'date'},
-        {key:'replacementDespDate', label:'Replacement Desp.Date', type:'date'},
-        {key:'replacementUnitSlNo', label:'Replacement Unit.Sl/No', type:'text'},
-      ]
-    },
-    'ag-monitors-ganshorn': {
-      label: 'Schiller AG, Monitors & Ganshorn',
-      fields: [
-        {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
-        {key:'product', label:'Product', type:'text'},
-        {key:'defectUnitSlNo', label:'Defect Unit Sl.No', type:'text'},
-        {key:'conf', label:'Conf', type:'text'},
-        {key:'customerNameAddress', label:'Customer Name and Address', type:'textarea'},
-        {key:'region', label:'Region', type:'text'},
-        {key:'reportedProblemDetails', label:'Reported Problem Details', type:'textarea'},
-        {key:'observedByFqc', label:'Observed by FQC', type:'textarea'},
-        {key:'rootCause', label:'Root Cause', type:'textarea'},
-        {key:'actionTaken', label:'Action Taken', type:'textarea'},
-        {key:'replUnitSendDate', label:'Repl.Unit.Send.Date', type:'date'},
-        {key:'replUnitSlNo', label:'Repl.Unit.Sl.No', type:'text'},
+        {key:'unitSn', label:'Unit S/N', type:'text'},
+        {key:'oaNumber', label:'OA / Invoice No', type:'text'},
+        {key:'description', label:'Description of Goods', type:'textarea'},
+        {key:'qty', label:'Qty', type:'number'},
+        {key:'supplierName', label:'Supplier / Customer Name', type:'text'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
       ]
     }
   };
 
-
-  const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
-  
+  const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator & Anesthesia';
   const tableHeadRow = document.getElementById('tableHeadRow');
   const tableBody = document.getElementById('tableBody');
   const recordCount = document.getElementById('recordCount');
   const searchInput = document.getElementById('searchInput');
 
   let currentDivision = 'vent-anesthesia';
-  const lDiv = activeDivision.toLowerCase();
-  if (lDiv.includes('schiller') || lDiv.includes('monitor') || lDiv.includes('ganshorn')) {
-    currentDivision = 'ag-monitors-ganshorn';
-  } else if (lDiv.includes('shipl')) {
-    currentDivision = 'shipl';
-  }
-
-  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/doa';
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/accin';
   function getToken() { return localStorage.getItem('token') || ''; }
   let entries = [];
-
-  const divisionTabs = document.getElementById('divisionTabs');
-  if (divisionTabs) divisionTabs.style.display = 'none';
 
   async function loadEntries() {
     try {
@@ -725,14 +681,14 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const openAddBtn = document.getElementById('openAddBtn');
   const closeModalBtn = document.getElementById('closeModalBtn');
   const cancelBtn = document.getElementById('cancelBtn');
-  const doaForm = document.getElementById('doawfForm');
+  const accInForm = document.getElementById('accInForm');
   const formGrid = document.getElementById('formGrid');
   const modalTitle = document.getElementById('modalTitle');
   const modalSubtitle = document.getElementById('modalSubtitle');
 
   function buildForm() {
     const div = divisions[currentDivision];
-    if (modalTitle) modalTitle.textContent = `Add New Entry`;
+    if (modalTitle) modalTitle.textContent = `Add New ACC-IN Entry`;
     if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
     formGrid.innerHTML = div.fields.map(f => {
       if (isSerialKey(f.key, f.label)) {
@@ -765,7 +721,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   }
 
   function openModal(){ buildForm(); modalOverlay.classList.add('visible'); }
-  function closeModal(){ modalOverlay.classList.remove('visible'); doaForm.reset(); }
+  function closeModal(){ modalOverlay.classList.remove('visible'); accInForm.reset(); }
   openAddBtn.addEventListener('click', openModal);
   closeModalBtn.addEventListener('click', closeModal);
   cancelBtn.addEventListener('click', closeModal);
@@ -777,9 +733,9 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     return div.innerHTML;
   }
 
-  doaForm.addEventListener('submit', async (e) => {
+  accInForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = doaForm.querySelector('button[type="submit"]');
+    const btn = accInForm.querySelector('button[type="submit"]');
     const oldText = btn ? btn.textContent : 'Save Entry';
     if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
@@ -848,38 +804,29 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.trim().toLowerCase();
     if (!q) { renderTable(entries); return; }
-    const filtered = entries.filter(entry =>
-      Object.values(entry.values).some(v => String(v).toLowerCase().includes(q))
-    );
+    const fields = divisions[currentDivision].fields;
+    const filtered = entries.filter(entry => {
+      return fields.some(f => {
+        const val = String(entry.values[f.key] || '').toLowerCase();
+        return val.includes(q);
+      });
+    });
     renderTable(filtered);
   });
 
-  /* ═══ Init Context ═══ */
-  document.addEventListener('DOMContentLoaded', () => {
+  // ═══ Init ═══
+  renderTableHead();
+  loadEntries();
 
-    const agSection = document.getElementById('agSidebarSection');
-    const agNav = document.getElementById('agSidebarNav');
-    const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-    if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-      if (agSection) agSection.style.display = 'block';
-      if (agNav) agNav.style.display = 'flex';
+  const activeDivName = (localStorage.getItem('activeDivision') || '').toLowerCase();
+  const accInNav = document.getElementById('accInSidebarItem');
+  if (accInNav) {
+    if (activeDivName.includes('vent') || activeDivName.includes('anesthesia') || !activeDivName || activeDivName === 'default') {
+      accInNav.style.display = '';
+    } else {
+      accInNav.style.display = 'none';
     }
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.name) { window.location.href = 'login.html'; return; }
-    const avatar = document.querySelector('.user-avatar');
-    const nameEl = document.querySelector('.user-name');
-    const roleEl = document.querySelector('.user-role');
-    if (avatar) avatar.textContent = user.name.charAt(0).toUpperCase();
-    if (nameEl) nameEl.textContent = user.name;
-    if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
-    
-    const h1 = document.querySelector('.topbar-left h1');
-    if (h1) h1.textContent = 'DOA+WF - ' + activeDivision;
-    
-    renderTableHead();
-    renderTable(entries);
-    loadEntries();
-  });
+  }
 
 </script>
 </body>
