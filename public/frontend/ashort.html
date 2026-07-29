@@ -724,7 +724,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     'In Progress': 'status-onhold'
   };
 
-  const sharedFields = [
+  const formFields = [
     {key:'date', label:'Date', type:'date'},
     {key:'model', label:'Model', type:'text'},
     {key:'oaNo', label:'OA No', type:'text'},
@@ -732,22 +732,29 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     {key:'shortShippedItems', label:'Short Shipped Items', type:'textarea'},
     {key:'qty', label:'Qty', type:'number'},
     {key:'remarks', label:'Remarks', type:'textarea'},
-    {key:'dispatchDateOfShortshipped', label:'Dispatch Date of Shortshipped Items', type:'date'},
+    {key:'dispatchDateOfShortshipped', label:'Dispatch Date of Shortshipped Items', type:'date'}
+  ];
+
+  const tableFields = [
+    ...formFields,
     {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS}
   ];
 
   const divisions = {
     'vent-anesthesia': {
       label: 'Ventilator & Anesthesia',
-      fields: [...sharedFields]
+      fields: [...formFields],
+      tableFields: [...tableFields]
     },
     'ag-monitors': {
       label: 'Schiller AG & Monitors',
-      fields: [...sharedFields]
+      fields: [...formFields],
+      tableFields: [...tableFields]
     },
     'shipl-ganshorn': {
       label: 'SHIPL & Ganshorn',
-      fields: [...sharedFields]
+      fields: [...formFields],
+      tableFields: [...tableFields]
     }
   };
 
@@ -786,12 +793,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const searchInput = document.getElementById('searchInput');
 
   function renderTableHead() {
-    const fields = divisions[currentDivision].fields;
+    const fields = divisions[currentDivision].tableFields || divisions[currentDivision].fields;
     tableHeadRow.innerHTML = '<th>S/N</th>' + fields.map(f => `<th>${f.label}</th>`).join('');
   }
 
   function renderTable(list) {
-    const fields = divisions[currentDivision].fields;
+    const fields = divisions[currentDivision].tableFields || divisions[currentDivision].fields;
     const total = list.length;
     if (!total) {
       tableBody.innerHTML = `
