@@ -525,6 +525,14 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 </div>
 
 <script>
+  
+  function isSerialKey(key, label) {
+    const k = (key || '').trim().toLowerCase();
+    const l = (label || '').trim().toLowerCase();
+    return k === 'unitsn' || k === 'serialno' || k === 'unitslno' || k === 'slno' ||
+           l === 'unit s/n' || l === 'serial no' || l === 'serial no.' || l === 'unit serial no' || l === 'serial number' || l === 'unit sl.no';
+  }
+
   function generateSerialSequence(fromStr, toStr) {
     fromStr = (fromStr || '').trim();
     toStr = (toStr || '').trim();
@@ -557,12 +565,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     return [fromStr, toStr];
   }
 
-  function isSerialKey(key, label) {
-    const k = (key || '').toLowerCase();
-    const l = (label || '').toLowerCase();
-    return k === 'unitsn' || k === 'serialno' || k === 'unitslno' || k === 'slno' || k === 'slslno' ||
-           l.includes('serial') || l.includes('unit s/n') || l.includes('sl.no') || l.includes('sl. no') || l.includes('sl sl no');
-  }
 
   /* ═══ Sidebar ═══ */
   const menuToggle = document.getElementById('menuToggle');

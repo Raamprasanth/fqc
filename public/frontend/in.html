@@ -584,8 +584,12 @@ body.is-ventilator .vent-only-field { display: flex; }
             <input type="text" id="fModel"/>
           </div>
           <div class="form-field">
-            <label for="fSerialNo">Serial No</label>
-            <input type="text" id="fSerialNo"/>
+            <label for="fSerialNoFrom">Serial No (From)</label>
+            <input type="text" id="fSerialNoFrom" placeholder="e.g. SN1001"/>
+          </div>
+          <div class="form-field">
+            <label for="fSerialNoTo">Serial No (To)</label>
+            <input type="text" id="fSerialNoTo" placeholder="e.g. SN1005 (optional)"/>
           </div>
           <div class="form-field">
             <label for="fConf">Conf</label>
@@ -778,8 +782,10 @@ body.is-ventilator .vent-only-field { display: flex; }
       invoice: document.getElementById('fInvoice').value.trim(),
       problem: document.getElementById('fProblem').value.trim(),
       remarks: document.getElementById('fRemarks').value.trim(),
-      airO2MixerSn: document.getElementById('fAirO2MixerSn') ? document.getElementById('fAirO2MixerSn').value.trim() : '',
     };
+
+    const airMixerEl = document.getElementById('fAirO2MixerSn');
+    if (airMixerEl) baseData.airO2MixerSn = airMixerEl.value.trim();
 
     const payloadList = serials.map(sn => ({ ...baseData, serialNo: sn }));
 
