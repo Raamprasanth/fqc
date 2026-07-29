@@ -374,6 +374,9 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 }
 .form-field{display:flex;flex-direction:column;gap:7px;}
 .form-field.full{grid-column:1 / -1;}
+.vent-only { display: none; }
+body.is-ventilator .vent-only { display: table-cell; }
+body.is-ventilator .vent-only-field { display: flex; }
 .form-field label{
   font-size:11.5px;
   font-weight:600;
@@ -529,11 +532,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             <th>Invoice No &amp; Date</th>
             <th>Any Problem in the Unit</th>
             <th>Final Remarks / Accessories Remarks</th>
+            <th class="vent-only">Air/O2 Mixer SN</th>
           </tr>
         </thead>
         <tbody id="tableBody">
           <tr class="empty-row" id="emptyRow">
-            <td colspan="13">
+            <td colspan="14">
               <span class="empty-icon">&#128203;</span>
               No records yet. Click "Add New" to log the first entry.
             </td>
@@ -610,6 +614,10 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <div class="form-field full">
             <label for="fRemarks">Final Remarks / Accessories Remarks</label>
             <textarea id="fRemarks"></textarea>
+          </div>
+          <div class="form-field vent-only vent-only-field">
+            <label for="fAirO2MixerSn">Air/O2 Mixer SN</label>
+            <input type="text" id="fAirO2MixerSn"/>
           </div>
         </div>
       </div>
@@ -730,6 +738,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
         <td>${e.invoice || '—'}</td>
         <td class="wrap-cell">${e.problem || '—'}</td>
         <td class="wrap-cell">${e.remarks || '—'}</td>
+        <td class="vent-only">${e.airO2MixerSn || '—'}</td>
       </tr>
     `).join('');
 
@@ -769,6 +778,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       invoice: document.getElementById('fInvoice').value.trim(),
       problem: document.getElementById('fProblem').value.trim(),
       remarks: document.getElementById('fRemarks').value.trim(),
+      airO2MixerSn: document.getElementById('fAirO2MixerSn') ? document.getElementById('fAirO2MixerSn').value.trim() : '',
     };
 
     const payloadList = serials.map(sn => ({ ...baseData, serialNo: sn }));
