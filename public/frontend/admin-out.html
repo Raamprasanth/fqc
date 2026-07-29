@@ -542,6 +542,45 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 </div>
 
 <script>
+  function generateSerialSequence(fromStr, toStr) {
+    fromStr = (fromStr || '').trim();
+    toStr = (toStr || '').trim();
+
+    if (!fromStr) return [];
+    if (!toStr || fromStr === toStr) return [fromStr];
+
+    const matchFrom = fromStr.match(/^(.*?)(0*\d+)$/);
+    const matchTo = toStr.match(/^(.*?)(0*\d+)$/);
+
+    if (matchFrom && matchTo && matchFrom[1] === matchTo[1]) {
+      const prefix = matchFrom[1];
+      const numFrom = parseInt(matchFrom[2], 10);
+      const numTo = parseInt(matchTo[2], 10);
+
+      if (!isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
+        const count = Math.min(numTo - numFrom + 1, 1000);
+        const padLength = Math.max(matchFrom[2].length, matchTo[2].length);
+
+        const seq = [];
+        for (let i = 0; i < count; i++) {
+          const currentNum = numFrom + i;
+          const paddedNum = String(currentNum).padStart(padLength, '0');
+          seq.push(prefix + paddedNum);
+        }
+        return seq;
+      }
+    }
+
+    return [fromStr, toStr];
+  }
+
+  function isSerialKey(key, label) {
+    const k = (key || '').toLowerCase();
+    const l = (label || '').toLowerCase();
+    return k === 'unitsn' || k === 'serialno' || k === 'unitslno' || k === 'slno' || k === 'slslno' ||
+           l.includes('serial') || l.includes('unit s/n') || l.includes('sl.no') || l.includes('sl. no') || l.includes('sl sl no');
+  }
+
 
   /* ═══ Sidebar ═══ */
   const menuToggle = document.getElementById('menuToggle');
@@ -742,9 +781,19 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 
   function buildForm() {
     const div = divisions[currentDivision];
-    modalTitle.textContent = `Add New Outward Entry`;
-    modalSubtitle.textContent = `Division: ${div.label}`;
+    if (modalTitle) modalTitle.textContent = `Add New Entry`;
+    if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
     formGrid.innerHTML = div.fields.map(f => {
+      if (isSerialKey(f.key, f.label)) {
+        return `<div class="form-field">
+          <label for="f_${f.key}_from">${f.label} (From)</label>
+          <input type="text" id="f_${f.key}_from" placeholder="e.g. SN1001"/>
+        </div>
+        <div class="form-field">
+          <label for="f_${f.key}_to">${f.label} (To)</label>
+          <input type="text" id="f_${f.key}_to" placeholder="e.g. SN1005 (optional)"/>
+        </div>`;
+      }
       const isFull = f.type === 'textarea';
       let control;
       if (f.type === 'select') {
@@ -781,22 +830,47 @@ td.wrap-cell{white-space:normal;min-width:200px;}
   outForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = outForm.querySelector('button[type="submit"]');
-    const oldText = btn.textContent;
-    btn.textContent = 'Saving...';
-    btn.disabled = true;
+    const oldText = btn ? btn.textContent : 'Save Entry';
+    if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
     const fields = divisions[currentDivision].fields;
-    const values = {};
+    let serialKey = null;
+    let serials = [];
+    const baseValues = {};
+
     fields.forEach(f => {
-      const el = document.getElementById(`f_${f.key}`);
-      if (el) values[f.key] = escapeHtml(String(el.value).trim());
+      if (isSerialKey(f.key, f.label)) {
+        serialKey = f.key;
+        const fromEl = document.getElementById(`f_${f.key}_from`);
+        const toEl = document.getElementById(`f_${f.key}_to`);
+        const fromVal = fromEl ? fromEl.value.trim() : '';
+        const toVal = toEl ? toEl.value.trim() : '';
+        serials = generateSerialSequence(fromVal, toVal);
+      } else {
+        const el = document.getElementById(`f_${f.key}`);
+        if (el) baseValues[f.key] = escapeHtml(el.value.trim());
+      }
     });
 
-    const entryPayload = {
-      division: divisions[currentDivision].label,
-      configKey: currentDivision,
-      values
-    };
+    if (serialKey && !serials.length) {
+      const fromEl = document.getElementById(`f_${serialKey}_from`);
+      if (fromEl && !fromEl.value.trim()) {
+        alert('Please enter a From value for serial number.');
+        if (btn) { btn.textContent = oldText; btn.disabled = false; }
+        return;
+      }
+    }
+
+    const serialList = serials.length ? serials : [''];
+    const payloadList = serialList.map(sn => {
+      const vals = { ...baseValues };
+      if (serialKey) vals[serialKey] = escapeHtml(sn);
+      return {
+        division: activeDivision,
+        configKey: currentDivision,
+        values: vals
+      };
+    });
 
     try {
       const res = await fetch(API_BASE, {
@@ -805,19 +879,19 @@ td.wrap-cell{white-space:normal;min-width:200px;}
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify(entryPayload)
+        body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
       });
       if (!res.ok) throw new Error('Failed to save');
       
-      const savedEntry = await res.json();
-      entries.unshift(savedEntry);
+      const saved = await res.json();
+      const savedArray = Array.isArray(saved) ? saved : [saved];
+      entries.unshift(...savedArray);
       renderTable(entries);
       closeModal();
     } catch (err) {
       alert('Error saving entry: ' + err.message);
     } finally {
-      btn.textContent = oldText;
-      btn.disabled = false;
+      if (btn) { btn.textContent = oldText; btn.disabled = false; }
     }
   });
 

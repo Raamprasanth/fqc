@@ -19,11 +19,20 @@ router.get('/', async (req, res) => {
 // Create new DOD entry
 router.post('/', async (req, res) => {
   try {
-    const entry = new Dod(req.body);
-    await entry.save();
-    res.status(201).json(entry);
+    const userId = req.user ? req.user.id : undefined;
+    if (Array.isArray(req.body)) {
+      const dataList = req.body.map(item => userId ? { ...item, createdBy: userId } : item);
+      const inserted = await Dod.insertMany(dataList);
+      return res.status(201).json(inserted);
+    }
+    const data = userId ? { ...req.body, createdBy: userId } : req.body;
+    const newRecord = await Dod.create(data);
+    res.status(201).json(newRecord);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('[Create Dod Error]', err);
+    res.status(500).json({ message: 'Failed to create record.', error: err.message });
+  }
+});
   }
 });
 

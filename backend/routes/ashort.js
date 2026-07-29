@@ -24,12 +24,20 @@ router.get('/', async (req, res) => {
 // ── POST /api/ashort ────────────────────────────────────────────────────────
 router.post('/', async (req, res) => {
   try {
-    const data = { ...req.body, createdBy: req.user.id };
+    const userId = req.user ? req.user.id : undefined;
+    if (Array.isArray(req.body)) {
+      const dataList = req.body.map(item => userId ? { ...item, createdBy: userId } : item);
+      const inserted = await Ashort.insertMany(dataList);
+      return res.status(201).json(inserted);
+    }
+    const data = userId ? { ...req.body, createdBy: userId } : req.body;
     const newRecord = await Ashort.create(data);
     res.status(201).json(newRecord);
   } catch (err) {
     console.error('[Create Ashort Error]', err);
-    res.status(500).json({ message: 'Failed to create ashort record.' });
+    res.status(500).json({ message: 'Failed to create record.', error: err.message });
+  }
+});
   }
 });
 

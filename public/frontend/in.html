@@ -622,6 +622,38 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 </div>
 
 <script>
+  function generateSerialSequence(fromStr, toStr) {
+    fromStr = (fromStr || '').trim();
+    toStr = (toStr || '').trim();
+
+    if (!fromStr) return [];
+    if (!toStr || fromStr === toStr) return [fromStr];
+
+    const matchFrom = fromStr.match(/^(.*?)(0*\d+)$/);
+    const matchTo = toStr.match(/^(.*?)(0*\d+)$/);
+
+    if (matchFrom && matchTo && matchFrom[1] === matchTo[1]) {
+      const prefix = matchFrom[1];
+      const numFrom = parseInt(matchFrom[2], 10);
+      const numTo = parseInt(matchTo[2], 10);
+
+      if (!isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
+        const count = Math.min(numTo - numFrom + 1, 1000);
+        const padLength = Math.max(matchFrom[2].length, matchTo[2].length);
+
+        const seq = [];
+        for (let i = 0; i < count; i++) {
+          const currentNum = numFrom + i;
+          const paddedNum = String(currentNum).padStart(padLength, '0');
+          seq.push(prefix + paddedNum);
+        }
+        return seq;
+      }
+    }
+
+    return [fromStr, toStr];
+  }
+
   const menuToggle = document.getElementById('menuToggle');
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
@@ -713,13 +745,23 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     btn.textContent = 'Saving...';
     btn.disabled = true;
 
-    const entry = {
+    const fromVal = document.getElementById('fSerialNoFrom').value.trim();
+    const toVal = document.getElementById('fSerialNoTo').value.trim();
+    const serials = generateSerialSequence(fromVal, toVal);
+
+    if (!serials.length) {
+      alert('Please enter Serial No (From)');
+      btn.textContent = oldText;
+      btn.disabled = false;
+      return;
+    }
+
+    const baseData = {
       division: activeDivision,
       fqcEngr: document.getElementById('fFqcEngr').value.trim(),
       inwardMonth: document.getElementById('fInwardMonth').value.trim(),
       inwardDate: document.getElementById('fInwardDate').value.trim(),
       model: document.getElementById('fModel').value.trim(),
-      serialNo: document.getElementById('fSerialNo').value.trim(),
       conf: document.getElementById('fConf').value.trim(),
       version: document.getElementById('fVersion').value.trim(),
       supplierWarranty: document.getElementById('fSupplierWarranty').value.trim(),
@@ -729,6 +771,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       remarks: document.getElementById('fRemarks').value.trim(),
     };
 
+    const payloadList = serials.map(sn => ({ ...baseData, serialNo: sn }));
+
     try {
       const res = await fetch(API_BASE, {
         method: 'POST',
@@ -736,12 +780,13 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify(entry)
+        body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
       });
       if (!res.ok) throw new Error('Failed to save');
       
-      const savedEntry = await res.json();
-      entries.unshift(savedEntry);
+      const saved = await res.json();
+      const savedArray = Array.isArray(saved) ? saved : [saved];
+      entries.unshift(...savedArray);
       renderTable(entries);
       closeModal();
     } catch (err) {
