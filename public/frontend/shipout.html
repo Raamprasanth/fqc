@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SHIP-OUT — SchillerIndia Services</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
     function exportTableToExcel(tableId, fileName) {
@@ -40,9 +37,7 @@
     }
     </script>
     <style>
-        *,
-        *::before,
-        *::after {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -62,10 +57,7 @@
             --sidebar-active: rgba(198, 122, 82, 0.18);
         }
 
-        html,
-        body {
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -85,9 +77,7 @@
             display: flex;
             flex-direction: column;
             position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
+            top: 0; left: 0; bottom: 0;
             z-index: 50;
             transition: transform .3s;
             overflow-y: auto;
@@ -102,8 +92,7 @@
         }
 
         .logo-mark {
-            width: 42px;
-            height: 42px;
+            width: 42px; height: 42px;
             border-radius: 50%;
             background: var(--clay);
             display: flex;
@@ -200,8 +189,7 @@
         }
 
         .user-avatar {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 50%;
             background: var(--sage);
             display: flex;
@@ -289,16 +277,8 @@
             margin-right: 16px;
         }
 
-        .topbar-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .topbar-left { display: flex; align-items: center; }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
 
         .btn {
             display: inline-flex;
@@ -320,23 +300,12 @@
             box-shadow: 0 6px 16px rgba(198, 122, 82, 0.28);
         }
 
-        .btn-primary:hover {
-            background: #b56a44;
-            transform: translateY(-1px);
-        }
-
-        .btn-ghost {
-            background: #f4efe3;
-            color: var(--dark);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(92, 122, 99, 0.14);
-        }
+        .btn-primary:hover { background: #b56a44; transform: translateY(-1px); }
+        .btn-ghost { background: #f4efe3; color: var(--dark); }
+        .btn-ghost:hover { background: rgba(92, 122, 99, 0.14); }
 
         .icon-btn {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border-radius: 50%;
             background: #f4efe3;
             border: none;
@@ -346,54 +315,11 @@
             font-size: 15px;
             cursor: pointer;
             transition: background .2s;
-            position: relative;
         }
 
-        .icon-btn:hover {
-            background: rgba(92, 122, 99, 0.12);
-        }
+        .icon-btn:hover { background: rgba(92, 122, 99, 0.12); }
 
-        .content {
-            padding: 36px;
-            flex: 1;
-        }
-
-        /* ═══ DIVISION TABS ═══ */
-        .division-tabs {
-            display: flex;
-            gap: 8px;
-            background: #f4efe3;
-            padding: 6px;
-            border-radius: 14px;
-            margin-bottom: 22px;
-            flex-wrap: wrap;
-            width: fit-content;
-            max-width: 100%;
-        }
-
-        .division-tab {
-            border: none;
-            background: transparent;
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background .2s, color .2s, box-shadow .2s;
-            white-space: nowrap;
-        }
-
-        .division-tab:hover {
-            color: var(--dark);
-        }
-
-        .division-tab.active {
-            background: #fff;
-            color: var(--clay);
-            box-shadow: 0 4px 12px rgba(45, 58, 48, 0.08);
-        }
+        .content { padding: 36px; flex: 1; }
 
         .toolbar-row {
             display: flex;
@@ -445,52 +371,49 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            min-width: 1000px;
+            min-width: 1200px;
             font-size: 12.8px;
         }
 
         thead th {
-            background: #f4efe3;
-            color: var(--dark);
+            background: #80a84c;
+            color: #ffffff;
             font-family: 'Inter', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
-            font-size: 10.6px;
+            letter-spacing: 0.04em;
+            font-size: 11px;
             text-align: left;
             padding: 14px 16px;
             white-space: nowrap;
             position: sticky;
             top: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: 1px solid var(--border);
         }
 
+        thead th:last-child { border-right: none; }
+        thead th:first-child { border-top-left-radius: 20px; }
+        thead th:last-child { border-top-right-radius: 20px; }
+
         tbody td {
-            padding: 13px 16px;
+            padding: 14px 16px;
             border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
             color: var(--text);
             white-space: nowrap;
         }
 
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        tbody tr:hover {
-            background: rgba(92, 122, 99, 0.05);
-        }
-
-        td.wrap-cell {
-            white-space: normal;
-            min-width: 220px;
-        }
+        tbody td:last-child { border-right: none; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: rgba(92, 122, 99, 0.05); }
+        td.wrap-cell { white-space: normal; min-width: 220px; }
 
         .sn-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 26px;
-            height: 26px;
+            width: 26px; height: 26px;
             border-radius: 50%;
             background: rgba(92, 122, 99, 0.12);
             color: var(--sage-dark);
@@ -501,82 +424,42 @@
         .status-pill {
             display: inline-flex;
             align-items: center;
-            padding: 4px 11px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
         }
-
-        .status-pending {
-            background: rgba(198, 122, 82, 0.14);
-            color: var(--clay);
-        }
-
-        .status-dispatched {
-            background: rgba(92, 122, 99, 0.14);
-            color: var(--sage-dark);
-        }
-
-        .status-onhold {
-            background: rgba(45, 58, 48, 0.08);
-            color: var(--dark);
-        }
-
-        .status-cancelled {
-            background: rgba(45, 58, 48, 0.08);
-            color: var(--dark);
-        }
+        .status-dispatched { background: rgba(92, 122, 99, 0.15); color: #3f5a46; }
+        .status-pending { background: rgba(196, 122, 82, 0.15); color: #c67a52; }
+        .status-onhold { background: rgba(220, 160, 50, 0.15); color: #8a6000; }
+        .status-cancelled { background: rgba(200, 60, 60, 0.15); color: #990000; }
 
         .empty-row td {
             text-align: center;
             padding: 56px 20px;
             color: #96a599;
         }
-
-        .empty-row .empty-icon {
-            font-size: 30px;
-            display: block;
-            margin-bottom: 10px;
-        }
+        .empty-row .empty-icon { font-size: 30px; display: block; margin-bottom: 10px; }
 
         /* ═══ MODAL ═══ */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 264px;
+            display: none; position: fixed;
+            top: 0; right: 0; bottom: 0; left: 264px;
             background: var(--background, #f5f7f6);
             z-index: 45;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 0;
-            overflow-y: auto;
+            align-items: flex-start; justify-content: center;
+            padding: 0; overflow-y: auto;
         }
 
-        @media (max-width: 960px) {
-            .modal-overlay {
-                left: 0;
-            }
-        }
-
-        .modal-overlay.visible {
-            display: flex;
-        }
+        @media (max-width: 960px) { .modal-overlay { left: 0; } }
+        .modal-overlay.visible { display: flex; }
 
         .modal {
-            background: var(--card, #fff);
-            border-radius: 0;
-            width: 100%;
-            min-height: 100%;
-            height: auto;
-            max-width: none;
-            box-shadow: none;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            background: var(--card, #fff); border-radius: 0;
+            width: 100%; min-height: 100%; height: auto;
+            max-width: none; box-shadow: none;
+            margin: 0; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
         .modal-head {
@@ -604,8 +487,7 @@
         .modal-close {
             background: rgba(255, 255, 255, 0.6);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             font-size: 16px;
             color: var(--dark);
@@ -614,20 +496,10 @@
             transition: background .2s;
         }
 
-        .modal-close:hover {
-            background: #fff;
-        }
+        .modal-close:hover { background: #fff; }
 
-        .modal form {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .modal-body {
-            padding: 28px 32px 8px;
-        }
+        .modal form { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+        .modal-body { padding: 28px 32px 8px; }
 
         .form-grid {
             display: grid;
@@ -635,15 +507,8 @@
             gap: 18px 24px;
         }
 
-        .form-field {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .form-field.full {
-            grid-column: 1 / -1;
-        }
+        .form-field { display: flex; flex-direction: column; gap: 7px; }
+        .form-field.full { grid-column: 1 / -1; }
 
         .form-field label {
             font-size: 11.5px;
@@ -653,9 +518,7 @@
             color: var(--sage-dark);
         }
 
-        .form-field input,
-        .form-field select,
-        .form-field textarea {
+        .form-field input, .form-field select, .form-field textarea {
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 11px 14px;
@@ -668,15 +531,8 @@
             width: 100%;
         }
 
-        .form-field textarea {
-            resize: vertical;
-            min-height: 70px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-field input:focus,
-        .form-field select:focus,
-        .form-field textarea:focus {
+        .form-field textarea { resize: vertical; min-height: 70px; font-family: 'Inter', sans-serif; }
+        .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
             border-color: var(--clay);
             box-shadow: 0 0 0 3px rgba(198, 122, 82, 0.14);
         }
@@ -693,66 +549,27 @@
         }
 
         .overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
+            display: none; position: fixed; inset: 0;
             background: rgba(45, 58, 48, 0.4);
             z-index: 45;
         }
 
-        @media (max-width:1200px) {
-            .form-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        @media (max-width:1200px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width:960px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main {
-                margin-left: 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .overlay.visible {
-                display: block;
-            }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .menu-toggle { display: block; }
+            .overlay.visible { display: block; }
         }
-
-        @media (max-width:768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        @media (max-width:768px) { .form-grid { grid-template-columns: 1fr; } }
         @media (max-width:560px) {
-            .content {
-                padding: 20px;
-            }
-
-            .topbar {
-                padding: 14px 20px;
-            }
-
-            .modal-body,
-            .modal-head,
-            .modal-footer {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
+            .content { padding: 20px; }
+            .topbar { padding: 14px 20px; }
+            .modal-body, .modal-head, .modal-footer { padding-left: 20px; padding-right: 20px; }
         }
     </style>
 </head>
-
 <body>
 
     <div class="overlay" id="overlay"></div>
@@ -769,39 +586,20 @@
 
         <div class="sidebar-section-label">Main</div>
         <ul class="nav-list">
-            <li class="nav-item"><a href="emp.html" data-page="dashboard"><span
-                        class="nav-icon">&#127968;</span>Dashboard</a></li>
+            <li class="nav-item"><a href="emp.html" data-page="dashboard"><span class="nav-icon">&#127968;</span>Dashboard</a></li>
         </ul>
 
         <div class="sidebar-section-label">Operations</div>
         <ul class="nav-list">
             <li class="nav-item"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
             <li class="nav-item"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
-            <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span
-                        class="nav-icon">&#128230;</span>Shortshipment</a></li>
-            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" class="active" data-page="ship-out"><span
-                        class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
+            <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
             <li class="nav-item"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
-            <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span
-                        class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
-            <li class="nav-item"><a href="acc-in.html" data-page="acc-in"><span
-                        class="nav-icon">&#128203;</span>ACC-IN</a></li>
-            <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span
-                        class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-            <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
-                        class="nav-icon">&#128267;</span>Battery Charging</a></li>
-            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
-                        class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
-                        class="nav-icon">&#128260;</span>Field Return Units</a></li>
-            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span
-                        class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
-        </ul>
-
-        <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
-        <ul class="nav-list" id="agSidebarNav" style="display:none;">
-            <li class="nav-item"><a href="medilog-license.html" data-page="medilog-license"><span
-                        class="nav-icon">&#128273;</span>Medilog License<span class="nav-badge">AG</span></a></li>
+            <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
+            <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" class="active" data-page="shipout"><span class="nav-icon">&#128230;</span>SHIP-OUT</a></li>
+            <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
         </ul>
 
         <div class="sidebar-footer">
@@ -825,18 +623,17 @@
                 </div>
             </div>
             <div class="topbar-right">
-                <button class="btn btn-ghost" id="exportBtn" onclick="exportTableToExcel('shipOutTable', 'ShipOut')">&#128229; Export Excel</button>
+                <button class="btn btn-ghost" id="exportBtn" onclick="exportTableToExcel('shipOutTable', 'Shipout')">&#128229; Export Excel</button>
+                <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
         </div>
 
         <div class="content">
-            <div class="division-tabs" id="divisionTabs"></div>
-
             <div class="toolbar-row">
                 <div class="search-box">
                     <span>&#128269;</span>
-                    <input type="text" id="searchInput" placeholder="Search this division's records..." />
+                    <input type="text" id="searchInput" placeholder="Search shipout records..." />
                 </div>
                 <div class="record-count" id="recordCount">0 records</div>
             </div>
@@ -875,7 +672,6 @@
     </div>
 
     <script>
-
         /* ═══ Sidebar ═══ */
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -899,7 +695,7 @@
             { key: 'shortShippedItems', label: 'Short Shipped Items', type: 'textarea' },
             { key: 'qty', label: 'Qty', type: 'number' },
             { key: 'remarks', label: 'Remarks', type: 'textarea' },
-            { key: 'dispatchDateShortshipped', label: 'Dispatch Date of Shortshipped Items', type: 'date' },
+            { key: 'dispatchDateOfShortshipped', label: 'Dispatch Date of Shortshipped Items', type: 'date' },
             { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
         ];
 
@@ -914,20 +710,51 @@
         function getToken() { return localStorage.getItem('token') || ''; }
         let entries = [];
 
-        const divisionTabs = document.getElementById('divisionTabs');
-        if (divisionTabs) divisionTabs.style.display = 'none';
-
         function statusPillClass(status) {
             const s = (status || '').trim().toLowerCase();
-            if (s === 'dispatched') return 'status-dispatched';
+            if (s === 'dispatched' || s === 'completed') return 'status-dispatched';
             if (s === 'on hold') return 'status-onhold';
             if (s === 'cancelled') return 'status-cancelled';
             return 'status-pending';
         }
 
+        function renderTableHead() {
+            if (!tableHeadRow) return;
+            tableHeadRow.innerHTML = '<th>S/N</th>' + SHIPOUT_FIELDS.map(f => `<th>${f.label}</th>`).join('');
+        }
+
+        function renderTable(list) {
+            if (!tableBody) return;
+            const total = list.length;
+            if (!total) {
+                tableBody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="${SHIPOUT_FIELDS.length + 1}">
+            <span class="empty-icon">&#128203;</span>
+            No records yet. Click "Add New" to log the first entry.
+          </td>
+        </tr>`;
+            } else {
+                tableBody.innerHTML = list.map((entry, i) => {
+                    const vals = entry.values || entry;
+                    const cells = SHIPOUT_FIELDS.map(f => {
+                        const val = vals[f.key] !== undefined ? vals[f.key] : entry[f.key];
+                        if (f.key === 'status') {
+                            const stVal = val || 'Dispatched';
+                            return `<td><span class="status-pill ${statusPillClass(stVal)}">${stVal}</span></td>`;
+                        }
+                        const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
+                        return `<td${wrap}>${val || '—'}</td>`;
+                    }).join('');
+                    return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
+                }).join('');
+            }
+            if (recordCount) recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
+        }
+
         async function loadEntries() {
             try {
-                const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
+                const res = await fetch(API_BASE, {
                     headers: { 'Authorization': 'Bearer ' + getToken() }
                 });
                 if (res.ok) {
@@ -937,38 +764,6 @@
             } catch (err) {
                 console.error('Failed to load entries', err);
             }
-        }
-
-        function renderTableHead() {
-            tableHeadRow.innerHTML = '<th>S/N</th>' + SHIPOUT_FIELDS.map(f => `<th>${f.label}</th>`).join('');
-        }
-
-        function renderTable(list) {
-            const total = list.length;
-            if (!total) {
-                tableBody.innerHTML = `
-        <tr class="empty-row">
-          <td colspan="${SHIPOUT_FIELDS.length + 1}">
-            <span class="empty-icon">&#128203;</span>
-            No records yet for ${activeDivision}. Click "Add New" to log the first entry.
-          </td>
-        </tr>`;
-            } else {
-                tableBody.innerHTML = list.map((entry, i) => {
-                    const vals = entry.values || entry;
-                    const cells = SHIPOUT_FIELDS.map(f => {
-                        const val = vals[f.key] || entry[f.key];
-                        if (f.key === 'status') {
-                            if (!val) return `<td>—</td>`;
-                            return `<td><span class="status-pill ${statusPillClass(val)}">${val}</span></td>`;
-                        }
-                        const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
-                        return `<td${wrap}>${val || '—'}</td>`;
-                    }).join('');
-                    return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
-                }).join('');
-            }
-            recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
         }
 
         /* ═══ Modal ═══ */
@@ -1005,11 +800,11 @@
         }
 
         function openModal() { buildForm(); modalOverlay.classList.add('visible'); }
-        function closeModal() { modalOverlay.classList.remove('visible'); shipOutForm.reset(); }
-        openAddBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+        function closeModal() { modalOverlay.classList.remove('visible'); if(shipOutForm) shipOutForm.reset(); }
+        if (openAddBtn) openAddBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
 
         function escapeHtml(str) {
             const div = document.createElement('div');
@@ -1017,94 +812,79 @@
             return div.innerHTML;
         }
 
-        shipOutForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = shipOutForm.querySelector('button[type="submit"]');
-            const oldText = btn ? btn.textContent : 'Save Entry';
-            if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
+        if (shipOutForm) {
+            shipOutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = shipOutForm.querySelector('button[type="submit"]');
+                const oldText = btn ? btn.textContent : 'Save Entry';
+                if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
-            const values = {};
-            SHIPOUT_FIELDS.forEach(f => {
-                const el = document.getElementById(`f_${f.key}`);
-                if (el) values[f.key] = escapeHtml(el.value.trim());
-            });
-
-            const payload = {
-                division: activeDivision,
-                configKey: 'shipout',
-                values
-            };
-
-            try {
-                const res = await fetch(API_BASE, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + getToken()
-                    },
-                    body: JSON.stringify(payload)
+                const values = {};
+                SHIPOUT_FIELDS.forEach(f => {
+                    const el = document.getElementById(`f_${f.key}`);
+                    if (el) values[f.key] = escapeHtml(el.value.trim());
                 });
-                if (!res.ok) throw new Error('Failed to save');
 
-                const saved = await res.json();
-                const savedArray = Array.isArray(saved) ? saved : [saved];
-                entries.unshift(...savedArray);
-                renderTable(entries);
-                closeModal();
-            } catch (err) {
-                alert('Error saving entry: ' + err.message);
-            } finally {
-                if (btn) { btn.textContent = oldText; btn.disabled = false; }
-            }
-        });
+                const payload = {
+                    division: activeDivision,
+                    configKey: 'shipout',
+                    values
+                };
 
-        searchInput.addEventListener('input', () => {
-            const q = searchInput.value.trim().toLowerCase();
-            if (!q) { renderTable(entries); return; }
-            const filtered = entries.filter(entry =>
-                Object.values(entry.values).some(v => String(v).toLowerCase().includes(q))
-            );
-            renderTable(filtered);
-        });
+                try {
+                    const res = await fetch(API_BASE, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!res.ok) throw new Error('Failed to save');
 
-        /* ═══ Init Context ═══ */
+                    const saved = await res.json();
+                    const savedArray = Array.isArray(saved) ? saved : [saved];
+                    entries.unshift(...savedArray);
+                    renderTable(entries);
+                    closeModal();
+                } catch (err) {
+                    alert('Error saving entry: ' + err.message);
+                } finally {
+                    if (btn) { btn.textContent = oldText; btn.disabled = false; }
+                }
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.trim().toLowerCase();
+                if (!q) { renderTable(entries); return; }
+                const filtered = entries.filter(entry => {
+                    const vals = entry.values || entry;
+                    return Object.values(vals).some(v => String(v || '').toLowerCase().includes(q));
+                });
+                renderTable(filtered);
+            });
+        }
+
+        // Initialize table headers and fetch records immediately
+        renderTableHead();
+        renderTable(entries);
+        loadEntries();
+
+        /* ═══ Init User & Sidebar Context ═══ */
         document.addEventListener('DOMContentLoaded', () => {
-
-            const agSection = document.getElementById('agSidebarSection');
-            const agNav = document.getElementById('agSidebarNav');
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
-            if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-                if (agSection) agSection.style.display = 'block';
-                if (agNav) agNav.style.display = 'flex';
-            }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
-            if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
             const roleEl = document.querySelector('.user-role');
-            if (avatar) avatar.textContent = user.name.charAt(0).toUpperCase();
-            if (nameEl) nameEl.textContent = user.name;
+            if (avatar && user.name) avatar.textContent = user.name.charAt(0).toUpperCase();
+            if (nameEl && user.name) nameEl.textContent = user.name;
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
             if (h1) h1.textContent = 'SHIP-OUT - ' + activeDivision;
-
-            renderTableHead();
-            renderTable(entries);
-            loadEntries();
         });
-
     </script>
 </body>
-
 </html>
