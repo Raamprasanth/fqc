@@ -955,14 +955,15 @@
         </tr>`;
             } else {
                 tableBody.innerHTML = list.map((entry, i) => {
+                    const vals = entry.values || entry;
                     const cells = SHIPOUT_FIELDS.map(f => {
+                        const val = vals[f.key] || entry[f.key];
                         if (f.key === 'status') {
-                            const val = entry.values[f.key];
                             if (!val) return `<td>—</td>`;
                             return `<td><span class="status-pill ${statusPillClass(val)}">${val}</span></td>`;
                         }
                         const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
-                        return `<td${wrap}>${entry.values[f.key] || '—'}</td>`;
+                        return `<td${wrap}>${val || '—'}</td>`;
                     }).join('');
                     return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
                 }).join('');

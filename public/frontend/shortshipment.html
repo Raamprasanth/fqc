@@ -793,10 +793,17 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (!confirm('Move this shortshipment entry to Shipout?')) return;
 
     const SHIPOUT_API = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shipout';
+    const entryValues = entry.values || entry;
+    const updatedValues = {
+      ...entryValues,
+      status: 'Dispatched'
+    };
+
     const payload = {
       division: entry.division || activeDivision,
       configKey: entry.configKey || currentDivision,
-      values: entry.values || entry,
+      values: updatedValues,
+      ...updatedValues,
       movedFrom: 'shortshipment',
       movedAt: new Date().toISOString()
     };

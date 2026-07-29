@@ -7,7 +7,18 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const filter = {};
-    if (req.query.division) filter.division = req.query.division;
+    if (req.query.division) {
+      const div = req.query.division.trim().toLowerCase();
+      if (div.includes('vent') || div.includes('anesthesia')) {
+        filter.division = { $regex: /vent|anesthesia/i };
+      } else if (div.includes('schiller') || div.includes('ag') || div.includes('monitor')) {
+        filter.division = { $regex: /schiller|ag|monitor/i };
+      } else if (div.includes('shipl') || div.includes('ganshorn')) {
+        filter.division = { $regex: /shipl|ganshorn/i };
+      } else {
+        filter.division = req.query.division;
+      }
+    }
     const records = await Shipout.find(filter).sort({ createdAt: -1 });
     res.json(records);
   } catch (err) {
