@@ -686,7 +686,7 @@ body.is-ventilator .vent-only-field { display: flex; }
     { id: 'fFqcEngr',           label: 'FQC ENGG',                              type: 'text',  key: 'fqcEngr' },
     { id: 'fInwardMonth',       label: 'MONTH',                                  type: 'month-select', key: 'inwardMonth' },
     { id: 'fFgRecdDate',        label: 'FG RECD DATE',                           type: 'date',  key: 'fgRecdDate' },
-    { id: 'fSource',            label: 'SOURCE',                                 type: 'text',  key: 'source' },
+    { id: 'fSource',            label: 'SOURCE',                                 type: 'source-datalist', key: 'source' },
     { id: 'fToNumber',          label: 'TO NUMBER',                              type: 'text',  key: 'toNumber' },
     { id: 'fModel',             label: 'MODEL',                                  type: 'text',  key: 'model' },
     { id: 'fUnitSlNoFrom',      label: 'UNIT SL/NO (From)',                      type: 'text',  key: '_serialFrom' },
@@ -734,6 +734,13 @@ body.is-ventilator .vent-only-field { display: flex; }
             <option>July</option><option>August</option><option>September</option>
             <option>October</option><option>November</option><option>December</option>
           </select>`;
+        } else if (f.type === 'source-datalist') {
+          ctrl = `<input type="text" id="${f.id}" list="sourceList" autocomplete="off" placeholder="Select or type..."/>
+          <datalist id="sourceList">
+            <option value="FG-P"></option>
+            <option value="Conversion"></option>
+            <option value="DOD Return"></option>
+          </datalist>`;
         } else if (f.type === 'textarea') {
           ctrl = `<textarea id="${f.id}"></textarea>`;
         } else {
