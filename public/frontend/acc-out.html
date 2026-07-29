@@ -488,6 +488,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     <li class="nav-item"><a href="acc-out.html" class="active" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
     <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
     <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
+    <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
     <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
     <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
   </ul>
@@ -886,6 +887,10 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (subOutNav) {
       subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
     }
+            const aodNav = document.getElementById('aodSidebarItem');
+            if (aodNav) {
+                aodNav.style.display = lDiv2.includes('shipl') ? '' : 'none';
+            }
     const shipOutNav = document.getElementById('shipOutSidebarItem');
     if (shipOutNav) {
       shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';

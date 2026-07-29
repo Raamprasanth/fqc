@@ -1151,6 +1151,10 @@
             if (subOutNav) {
                 subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             }
+            const aodNav = document.getElementById('aodSidebarItem');
+            if (aodNav) {
+                aodNav.style.display = lDiv2.includes('shipl') ? '' : 'none';
+            }
             const shipOutNav = document.getElementById('shipOutSidebarItem');
             if (shipOutNav) {
                 shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';

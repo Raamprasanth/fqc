@@ -41,6 +41,7 @@ const shipoutRouter = require('./routes/shipout');
 const fieldreturnRouter = require('./routes/fieldreturn');
 const fieldreturnaccRouter = require('./routes/fieldreturnacc');
 const codesRouter = require('./routes/codes');
+const aodRouter = require('./routes/aod');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -86,6 +87,7 @@ app.use('/api/shipout', shipoutRouter);
 app.use('/api/fieldreturn', fieldreturnRouter);
 app.use('/api/fieldreturnacc', fieldreturnaccRouter);
 app.use('/api/codes', codesRouter);
+app.use('/api/aod', aodRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
