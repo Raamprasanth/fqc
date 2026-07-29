@@ -690,12 +690,24 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     }
   }
 
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) { renderTable(entries); return; }
+      const filtered = entries.filter(e => {
+        if (!e.values) return false;
+        return Object.values(e.values).some(v => String(v).toLowerCase().includes(q));
+      });
+      renderTable(filtered);
+    });
+  }
+
   /* ═══ Modal ═══ */
   const modalOverlay = document.getElementById('modalOverlay');
   const openAddBtn = document.getElementById('openAddBtn');
   const closeModalBtn = document.getElementById('closeModalBtn');
   const cancelBtn = document.getElementById('cancelBtn');
-  const shortForm = document.getElementById('shortshipmentForm') || document.getElementById('outForm') || document.getElementById('shortForm');
+  const shortForm = document.getElementById('ssForm');
   const formGrid = document.getElementById('formGrid');
   const modalTitle = document.getElementById('modalTitle');
   const modalSubtitle = document.getElementById('modalSubtitle');
