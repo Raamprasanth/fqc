@@ -5,6 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Employee Dashboard — SchillerIndia Services</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+function exportTableToExcel(tableId, fileName) {
+  const table = document.getElementById(tableId);
+  if (!table) { alert('No table data available to export.'); return; }
+  const activeDiv = (typeof activeDivision !== 'undefined') ? activeDivision : (localStorage.getItem('activeDivision') || 'Export');
+  const name = (fileName || 'export') + '_' + activeDiv + '_' + new Date().toISOString().slice(0, 10);
+  if (typeof XLSX !== 'undefined') {
+    const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+    XLSX.writeFile(wb, name + '.xlsx');
+  } else {
+    let csv = [];
+    const rows = table.querySelectorAll('tr');
+    for (let i = 0; i < rows.length; i++) {
+      const row = [], cols = rows[i].querySelectorAll('td, th');
+      for (let j = 0; j < cols.length; j++) {
+        let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+        row.push('"' + data + '"');
+      }
+      csv.push(row.join(','));
+    }
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', name + '.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -498,6 +529,7 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
       </div>
     </div>
     <div class="topbar-right">
+      <button class="btn btn-ghost" id="exportBtn" onclick="exportTableToExcel('codesTable', 'Codes')">&#128229; Export Excel</button>
       <button class="icon-btn"><span class="dot"></span>&#128276;</button>
       <button class="icon-btn">&#9881;&#65039;</button>
     </div>
