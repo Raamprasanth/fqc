@@ -916,11 +916,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
             if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
-
-            const dg400Nav = document.getElementById('dg400SidebarItem');
-            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
-            const dg400xNav = document.getElementById('dg400xSidebarItem');
-            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
             const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');

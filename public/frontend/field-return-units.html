@@ -787,7 +787,7 @@
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
             <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
-            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" class="active" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
         </ul>
 
@@ -1230,8 +1230,6 @@
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
             if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
-
-            
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
