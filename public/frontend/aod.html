@@ -1011,7 +1011,7 @@
             if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
             const accInNav = document.getElementById('accInSidebarItem');
-            if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor) ? '' : 'none';
+            if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor || isShipl) ? '' : 'none';
 
             const accOutNav = document.getElementById('accOutSidebarItem');
             if (accOutNav) accOutNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
@@ -1024,6 +1024,12 @@
 
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+
+            const dg400Nav = document.getElementById('dg400SidebarItem');
+            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
+
+            const dg400xNav = document.getElementById('dg400xSidebarItem');
+            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
             if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';

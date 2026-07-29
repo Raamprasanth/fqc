@@ -786,6 +786,9 @@
             <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item" id="dg400SidebarItem"><a href="dg400.html" data-page="dg400-imp-test-report"><span class="nav-icon">&#128300;</span>DG400 IMP.Test Report</a></li>
+            <li class="nav-item" id="dg400xSidebarItem"><a href="dg400x.html" data-page="dg400x-imp-test-report"><span class="nav-icon">&#128301;</span>DG400X IMP.Test Report</a></li>
+
             <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" class="active" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
@@ -1078,7 +1081,7 @@
             if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
             const accInNav = document.getElementById('accInSidebarItem');
-            if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor) ? '' : 'none';
+            if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor || isShipl) ? '' : 'none';
 
             const accOutNav = document.getElementById('accOutSidebarItem');
             if (accOutNav) accOutNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
@@ -1091,6 +1094,12 @@
 
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+
+            const dg400Nav = document.getElementById('dg400SidebarItem');
+            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
+
+            const dg400xNav = document.getElementById('dg400xSidebarItem');
+            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
             if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';

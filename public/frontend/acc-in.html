@@ -766,7 +766,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify({ ...data, values: data })
+        body: JSON.stringify({ ...data, division: activeDivision, values: data })
       });
       if (!res.ok) throw new Error('Failed to save');
       
@@ -809,7 +809,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
     const accInNav = document.getElementById('accInSidebarItem');
-    if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor) ? '' : 'none';
+    if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor || isShipl) ? '' : 'none';
 
     const accOutNav = document.getElementById('accOutSidebarItem');
     if (accOutNav) accOutNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
@@ -823,6 +823,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     const aodNav = document.getElementById('aodSidebarItem');
     if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
+    const dg400Nav = document.getElementById('dg400SidebarItem');
+    if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
+
+    const dg400xNav = document.getElementById('dg400xSidebarItem');
+    if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
+
     const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
     if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
@@ -832,6 +838,20 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
     if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
   });
+
+  async function loadEntries() {
+    try {
+      const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
+        headers: { 'Authorization': 'Bearer ' + getToken() }
+      });
+      if (res.ok) {
+        entries = await res.json();
+        renderTable(entries);
+      }
+    } catch (err) {
+      console.error('Failed to load entries', err);
+    }
+  }
 
   // Init
   loadEntries();

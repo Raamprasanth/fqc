@@ -863,11 +863,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       const resPost = await fetch(SHIPOUT_API, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + getToken()
-        },
-        body: JSON.stringify(payload)
-      });
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      },
+      body: JSON.stringify({ ...updatedValues, division: activeDivision, values: updatedValues })
+    });
       if (!resPost.ok) throw new Error('Failed to save to Shipout.');
 
       const resDel = await fetch(API_BASE + '/' + id, {
@@ -886,7 +886,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
   async function loadEntries() {
     try {
-      const res = await fetch(API_BASE, {
+      const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
         headers: { 'Authorization': 'Bearer ' + getToken() }
       });
       if (res.ok) {
@@ -1086,48 +1086,53 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
   /* ═══ Init Context ═══ */
   document.addEventListener('DOMContentLoaded', () => {
-            // Sidebar visibility based on division
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const isShipl = lDiv2.includes('shipl');
-            const isAgOrGanshorn = lDiv2.includes('schiller') || lDiv2.includes('ganshorn');
-            const isMonitor = lDiv2.includes('monitor');
-            const isAgGanshornOrMonitor = isAgOrGanshorn || isMonitor;
+    // Sidebar visibility based on division
+    const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+    const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+    const isShipl = lDiv2.includes('shipl');
+    const isAgOrGanshorn = lDiv2.includes('schiller') || lDiv2.includes('ganshorn');
+    const isMonitor = lDiv2.includes('monitor');
+    const isAgGanshornOrMonitor = isAgOrGanshorn || isMonitor;
 
-            const agSection = document.getElementById('agSidebarSection');
-            const agNav = document.getElementById('agSidebarNav');
-            if (agSection) agSection.style.display = isAgOrGanshorn ? 'block' : 'none';
-            if (agNav) agNav.style.display = isAgOrGanshorn ? 'flex' : 'none';
+    const agSection = document.getElementById('agSidebarSection');
+    const agNav = document.getElementById('agSidebarNav');
+    if (agSection) agSection.style.display = isAgOrGanshorn ? 'block' : 'none';
+    if (agNav) agNav.style.display = isAgOrGanshorn ? 'flex' : 'none';
 
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const shipOutNav = document.getElementById('shipOutSidebarItem');
+    if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
-            const accInNav = document.getElementById('accInSidebarItem');
-            if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor) ? '' : 'none';
+    const accInNav = document.getElementById('accInSidebarItem');
+    if (accInNav) accInNav.style.display = (isVentOrAnesthesia || isAgGanshornOrMonitor || isShipl) ? '' : 'none';
 
-            const accOutNav = document.getElementById('accOutSidebarItem');
-            if (accOutNav) accOutNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const accOutNav = document.getElementById('accOutSidebarItem');
+    if (accOutNav) accOutNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            const batteryNav = document.getElementById('batteryChargingSidebarItem');
-            if (batteryNav) batteryNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const batteryNav = document.getElementById('batteryChargingSidebarItem');
+    if (batteryNav) batteryNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const subOutNav = document.getElementById('subOutSidebarItem');
+    if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
-            const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+    const aodNav = document.getElementById('aodSidebarItem');
+    if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
-            const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
-            if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const dg400Nav = document.getElementById('dg400SidebarItem');
+    if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
 
-            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const dg400xNav = document.getElementById('dg400xSidebarItem');
+    if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
 
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
+    if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+    if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+
+    const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+    if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');
