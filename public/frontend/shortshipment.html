@@ -350,6 +350,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 .status-dispatched{background:rgba(92,122,99,0.14);color:var(--sage-dark);}
 .status-resolved{background:rgba(92,122,99,0.14);color:var(--sage-dark);}
 .status-onhold{background:rgba(45,58,48,0.08);color:var(--dark);}
+.status-open{background:rgba(92,122,99,0.14);color:var(--sage-dark);}
+.status-closed{background:rgba(198,122,82,0.14);color:var(--clay);}
 .empty-row td{text-align:center;padding:56px 20px;color:#96a599;}
 .empty-row .empty-icon{font-size:30px;display:block;margin-bottom:10px;}
 
@@ -666,7 +668,9 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const STATUS_CLASS = {
     'Pending': 'status-pending',
     'Completed': 'status-dispatched',
-    'In Progress': 'status-onhold'
+    'In Progress': 'status-onhold',
+    'Open': 'status-open',
+    'Close': 'status-closed'
   };
 
   const formFields = [
@@ -702,6 +706,20 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS}
   ];
 
+  const agGanshornFormFields = [
+    {key:'date', label:'Date', type:'date'},
+    {key:'model', label:'Model', type:'text'},
+    {key:'oaNo', label:'OA No', type:'text'},
+    {key:'status', label:'Status', type:'datalist', options: ['Open', 'Close']},
+    {key:'customerNameAddress', label:'Customer Name & Address', type:'textarea'},
+    {key:'shortShippedItems', label:'Short Shipped Items', type:'textarea'},
+    {key:'qty', label:'Qty', type:'number'},
+    {key:'remarks', label:'Remarks', type:'textarea'},
+    {key:'dispatchDateOfShortshipped', label:'Dispatch Date of Shortshipped Items', type:'date'}
+  ];
+
+  const agGanshornTableFields = [...agGanshornFormFields];
+
   const divisions = {
     'vent-anesthesia': {
       label: 'Ventilator & Anesthesia',
@@ -710,8 +728,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     },
     'schiller-ag': {
       label: 'Schiller AG',
-      fields: [...formFields],
-      tableFields: [...tableFields]
+      fields: [...agGanshornFormFields],
+      tableFields: [...agGanshornTableFields]
     },
     'monitors': {
       label: 'Monitors',
@@ -720,12 +738,13 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     },
     'ganshorn': {
       label: 'Ganshorn',
-      fields: [...formFields],
-      tableFields: [...tableFields]
+      fields: [...agGanshornFormFields],
+      tableFields: [...agGanshornTableFields]
     },
     'shipl': {
       label: 'SHIPL',
-      fields: [undefined]
+      fields: [...shiplFormFields],
+      tableFields: [...shiplTableFields]
     }
   };
 
@@ -734,7 +753,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   if (activeDivision === 'Schiller AG') currentDivision = 'schiller-ag';
   if (activeDivision === 'Monitors') currentDivision = 'monitors';
   if (activeDivision === 'Ganshorn') currentDivision = 'ganshorn';
-  if (activeDivision === 'SHIPL') currentDivision = 'shipl-ganshorn';
+  if (activeDivision === 'SHIPL') currentDivision = 'shipl';
 
   let entries = [];
   const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shortshipment';
@@ -921,6 +940,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <option value="">Select ${f.label.toLowerCase()}</option>
           ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
         </select>`;
+      } else if (f.type === 'datalist') {
+        control = `<input type="text" id="f_${f.key}" list="dl_${f.key}" placeholder="Select status or type custom..."/>
+        <datalist id="dl_${f.key}">
+          ${f.options.map(o => `<option value="${o}"></option>`).join('')}
+        </datalist>`;
       } else if (f.type === 'textarea') {
         control = `<textarea id="f_${f.key}"></textarea>`;
       } else {
