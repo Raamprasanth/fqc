@@ -759,7 +759,7 @@
 
         async function loadEntries() {
             try {
-                const res = await fetch(API_BASE, {
+                const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
                     headers: { 'Authorization': 'Bearer ' + getToken() }
                 });
                 if (res.ok) {
