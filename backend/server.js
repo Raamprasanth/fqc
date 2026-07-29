@@ -43,6 +43,7 @@ const fieldreturnaccRouter = require('./routes/fieldreturnacc');
 const codesRouter = require('./routes/codes');
 const aodRouter = require('./routes/aod');
 const dg400Router = require('./routes/dg400');
+const dg400xRouter = require('./routes/dg400x');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -90,6 +91,7 @@ app.use('/api/fieldreturnacc', fieldreturnaccRouter);
 app.use('/api/codes', codesRouter);
 app.use('/api/aod', aodRouter);
 app.use('/api/dg400-imp-test', dg400Router);
+app.use('/api/dg400x-imp-test', dg400xRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {
