@@ -876,6 +876,10 @@ td.wrap-cell{white-space:normal;min-width:200px;}
       if (agSection) agSection.style.display = 'block';
       if (agNav) agNav.style.display = 'flex';
     }
+    const subOutNav = document.getElementById('subOutSidebarItem');
+    if (subOutNav) {
+      subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+    }
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
