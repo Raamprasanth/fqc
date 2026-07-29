@@ -759,6 +759,10 @@
                         class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span
                         class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
+                        class="nav-icon">&#128260;</span>Field Return Units</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span
+                        class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
             <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
                         class="nav-icon">&#128267;</span>Battery Charging</a></li>
         </ul>
@@ -1118,6 +1122,14 @@
             const shipOutNav = document.getElementById('shipOutSidebarItem');
             if (shipOutNav) {
                 shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            }
+            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+            if (fieldReturnNav) {
+                fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            }
+            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+            if (fieldReturnAccNav) {
+                fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
             }
             if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
                 if (agSection) agSection.style.display = 'block';

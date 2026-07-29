@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SHIP-OUT — SchillerIndia Services</title>
+    <title>FIELD RETURN ACCESSORIES — SchillerIndia Services</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
@@ -757,12 +757,13 @@
                         class="nav-icon">&#128203;</span>ACC-OUT</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
                         class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" class="active" data-page="ship-out"><span
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span
                         class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
                         class="nav-icon">&#128260;</span>Field Return Units</a></li>
-            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span
-                        class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" class="active"
+                    data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return
+                    Accessories</a></li>
             <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
                         class="nav-icon">&#128267;</span>Battery Charging</a></li>
         </ul>
@@ -789,11 +790,12 @@
             <div class="topbar-left">
                 <button class="menu-toggle" id="menuToggle">&#9776;</button>
                 <div>
-                    <h1>SHIP-OUT</h1>
-                    <div class="breadcrumb">Home / Operations / SHIP-OUT</div>
+                    <h1>FIELD RETURN ACCESSORIES</h1>
+                    <div class="breadcrumb">Home / Operations / Field Return Accessories</div>
                 </div>
             </div>
             <div class="topbar-right">
+                <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
         </div>
@@ -810,7 +812,7 @@
             </div>
 
             <div class="table-wrap">
-                <table id="shipOutTable">
+                <table id="fieldReturnAccTable">
                     <thead>
                         <tr id="tableHeadRow"></tr>
                     </thead>
@@ -825,12 +827,12 @@
         <div class="modal">
             <div class="modal-head">
                 <div>
-                    <h2 id="modalTitle">Add New SHIP-OUT Entry</h2>
-                    <p id="modalSubtitle">Fill in the details below to log a new short-shipped dispatch.</p>
+                    <h2 id="modalTitle">Add New Field Return Accessory Entry</h2>
+                    <p id="modalSubtitle">Fill in the details below to log a new field-returned accessory.</p>
                 </div>
                 <button class="modal-close" id="closeModalBtn">&#10005;</button>
             </div>
-            <form id="shipOutForm">
+            <form id="fieldReturnAccForm">
                 <div class="modal-body">
                     <div class="form-grid" id="formGrid"></div>
                 </div>
@@ -857,18 +859,16 @@
             window.location.href = 'login.html';
         });
 
-        /* ═══ SHIP-OUT field config ═══ */
-        const STATUS_OPTIONS = ['Pending', 'Dispatched', 'On Hold', 'Cancelled'];
-        const SHIPOUT_FIELDS = [
+        /* ═══ FIELD RETURN ACCESSORIES field config ═══ */
+        const STATUS_OPTIONS = ['Open', 'In Progress', 'Resolved', 'Closed'];
+        const FIELDRETURN_ACC_FIELDS = [
             { key: 'date', label: 'Date', type: 'date' },
-            { key: 'model', label: 'Model', type: 'text' },
-            { key: 'oaNo', label: 'OA No', type: 'text' },
-            { key: 'customerNameAddress', label: 'Customer Name & Address', type: 'textarea' },
-            { key: 'shortShippedItems', label: 'Short Shipped Items', type: 'textarea' },
-            { key: 'qty', label: 'Qty', type: 'number' },
-            { key: 'remarks', label: 'Remarks', type: 'textarea' },
-            { key: 'dispatchDateShortshipped', label: 'Dispatch Date of Shortshipped Items', type: 'date' },
+            { key: 'description', label: 'Description', type: 'textarea' },
+            { key: 'recQty', label: 'Rec Qty', type: 'number' },
             { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
+            { key: 'customerNameAddress', label: 'Customer Name and Address', type: 'textarea' },
+            { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
+            { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
         ];
 
         const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
@@ -878,7 +878,7 @@
         const recordCount = document.getElementById('recordCount');
         const searchInput = document.getElementById('searchInput');
 
-        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shipout';
+        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/fieldreturnacc';
         function getToken() { return localStorage.getItem('token') || ''; }
         let entries = [];
 
@@ -887,9 +887,9 @@
 
         function statusPillClass(status) {
             const s = (status || '').trim().toLowerCase();
-            if (s === 'dispatched') return 'status-dispatched';
-            if (s === 'on hold') return 'status-onhold';
-            if (s === 'cancelled') return 'status-cancelled';
+            if (s === 'resolved') return 'status-dispatched';
+            if (s === 'in progress') return 'status-onhold';
+            if (s === 'closed') return 'status-cancelled';
             return 'status-pending';
         }
 
@@ -908,7 +908,7 @@
         }
 
         function renderTableHead() {
-            tableHeadRow.innerHTML = '<th>S/N</th>' + SHIPOUT_FIELDS.map(f => `<th>${f.label}</th>`).join('');
+            tableHeadRow.innerHTML = '<th>S/N</th>' + FIELDRETURN_ACC_FIELDS.map(f => `<th>${f.label}</th>`).join('');
         }
 
         function renderTable(list) {
@@ -916,14 +916,14 @@
             if (!total) {
                 tableBody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="${SHIPOUT_FIELDS.length + 1}">
+          <td colspan="${FIELDRETURN_ACC_FIELDS.length + 1}">
             <span class="empty-icon">&#128203;</span>
             No records yet for ${activeDivision}. Click "Add New" to log the first entry.
           </td>
         </tr>`;
             } else {
                 tableBody.innerHTML = list.map((entry, i) => {
-                    const cells = SHIPOUT_FIELDS.map(f => {
+                    const cells = FIELDRETURN_ACC_FIELDS.map(f => {
                         if (f.key === 'status') {
                             const val = entry.values[f.key];
                             if (!val) return `<td>—</td>`;
@@ -943,7 +943,7 @@
         const openAddBtn = document.getElementById('openAddBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const cancelBtn = document.getElementById('cancelBtn');
-        const shipOutForm = document.getElementById('shipOutForm');
+        const fieldReturnAccForm = document.getElementById('fieldReturnAccForm');
         const formGrid = document.getElementById('formGrid');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
@@ -951,7 +951,7 @@
         function buildForm() {
             if (modalTitle) modalTitle.textContent = `Add New Entry`;
             if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
-            formGrid.innerHTML = SHIPOUT_FIELDS.map(f => {
+            formGrid.innerHTML = FIELDRETURN_ACC_FIELDS.map(f => {
                 const isFull = f.type === 'textarea';
                 let control;
                 if (f.type === 'select') {
@@ -972,7 +972,7 @@
         }
 
         function openModal() { buildForm(); modalOverlay.classList.add('visible'); }
-        function closeModal() { modalOverlay.classList.remove('visible'); shipOutForm.reset(); }
+        function closeModal() { modalOverlay.classList.remove('visible'); fieldReturnAccForm.reset(); }
         openAddBtn.addEventListener('click', openModal);
         closeModalBtn.addEventListener('click', closeModal);
         cancelBtn.addEventListener('click', closeModal);
@@ -984,21 +984,21 @@
             return div.innerHTML;
         }
 
-        shipOutForm.addEventListener('submit', async (e) => {
+        fieldReturnAccForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = shipOutForm.querySelector('button[type="submit"]');
+            const btn = fieldReturnAccForm.querySelector('button[type="submit"]');
             const oldText = btn ? btn.textContent : 'Save Entry';
             if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
             const values = {};
-            SHIPOUT_FIELDS.forEach(f => {
+            FIELDRETURN_ACC_FIELDS.forEach(f => {
                 const el = document.getElementById(`f_${f.key}`);
                 if (el) values[f.key] = escapeHtml(el.value.trim());
             });
 
             const payload = {
                 division: activeDivision,
-                configKey: 'shipout',
+                configKey: 'fieldreturnacc',
                 values
             };
 
@@ -1041,10 +1041,10 @@
             const agNav = document.getElementById('agSidebarNav');
             const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
             const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const subOutNav = document.getElementById('subOutSidebarItem');
             if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
             if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
@@ -1064,7 +1064,7 @@
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
-            if (h1) h1.textContent = 'SHIP-OUT - ' + activeDivision;
+            if (h1) h1.textContent = 'FIELD RETURN ACCESSORIES - ' + activeDivision;
 
             renderTableHead();
             renderTable(entries);
