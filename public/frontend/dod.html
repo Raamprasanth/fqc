@@ -637,7 +637,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     'ag-monitors-ganshorn': {
       label: 'Schiller AG, Monitors & Ganshorn',
       fields: [
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusAg'},
         {key:'inwardDate', label:'Inward Date', type:'date'},
         {key:'model', label:'Model', type:'text'},
         {key:'unitSlNo', label:'Unit Sl.No', type:'text'},
@@ -652,7 +652,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       label: 'Ventilator & Anesthesia',
       fields: [
         {key:'date', label:'Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusVent'},
         {key:'model', label:'Model', type:'text'},
         {key:'conf', label:'Conf', type:'text'},
         {key:'unitSn', label:'Unit S/N', type:'text'},
@@ -670,7 +670,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       fields: [
         {key:'dodNo', label:'DOD No', type:'text'},
         {key:'dodRaisedDate', label:'DOD Raised Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:['DOD-IN', 'DOD-OUT']},
+        {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusShipl'},
         {key:'model', label:'Model', type:'text'},
         {key:'unitSlNo', label:'Unit.Sl.No', type:'text'},
         {key:'config', label:'Config', type:'text'},
@@ -781,6 +781,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <option value="">Select ${f.label.toLowerCase()}</option>
           ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
         </select>`;
+      } else if (f.type === 'datalist') {
+        control = `<input type="text" id="f_${f.key}" list="${f.datalistId}" autocomplete="off" placeholder="Select or type..."/>
+          <datalist id="${f.datalistId}">
+            ${f.options.map(o => `<option value="${o}"></option>`).join('')}
+          </datalist>`;
       } else if (f.type === 'textarea') {
         control = `<textarea id="f_${f.key}"></textarea>`;
       } else {

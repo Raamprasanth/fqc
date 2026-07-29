@@ -638,7 +638,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       label: 'Ventilator & Anesthesia',
       fields: [
         {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusVent'},
         {key:'product', label:'Product', type:'text'},
         {key:'defectUnitSn', label:'Defect Unit S/N', type:'text'},
         {key:'configuration', label:'Configuration', type:'text'},
@@ -657,7 +657,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       label: 'SHIPL',
       fields: [
         {key:'defRecdDate', label:'Def.Recd.Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:['DOA', 'WF', 'Exchange']},
+        {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusShipl'},
         {key:'model', label:'Model', type:'text'},
         {key:'defectiveUnitSlNo', label:'Defective Unit Sl.No', type:'text'},
         {key:'config', label:'Config', type:'text'},
@@ -677,7 +677,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       label: 'Schiller AG, Monitors & Ganshorn',
       fields: [
         {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusAg'},
         {key:'product', label:'Product', type:'text'},
         {key:'defectUnitSlNo', label:'Defect Unit Sl.No', type:'text'},
         {key:'conf', label:'Conf', type:'text'},
@@ -790,6 +790,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <option value="">Select ${f.label.toLowerCase()}</option>
           ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
         </select>`;
+      } else if (f.type === 'datalist') {
+        control = `<input type="text" id="f_${f.key}" list="${f.datalistId}" autocomplete="off" placeholder="Select or type..."/>
+          <datalist id="${f.datalistId}">
+            ${f.options.map(o => `<option value="${o}"></option>`).join('')}
+          </datalist>`;
       } else if (f.type === 'textarea') {
         control = `<textarea id="f_${f.key}"></textarea>`;
       } else {
