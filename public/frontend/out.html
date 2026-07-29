@@ -686,9 +686,10 @@ td.wrap-cell{white-space:normal;min-width:200px;}
     'shipl-ganshorn': {
       label: 'SHIPL & Ganshorn',
       fields: [
-        {key:'fqcEngr', label:'FQC Engr', type:'text'},
+        {key:'fqcEngg', label:'FQC Engg', type:'text'},
+        {key:'dateOfDispatch', label:'Date of Dispatch', type:'date'},
         {key:'month', label:'Month', type:'select', options:MONTHS},
-        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'status', label:'Status', type:'datalist', options:['DOA', 'Export', 'Sales', 'Stock Transfer', 'WF'], datalistId:'outStatusList'},
         {key:'oaNo', label:'OA No', type:'text'},
         {key:'model', label:'Model', type:'text'},
         {key:'unitSn', label:'Unit S/N', type:'text'},
