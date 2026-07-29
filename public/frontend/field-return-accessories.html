@@ -1088,23 +1088,6 @@
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
-            const agSection = document.getElementById('agSidebarSection');
-            const agNav = document.getElementById('agSidebarNav');
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
-            if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-                if (agSection) agSection.style.display = 'block';
-                if (agNav) agNav.style.display = 'flex';
-            }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');

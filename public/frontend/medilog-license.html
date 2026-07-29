@@ -902,24 +902,6 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-    const subOutNav = document.getElementById('subOutSidebarItem');
-    if (subOutNav) {
-      subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
-    const accInNav = document.getElementById('accInSidebarItem');
-    if (accInNav) {
-      accInNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
-            const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) {
-                aodNav.style.display = lDiv2.includes('shipl') ? '' : 'none';
-            }
-    const shipOutNav = document.getElementById('shipOutSidebarItem');
-    if (shipOutNav) {
-      shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');

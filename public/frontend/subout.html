@@ -1162,11 +1162,6 @@
 
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-
-            if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-                if (agSection) agSection.style.display = 'block';
-                if (agNav) agNav.style.display = 'flex';
-            }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');

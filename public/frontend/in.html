@@ -965,16 +965,7 @@ body.is-ventilator .vent-only-field { display: flex; }
     // Items only for SHIPL
     const aodNav = document.getElementById('aodSidebarItem');
     if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-
-    // Hide DOD/DOA-WF/Shortshipment for non-relevant divisions
-    const shortshipmentNav = document.getElementById('shortshipmentSidebarItem');
-    if (shortshipmentNav) shortshipmentNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-    const dodNav = document.getElementById('dodSidebarItem');
-    if (dodNav) dodNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-    const doaWfNav = document.getElementById('doaWfSidebarItem');
-    if (doaWfNav) doaWfNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');
