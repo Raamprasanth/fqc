@@ -787,7 +787,7 @@
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
-            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" class="active" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
         </ul>
 
         <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
@@ -1080,7 +1080,7 @@
             if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
             const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
             if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
@@ -1097,7 +1097,7 @@
             const shipOutNav = document.getElementById('shipOutSidebarItem');
             if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
             const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
             if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
 

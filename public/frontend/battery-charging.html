@@ -889,7 +889,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
             const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
             if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
