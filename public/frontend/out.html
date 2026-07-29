@@ -911,37 +911,47 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 
   /* ═══ Init Context ═══ */
   document.addEventListener('DOMContentLoaded', () => {
-            // Sidebar visibility based on division
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const isShipl = lDiv2.includes('shipl');
-            const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
+    const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+    const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+    const isShipl = lDiv2.includes('shipl');
+    const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
 
-            const agSection = document.getElementById('agSidebarSection');
-            const agNav = document.getElementById('agSidebarNav');
-            if (agSection) agSection.style.display = isAg ? 'block' : 'none';
-            if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
+    const agSection = document.getElementById('agSidebarSection');
+    const agNav = document.getElementById('agSidebarNav');
+    if (agSection) agSection.style.display = isAg ? 'block' : 'none';
+    if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
 
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    // Items only for Vent/Anesthesia
+    const shipOutNav = document.getElementById('shipOutSidebarItem');
+    if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const subOutNav = document.getElementById('subOutSidebarItem');
+    if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const accInNav = document.getElementById('accInSidebarItem');
+    if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const accOutNav = document.getElementById('accOutSidebarItem');
+    if (accOutNav) accOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const batteryNav = document.getElementById('batteryChargingSidebarItem');
+    if (batteryNav) batteryNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+    if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
-            const accInNav = document.getElementById('accInSidebarItem');
-            if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    // Items only for Vent/Anesthesia OR SHIPL
+    const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+    if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+    // Items only for SHIPL
+    const aodNav = document.getElementById('aodSidebarItem');
+    if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
-            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    // Hide DOD/DOA-WF/Shortshipment for non-relevant divisions
+    const shortshipmentNav = document.getElementById('shortshipmentSidebarItem');
+    if (shortshipmentNav) shortshipmentNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const dodNav = document.getElementById('dodSidebarItem');
+    if (dodNav) dodNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+    const doaWfNav = document.getElementById('doaWfSidebarItem');
+    if (doaWfNav) doaWfNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
-            const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-
-            
-            const user =(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');
@@ -949,10 +959,10 @@ td.wrap-cell{white-space:normal;min-width:200px;}
     if (avatar) avatar.textContent = user.name.charAt(0).toUpperCase();
     if (nameEl) nameEl.textContent = user.name;
     if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
-    
+
     const h1 = document.querySelector('.topbar-left h1');
     if (h1) h1.textContent = 'Outward - ' + activeDivision;
-    
+
     renderTableHead();
     renderTable(entries);
     loadEntries();
