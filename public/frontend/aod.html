@@ -724,30 +724,19 @@
 
         <div class="sidebar-section-label">Operations</div>
         <ul class="nav-list">
-            <li class="nav-item"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
-            <li class="nav-item"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
-            <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span
-                        class="nav-icon">&#128230;</span>Shortshipment</a></li>
-            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span
-                        class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
-            <li class="nav-item"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
-            <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span
-                        class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
-            <li class="nav-item" id="aodSidebarItem"><a href="aod.html" class="active" data-page="aod"><span
-                        class="nav-icon">&#128203;</span>AOD</a></li>
-            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span
-                        class="nav-icon">&#128229;</span>ACC-IN</a></li>
-            <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span
-                        class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-            <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
-                        class="nav-icon">&#128267;</span>Battery Charging</a></li>
-            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
-                        class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
-                        class="nav-icon">&#128260;</span>Field Return Units</a></li>
-            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html"
-                    data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return
-                    Accessories</a></li>
+            <li class="nav-item" id="inSidebarItem"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
+            <li class="nav-item" id="outSidebarItem"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
+            <li class="nav-item" id="shortshipmentSidebarItem"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="shipout"><span class="nav-icon">&#128230;</span>SHIP-OUT</a></li>
+            <li class="nav-item" id="dodSidebarItem"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
+            <li class="nav-item" id="doaWfSidebarItem"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
+            <li class="nav-item" id="accOutSidebarItem"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+            <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
+            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
+            <li class="nav-item" id="aodSidebarItem"><a href="aod.html" class="active" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
         </ul>
 
         <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
@@ -1003,37 +992,37 @@
 
         // Update Sidebar User Info
         document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar visibility based on division
+            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+            const isShipl = lDiv2.includes('shipl');
+            const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
 
             const agSection = document.getElementById('agSidebarSection');
             const agNav = document.getElementById('agSidebarNav');
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-                if (agSection) agSection.style.display = 'block';
-                if (agNav) agNav.style.display = 'flex';
-            }
-            const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) {
-                subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-            }
-            const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) {
-                aodNav.style.display = lDiv2.includes('shipl') ? '' : 'none';
-            }
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) {
-                shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-            }
-            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) {
-                fieldReturnNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-            }
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) {
-                fieldReturnAccNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-            }
-            loadEntries();
+            if (agSection) agSection.style.display = isAg ? 'block' : 'none';
+            if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
 
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const accInNav = document.getElementById('accInSidebarItem');
+            if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const subOutNav = document.getElementById('subOutSidebarItem');
+            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const aodNav = document.getElementById('aodSidebarItem');
+            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+
+            loadEntries();
+            const user =(localStorage.getItem('user') || '{}');
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
             const roleEl = document.querySelector('.user-role');

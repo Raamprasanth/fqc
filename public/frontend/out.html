@@ -465,21 +465,21 @@ td.wrap-cell{white-space:normal;min-width:200px;}
   </ul>
 
   <div class="sidebar-section-label">Operations</div>
-  <ul class="nav-list">
-    <li class="nav-item"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
-    <li class="nav-item"><a href="out.html" class="active" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
-    <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
-    <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
-    <li class="nav-item"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
-    <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
-    <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
-    <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-    <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
-    <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-    <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
-    <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
-    <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
-  </ul>
+        <ul class="nav-list">
+            <li class="nav-item" id="inSidebarItem"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
+            <li class="nav-item" id="outSidebarItem"><a href="out.html" class="active" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
+            <li class="nav-item" id="shortshipmentSidebarItem"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="shipout"><span class="nav-icon">&#128230;</span>SHIP-OUT</a></li>
+            <li class="nav-item" id="dodSidebarItem"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
+            <li class="nav-item" id="doaWfSidebarItem"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
+            <li class="nav-item" id="accOutSidebarItem"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+            <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
+            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
+            <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
+        </ul>
 
   <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
   <ul class="nav-list" id="agSidebarNav" style="display:none;">
@@ -685,6 +685,139 @@ td.wrap-cell{white-space:normal;min-width:200px;}
     },
     'shipl-ganshorn': {
       label: 'SHIPL & Ganshorn',
+      fields: [
+        {key:'fqcEngr', label:'FQC Engr', type:'text'},
+        {key:'month', label:'Month', type:'select', options:MONTHS},
+        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'oaNo', label:'OA No', type:'text'},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSn', label:'Unit S/N', type:'text'},
+        {key:'confg', label:'Confg', type:'text'},
+        {key:'swVer', label:'S/W Ver', type:'text'},
+        {key:'ibpModuleSn', label:'IBP Module S.N', type:'text'},
+        {key:'etco2ModuleSn', label:'ETCO2 Module / Sensor S.N', type:'text'},
+        {key:'warrantyStdAmc', label:'Warranty STD + AMC', type:'text'},
+        {key:'o2Sensor', label:'O2 Sensor', type:'text'},
+        {key:'vaporizerSlno', label:'Vaporizer Sl/No', type:'text'},
+        {key:'customerNameDetails', label:'Customer Name & Details', type:'textarea'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    }
+  };
+
+  const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
+
+  const tableHeadRow = document.getElementById('tableHeadRow');
+  const tableBody = document.getElementById('tableBody');
+  const recordCount = document.getElementById('recordCount');
+  const searchInput = document.getElementById('searchInput');
+
+  let currentDivision = 'vent-anesthesia';
+  const lDiv = activeDivision.toLowerCase();
+  if (lDiv.includes('schiller') || lDiv.includes('monitor')) {
+    currentDivision = 'ag-monitors';
+  } else if (lDiv.includes('shipl') || lDiv.includes('ganshorn')) {
+    currentDivision = 'shipl-ganshorn';
+  }
+
+  const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/outward';
+  function getToken() { return localStorage.getItem('token') || ''; }
+  let entries = [];
+
+  const divisionTabs = document.getElementById('divisionTabs');
+  if (divisionTabs) divisionTabs.style.display = 'none';
+
+  async function loadEntries() {
+    try {
+      const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
+        headers: { 'Authorization': 'Bearer ' + getToken() }
+      });
+      if (res.ok) {
+        entries = await res.json();
+        renderTable(entries);
+      }
+    } catch (err) {
+      console.error('Failed to load entries', err);
+    }
+  }
+
+  function renderTableHead() {
+    const fields = divisions[currentDivision].fields;
+    tableHeadRow.innerHTML = '<th>S/N</th>' + fields.map(f => `<th>${f.label}</th>`).join('');
+  }
+
+  function renderTable(list) {
+    const fields = divisions[currentDivision].fields;
+    const total = list.length;
+    if (!total) {
+      tableBody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="${fields.length + 1}">
+            <span class="empty-icon">&#128203;</span>
+            No records yet for ${activeDivision}. Click "Add New" to log the first entry.
+          </td>
+        </tr>`;
+    } else {
+      tableBody.innerHTML = list.map((entry, i) => {
+        const cells = fields.map(f => {
+          const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
+          return `<td${wrap}>${entry.values[f.key] || '—'}</td>`;
+        }).join('');
+        return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
+      }).join('');
+    }
+    recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
+  }
+
+  /* ═══ Modal ═══ */
+  const modalOverlay = document.getElementById('modalOverlay');
+  const openAddBtn = document.getElementById('openAddBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const outForm = document.getElementById('outForm');
+  const formGrid = document.getElementById('formGrid');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSubtitle = document.getElementById('modalSubtitle');
+
+  function buildForm() {
+    const div = divisions[currentDivision];
+    if (modalTitle) modalTitle.textContent = `Add New Entry`;
+    if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
+    formGrid.innerHTML = div.fields.map(f => {
+      if (isSerialKey(f.key, f.label)) {
+        return `<div class="form-field">
+          <label for="f_${f.key}_from">${f.label} (From)</label>
+          <input type="text" id="f_${f.key}_from"/>
+        </div>
+        <div class="form-field">
+          <label for="f_${f.key}_to">${f.label} (To)</label>
+          <input type="text" id="f_${f.key}_to"/>
+        </div>`;
+      }
+      const isFull = f.type === 'textarea';
+      let control;
+      if (f.type === 'select') {
+        control = `<select id="f_${f.key}">
+          <option value="">Select ${f.label.toLowerCase()}</option>
+          ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
+        </select>`;
+      } else if (f.type === 'datalist') {
+        control = `<input type="text" id="f_${f.key}" list="${f.datalistId}" autocomplete="off" placeholder="Select or type..."/>
+          <datalist id="${f.datalistId}">
+            ${f.options.map(o => `<option value="${o}"></option>`).join('')}
+          </datalist>`;
+      } else if (f.type === 'textarea') {
+        control = `<textarea id="f_${f.key}"></textarea>`;
+      } else {
+        control = `<input type="${f.type}" id="f_${f.key}"/>`;
+      }
+      return `<div class="form-field${isFull ? ' full' : ''}">
+        <label for="f_${f.key}">${f.label}</label>
+        ${control}
+      </div>`;
+    }).join('');
+  }
+
   function openModal(){ buildForm(); modalOverlay.classList.add('visible'); }
   function closeModal(){ modalOverlay.classList.remove('visible'); outForm.reset(); }
   openAddBtn.addEventListener('click', openModal);
@@ -777,35 +910,37 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 
   /* ═══ Init Context ═══ */
   document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar visibility based on division
+            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+            const isShipl = lDiv2.includes('shipl');
+            const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
 
-    const agSection = document.getElementById('agSidebarSection');
-    const agNav = document.getElementById('agSidebarNav');
-    const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-    if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
-      if (agSection) agSection.style.display = 'block';
-      if (agNav) agNav.style.display = 'flex';
-    }
-    const subOutNav = document.getElementById('subOutSidebarItem');
-    if (subOutNav) {
-      subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
+            const agSection = document.getElementById('agSidebarSection');
+            const agNav = document.getElementById('agSidebarNav');
+            if (agSection) agSection.style.display = isAg ? 'block' : 'none';
+            if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
+
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const accInNav = document.getElementById('accInSidebarItem');
+            if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const subOutNav = document.getElementById('subOutSidebarItem');
+            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+            if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
             const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) {
-                aodNav.style.display = lDiv2.includes('shipl') ? '' : 'none';
-            }
-    const shipOutNav = document.getElementById('shipOutSidebarItem');
-    if (shipOutNav) {
-      shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
-    const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-    if (fieldReturnNav) {
-      fieldReturnNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
-    const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-    if (fieldReturnAccNav) {
-      fieldReturnAccNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
-    }
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+
+            
+            const user =(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');
