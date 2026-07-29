@@ -837,6 +837,10 @@ body.is-ventilator .vent-only-field { display: flex; }
     
     const h1 = document.querySelector('.topbar-left h1');
     if (h1) h1.textContent = 'In - ' + activeDivision;
+    
+    if (lDiv2.includes('ventilator')) {
+      document.body.classList.add('is-ventilator');
+    }
 
     loadEntries();
   });
