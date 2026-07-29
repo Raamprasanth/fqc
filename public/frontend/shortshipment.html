@@ -684,6 +684,23 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS}
   ];
 
+  const shiplFormFields = [
+    {key:'date', label:'Date', type:'date'},
+    {key:'model', label:'Model', type:'text'},
+    {key:'oaNo', label:'OA No', type:'text'},
+    {key:'unitSlNo', label:'Unit Sl/No', type:'text'},
+    {key:'customerNameAddress', label:'Customer Name & Address', type:'textarea'},
+    {key:'shortShippedItems', label:'Short Shipped Items', type:'textarea'},
+    {key:'qty', label:'Qty', type:'number'},
+    {key:'remarks', label:'Remarks', type:'textarea'},
+    {key:'dispatchDateOfShortshipped', label:'Dispatch Date of Shortshipped Items', type:'date'}
+  ];
+
+  const shiplTableFields = [
+    ...shiplFormFields,
+    {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS}
+  ];
+
   const divisions = {
     'vent-anesthesia': {
       label: 'Ventilator & Anesthesia',
@@ -697,8 +714,8 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     },
     'shipl-ganshorn': {
       label: 'SHIPL & Ganshorn',
-      fields: [...formFields],
-      tableFields: [...tableFields]
+      fields: [...shiplFormFields],
+      tableFields: [...shiplTableFields]
     }
   };
 
