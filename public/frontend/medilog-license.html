@@ -539,6 +539,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             <th>HW Ver &amp; Remarks</th>
             <th>Accessory Remarks, Batch, Lot, Sr.No.</th>
             <th>Remarks</th>
+            <th>Attachment</th>
           </tr>
         </thead>
         <tbody id="tableBody">
@@ -620,6 +621,10 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <div class="form-field full">
             <label for="fRemarks">Remarks</label>
             <textarea id="fRemarks"></textarea>
+          </div>
+          <div class="form-field full" id="attachmentFieldWrapper" style="display: none;">
+            <label for="fAttachment">Attachment</label>
+            <input type="file" id="fAttachment" name="attachment" />
           </div>
         </div>
       </div>
@@ -709,6 +714,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const recordCount = document.getElementById('recordCount');
   const searchInput = document.getElementById('searchInput');
   const openAddBtn = document.getElementById('openAddBtn');
+  const isSagOrGanshorn = lDiv.includes('schiller') || lDiv.includes('ganshorn');
+
+  if (isSagOrGanshorn) {
+    const attachWrapper = document.getElementById('attachmentFieldWrapper');
+    if (attachWrapper) attachWrapper.style.display = 'block';
+  }
 
   if (!isApplicable && openAddBtn) {
     openAddBtn.style.display = 'none';
@@ -737,7 +748,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (!isApplicable) {
       tableBody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="13">
+          <td colspan="14">
             <span class="empty-icon">&#9888;&#65039;</span>
             Medilog License is only applicable for Schiller AG and Monitors division.
           </td>
@@ -745,7 +756,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     } else if (!total) {
       tableBody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="13">
+          <td colspan="14">
             <span class="empty-icon">&#128203;</span>
             No records yet for ${activeDivision}. Click "Add New" to log the first entry.
           </td>
@@ -767,6 +778,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
           <td class="wrap-cell">${v.hwVer || '—'}</td>
           <td class="wrap-cell">${v.accessoryRemarks || '—'}</td>
           <td class="wrap-cell">${v.remarks || '—'}</td>
+          <td>${v.attachment ? `<a href="${(window.location.protocol === 'file:' ? 'http://localhost:3001' : '')}${v.attachment}" target="_blank">Download</a>` : '—'}</td>
         </tr>`;
       }).join('');
     }
@@ -802,53 +814,49 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     const oldText = btn ? btn.textContent : 'Save Entry';
     if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
-    const fields = divisions[currentDivision].fields;
-    let serialKey = null;
-    let serials = [];
-    const baseValues = {};
+    const baseValues = {
+      month: escapeHtml(document.getElementById('fMonth').value),
+      inwardDate: escapeHtml(document.getElementById('fInwardDate').value.trim()),
+      model: escapeHtml(document.getElementById('fModel').value.trim()),
+      conf: escapeHtml(document.getElementById('fConf').value.trim()),
+      version: escapeHtml(document.getElementById('fVersion').value.trim()),
+      refInvoice: escapeHtml(document.getElementById('fRefInvoice').value.trim()),
+      qty: escapeHtml(document.getElementById('fQty').value.trim()),
+      swVer: escapeHtml(document.getElementById('fSwVer').value.trim()),
+      hwVer: escapeHtml(document.getElementById('fHwVer').value.trim()),
+      accessoryRemarks: escapeHtml(document.getElementById('fAccessoryRemarks').value.trim()),
+      remarks: escapeHtml(document.getElementById('fRemarks').value.trim())
+    };
 
-    fields.forEach(f => {
-      if (isSerialKey(f.key, f.label)) {
-        serialKey = f.key;
-        const fromEl = document.getElementById(`f_${f.key}_from`);
-        const toEl = document.getElementById(`f_${f.key}_to`);
-        const fromVal = fromEl ? fromEl.value.trim() : '';
-        const toVal = toEl ? toEl.value.trim() : '';
-        serials = generateSerialSequence(fromVal, toVal);
-      } else {
-        const el = document.getElementById(`f_${f.key}`);
-        if (el) baseValues[f.key] = escapeHtml(el.value.trim());
-      }
-    });
-
-    if (serialKey && !serials.length) {
-      const fromEl = document.getElementById(`f_${serialKey}_from`);
-      if (fromEl && !fromEl.value.trim()) {
-        alert('Please enter a From value for serial number.');
-        if (btn) { btn.textContent = oldText; btn.disabled = false; }
-        return;
-      }
+    const fromVal = document.getElementById('fUnitSrNo').value.trim();
+    if (!fromVal) {
+      alert('Please enter Unit Sr.No.');
+      if (btn) { btn.textContent = oldText; btn.disabled = false; }
+      return;
     }
-
-    const serialList = serials.length ? serials : [''];
-    const payloadList = serialList.map(sn => {
-      const vals = { ...baseValues };
-      if (serialKey) vals[serialKey] = escapeHtml(sn);
-      return {
-        division: activeDivision,
-        configKey: currentDivision,
-        values: vals
-      };
-    });
+    
+    // Create a payload object
+    const payload = {
+      division: activeDivision,
+      configKey: 'medilog',
+      values: { ...baseValues, unitSrNo: escapeHtml(fromVal) }
+    };
 
     try {
+      const formData = new FormData();
+      formData.append('data', JSON.stringify([payload]));
+
+      const fileInput = document.getElementById('fAttachment');
+      if (fileInput && fileInput.files[0]) {
+        formData.append('attachment', fileInput.files[0]);
+      }
+
       const res = await fetch(API_BASE, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
         },
-        body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
+        body: formData
       });
       if (!res.ok) throw new Error('Failed to save');
       

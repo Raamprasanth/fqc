@@ -66,9 +66,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Serve static frontend ─────────────────────────────────────────────────────
+// ── Serve static frontend and uploads ──────────────────────────────────────────
 // Makes both index.html and login.html available at http://localhost:3001/
 app.use(express.static(path.join(__dirname, '..', 'public', 'frontend')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── API routes ────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRouter);
