@@ -308,6 +308,36 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   font-weight:600;
   font-size:11.5px;
 }
+.btn-action-icon {
+  background: #f4efe3;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .2s, transform .15s, border-color .2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-action-icon:hover {
+  transform: translateY(-1px);
+}
+.btn-edit {
+  color: #3f5a46;
+}
+.btn-edit:hover {
+  background: rgba(92,122,99,0.15);
+  border-color: var(--sage);
+}
+.btn-tick {
+  color: #5c7a63;
+  background: rgba(92,122,99,0.12);
+}
+.btn-tick:hover {
+  background: #5c7a63;
+  color: #fff;
+}
 .status-pill{
   display:inline-flex;
   align-items:center;
@@ -679,9 +709,11 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const recordCount = document.getElementById('recordCount');
   const searchInput = document.getElementById('searchInput');
 
+  let editingEntryId = null;
+
   function renderTableHead() {
     const fields = divisions[currentDivision].fields;
-    tableHeadRow.innerHTML = '<th>S/N</th>' + fields.map(f => `<th>${f.label}</th>`).join('');
+    tableHeadRow.innerHTML = '<th>S/N</th><th>ACTION</th>' + fields.map(f => `<th>${f.label}</th>`).join('');
   }
 
   function renderTable(list) {
@@ -690,7 +722,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (!total) {
       tableBody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="${fields.length + 1}">
+          <td colspan="${fields.length + 2}">
             <span class="empty-icon">&#128203;</span>
             No records yet for ${divisions[currentDivision].label}. Click "Add New" to log the first entry.
           </td>
@@ -698,19 +730,93 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     } else {
       tableBody.innerHTML = list.map((entry, i) => {
         const cells = fields.map(f => {
+          const vals = entry.values || entry;
           if (f.key === 'status') {
-            const val = entry.values[f.key];
+            const val = vals[f.key];
             if (!val) return '<td>—</td>';
             const cls = STATUS_CLASS[val] || 'status-pending';
             return `<td><span class="status-pill ${cls}">${val}</span></td>`;
           }
           const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
-          return `<td${wrap}>${entry.values[f.key] || '—'}</td>`;
+          return `<td${wrap}>${vals[f.key] || '—'}</td>`;
         }).join('');
-        return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
+
+        return `<tr>
+          <td><span class="sn-badge">${total - i}</span></td>
+          <td>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <button type="button" class="btn-action-icon btn-edit" onclick="editShortshipment('${entry._id}')" title="Edit Entry">✏️</button>
+              <button type="button" class="btn-action-icon btn-tick" onclick="moveToShipout('${entry._id}')" title="Move to Shipout">✔️</button>
+            </div>
+          </td>
+          ${cells}
+        </tr>`;
       }).join('');
     }
     recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
+  }
+
+  function editShortshipment(id) {
+    const entry = entries.find(e => e._id === id);
+    if (!entry) return;
+    editingEntryId = id;
+    buildForm();
+    if (modalTitle) modalTitle.textContent = `Edit Shortshipment Entry`;
+    const submitBtn = shortForm ? shortForm.querySelector('button[type="submit"]') : null;
+    if (submitBtn) submitBtn.textContent = 'Update Entry';
+
+    const fields = divisions[currentDivision].fields;
+    const vals = entry.values || entry;
+    fields.forEach(f => {
+      if (isSerialKey(f.key, f.label)) {
+        const fromEl = document.getElementById(`f_${f.key}_from`);
+        if (fromEl) fromEl.value = vals[f.key] || '';
+      } else {
+        const el = document.getElementById(`f_${f.key}`);
+        if (el) el.value = vals[f.key] || '';
+      }
+    });
+
+    modalOverlay.classList.add('visible');
+  }
+
+  async function moveToShipout(id) {
+    const entry = entries.find(e => e._id === id);
+    if (!entry) return;
+    if (!confirm('Move this shortshipment entry to Shipout?')) return;
+
+    const SHIPOUT_API = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shipout';
+    const payload = {
+      division: entry.division || activeDivision,
+      configKey: entry.configKey || currentDivision,
+      values: entry.values || entry,
+      movedFrom: 'shortshipment',
+      movedAt: new Date().toISOString()
+    };
+
+    try {
+      const resPost = await fetch(SHIPOUT_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!resPost.ok) throw new Error('Failed to save to Shipout.');
+
+      const resDel = await fetch(API_BASE + '/' + id, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + getToken() }
+      });
+      if (!resDel.ok) throw new Error('Failed to delete from Shortshipment.');
+
+      entries = entries.filter(e => e._id !== id);
+      renderTable(entries);
+      alert('Entry successfully moved to Shipout page!');
+    } catch (err) {
+      alert('Error moving entry: ' + err.message);
+    }
   }
 
   async function loadEntries() {
@@ -784,7 +890,13 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   }
 
   function openModal(){ buildForm(); modalOverlay.classList.add('visible'); }
-  function closeModal(){ modalOverlay.classList.remove('visible'); if(shortForm) shortForm.reset(); }
+  function closeModal(){
+    modalOverlay.classList.remove('visible');
+    if(shortForm) shortForm.reset();
+    editingEntryId = null;
+    const submitBtn = shortForm ? shortForm.querySelector('button[type="submit"]') : null;
+    if (submitBtn) submitBtn.textContent = 'Save Entry';
+  }
   
   if(openAddBtn) openAddBtn.addEventListener('click', openModal);
   if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
@@ -822,6 +934,38 @@ td.wrap-cell{white-space:normal;min-width:220px;}
         if (el) baseValues[f.key] = escapeHtml(el.value.trim());
       }
     });
+
+    if (editingEntryId) {
+      const vals = { ...baseValues };
+      if (serialKey && serials.length) vals[serialKey] = serials[0];
+      try {
+        const res = await fetch(API_BASE + '/' + editingEntryId, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+          },
+          body: JSON.stringify({
+            division: activeDivision,
+            configKey: currentDivision,
+            values: vals
+          })
+        });
+        if (!res.ok) throw new Error('Failed to update entry');
+        
+        const updated = await res.json();
+        const idx = entries.findIndex(e => e._id === editingEntryId);
+        if (idx !== -1) entries[idx] = updated;
+        renderTable(entries);
+        closeModal();
+      } catch (err) {
+        alert('Error updating entry: ' + err.message);
+      } finally {
+        if (btn) { btn.textContent = oldText; btn.disabled = false; }
+        editingEntryId = null;
+      }
+      return;
+    }
 
     if (serialKey && !serials.length) {
       const fromEl = document.getElementById(`f_${serialKey}_from`);

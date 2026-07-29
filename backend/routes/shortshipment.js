@@ -37,4 +37,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+// ── PUT /:id ───────────────────────────────────────────────────────
+router.put('/:id', async (req, res) => {
+  try {
+    const updated = await Shortshipment.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ message: 'Record not found.' });
+    res.json(updated);
+  } catch (err) {
+    console.error('[Update Shortshipment Error]', err);
+    res.status(500).json({ message: 'Failed to update record.', error: err.message });
+  }
+});
+
+// ── DELETE /:id ────────────────────────────────────────────────────
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleted = await Shortshipment.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: 'Record not found.' });
+    res.json({ message: 'Record deleted successfully.', deleted });
+  } catch (err) {
+    console.error('[Delete Shortshipment Error]', err);
+    res.status(500).json({ message: 'Failed to delete record.', error: err.message });
+  }
+});
+
 module.exports = router;
