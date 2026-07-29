@@ -606,28 +606,35 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     toStr = (toStr || '').trim();
 
     if (!fromStr) return [];
-    if (!toStr || fromStr === toStr) return [fromStr];
+    if (!toStr || fromStr.toLowerCase() === toStr.toLowerCase()) return [fromStr];
 
     const matchFrom = fromStr.match(/^(.*?)(0*\d+)$/);
+    if (!matchFrom) return [fromStr, toStr];
+
+    const prefix = matchFrom[1];
+    const digitsFromStr = matchFrom[2];
+    const numFrom = parseInt(digitsFromStr, 10);
+
     const matchTo = toStr.match(/^(.*?)(0*\d+)$/);
+    if (!matchTo) return [fromStr, toStr];
 
-    if (matchFrom && matchTo && matchFrom[1] === matchTo[1]) {
-      const prefix = matchFrom[1];
-      const numFrom = parseInt(matchFrom[2], 10);
-      const numTo = parseInt(matchTo[2], 10);
+    const toPrefix = matchTo[1];
+    const digitsToStr = matchTo[2];
+    const numTo = parseInt(digitsToStr, 10);
 
-      if (!isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
-        const count = Math.min(numTo - numFrom + 1, 1000);
-        const padLength = Math.max(matchFrom[2].length, matchTo[2].length);
+    const prefixMatches = !toPrefix || prefix.toLowerCase() === toPrefix.toLowerCase();
 
-        const seq = [];
-        for (let i = 0; i < count; i++) {
-          const currentNum = numFrom + i;
-          const paddedNum = String(currentNum).padStart(padLength, '0');
-          seq.push(prefix + paddedNum);
-        }
-        return seq;
+    if (prefixMatches && !isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
+      const count = Math.min(numTo - numFrom + 1, 1000);
+      const padLength = Math.max(digitsFromStr.length, digitsToStr.length);
+
+      const seq = [];
+      for (let i = 0; i < count; i++) {
+        const currentNum = numFrom + i;
+        const paddedNum = String(currentNum).padStart(padLength, '0');
+        seq.push(prefix + paddedNum);
       }
+      return seq;
     }
 
     return [fromStr, toStr];
