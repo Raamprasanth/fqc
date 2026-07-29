@@ -45,6 +45,7 @@ const aodRouter = require('./routes/aod');
 const changedetailRouter = require('./routes/changedetail');
 const dg400Router = require('./routes/dg400');
 const dg400xRouter = require('./routes/dg400x');
+const batchinfoRouter = require('./routes/batchinfo');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -94,6 +95,7 @@ app.use('/api/aod', aodRouter);
 app.use('/api/change-details', changedetailRouter);
 app.use('/api/dg400-imp-test', dg400Router);
 app.use('/api/dg400x-imp-test', dg400xRouter);
+app.use('/api/batch-info', batchinfoRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => {

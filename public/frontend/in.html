@@ -979,7 +979,7 @@ body.is-ventilator .vent-only-field { display: flex; }
     const dg400xNav = document.getElementById('dg400xSidebarItem');
     if (dg400xNav) dg400xNav.style.display = _isShipl ? '' : 'none';
     const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
-    if (changeDetailsNav) changeDetailsNav.style.display = _isShipl ? '' : 'none';
+    if (changeDetailsNav) changeDetailsNav.style.display = (_isVentOrAnesthesia || _isShipl) ? '' : 'none';
   })();
 
   // ═══ User info & init ═══
