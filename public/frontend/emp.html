@@ -846,7 +846,7 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
             
-            const user =(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     
     // Update Sidebar User Info

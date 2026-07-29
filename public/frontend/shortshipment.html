@@ -1064,7 +1064,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (accInNav) {
       accInNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
     }
-            const user =(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');
@@ -1075,31 +1075,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (roleEl) roleEl.textContent = (user.designation || 'Employee');
     if (divEl) divEl.textContent = activeDivision;
 
-    // Apply strict access restrictions across the sidebar
-    document.querySelectorAll('.nav-item').forEach(item => {
-      const link = item.querySelector('a');
-      if (!link) return;
-      const page = link.dataset.page;
-      
-      const isApplicable = (() => {
-        if (page === 'dashboard' || page === 'shortshipment') return true;
-        if (page === 'medilog-license') {
-          return activeDivision === 'Schiller AG';
-        }
-        if (page === 'sub-out' || page === 'ship-out' || page === 'field-return-units' || page === 'field-return-accessories') {
-          const l = activeDivision.toLowerCase();
-          return l.includes('vent') || l.includes('anesthesia');
-        }
-        if (page === 'in' || page === 'out' || page === 'dod' || page === 'doa-wf' || page === 'acc-out' || page === 'battery-charging') {
-          return true;
-        }
-        return true; 
-      })();
-
-      if (!isApplicable) {
-        item.style.display = 'none';
-      }
-    });
+    
     
     renderTableHead();
     loadEntries();

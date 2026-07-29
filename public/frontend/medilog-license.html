@@ -920,7 +920,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (shipOutNav) {
       shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
     }
-            const user =(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
     const nameEl = document.querySelector('.user-name');

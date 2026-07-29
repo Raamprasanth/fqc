@@ -911,7 +911,7 @@
     if (accInNav) {
       accInNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
     }
-            const user =(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
             const roleEl = document.querySelector('.user-role');

@@ -1022,7 +1022,7 @@
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
             loadEntries();
-            const user =(localStorage.getItem('user') || '{}');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
             const roleEl = document.querySelector('.user-role');
