@@ -466,6 +466,9 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
     <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
     <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
     <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+    <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
+    <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
+    <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
     <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
   </ul>
 
@@ -811,6 +814,13 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
     if (accInNav) {
       accInNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia') || !lDiv2 || lDiv2 === 'default') ? '' : 'none';
     }
+    const isVentOrAnesthesiaEmp = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+    const subOutNavEmp = document.getElementById('subOutSidebarItem');
+    if (subOutNavEmp) subOutNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
+    const shipOutNavEmp = document.getElementById('shipOutSidebarItem');
+    if (shipOutNavEmp) shipOutNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
+    const fieldReturnNavEmp = document.getElementById('fieldReturnSidebarItem');
+    if (fieldReturnNavEmp) fieldReturnNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
 
     // Fetch Stats
     try {

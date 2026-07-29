@@ -38,6 +38,7 @@ const aoutRouter = require('./routes/aout');
 const ashortRouter = require('./routes/ashort');
 const suboutRouter = require('./routes/subout');
 const shipoutRouter = require('./routes/shipout');
+const fieldreturnRouter = require('./routes/fieldreturn');
 const codesRouter = require('./routes/codes');
 
 const app = express();
@@ -81,6 +82,7 @@ app.use('/api/aout', aoutRouter);
 app.use('/api/ashort', ashortRouter);
 app.use('/api/subout', suboutRouter);
 app.use('/api/shipout', shipoutRouter);
+app.use('/api/fieldreturn', fieldreturnRouter);
 app.use('/api/codes', codesRouter);
 
 // ── Health check ──────────────────────────────────────────────────────────────

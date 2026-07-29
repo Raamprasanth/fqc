@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SHIP-OUT — SchillerIndia Services</title>
+    <title>FIELD RETURN UNITS — SchillerIndia Services</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
@@ -757,9 +757,9 @@
                         class="nav-icon">&#128203;</span>ACC-OUT</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
                         class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" class="active" data-page="ship-out"><span
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span
                         class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
-            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" class="active" data-page="field-return-units"><span
                         class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
                         class="nav-icon">&#128267;</span>Battery Charging</a></li>
@@ -787,11 +787,12 @@
             <div class="topbar-left">
                 <button class="menu-toggle" id="menuToggle">&#9776;</button>
                 <div>
-                    <h1>SHIP-OUT</h1>
-                    <div class="breadcrumb">Home / Operations / SHIP-OUT</div>
+                    <h1>FIELD RETURN UNITS</h1>
+                    <div class="breadcrumb">Home / Operations / Field Return Units</div>
                 </div>
             </div>
             <div class="topbar-right">
+                <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
         </div>
@@ -808,7 +809,7 @@
             </div>
 
             <div class="table-wrap">
-                <table id="shipOutTable">
+                <table id="fieldReturnTable">
                     <thead>
                         <tr id="tableHeadRow"></tr>
                     </thead>
@@ -823,12 +824,12 @@
         <div class="modal">
             <div class="modal-head">
                 <div>
-                    <h2 id="modalTitle">Add New SHIP-OUT Entry</h2>
-                    <p id="modalSubtitle">Fill in the details below to log a new short-shipped dispatch.</p>
+                    <h2 id="modalTitle">Add New Field Return Unit Entry</h2>
+                    <p id="modalSubtitle">Fill in the details below to log a new field-returned unit.</p>
                 </div>
                 <button class="modal-close" id="closeModalBtn">&#10005;</button>
             </div>
-            <form id="shipOutForm">
+            <form id="fieldReturnForm">
                 <div class="modal-body">
                     <div class="form-grid" id="formGrid"></div>
                 </div>
@@ -841,6 +842,52 @@
     </div>
 
     <script>
+
+        function isSerialKey(key, label) {
+            const k = (key || '').trim().toLowerCase();
+            const l = (label || '').trim().toLowerCase();
+            return k === 'unitslno' || k === 'unitsn' || k === 'serialno' || k === 'slno' ||
+                l === 'unit sl.no' || l === 'unit s/n' || l === 'serial no' || l === 'serial no.' || l === 'serial number';
+        }
+
+        function generateSerialSequence(fromStr, toStr) {
+            fromStr = (fromStr || '').trim();
+            toStr = (toStr || '').trim();
+
+            if (!fromStr) return [];
+            if (!toStr || fromStr.toLowerCase() === toStr.toLowerCase()) return [fromStr];
+
+            const matchFrom = fromStr.match(/^(.*?)(0*\d+)$/);
+            if (!matchFrom) return [fromStr, toStr];
+
+            const prefix = matchFrom[1];
+            const digitsFromStr = matchFrom[2];
+            const numFrom = parseInt(digitsFromStr, 10);
+
+            const matchTo = toStr.match(/^(.*?)(0*\d+)$/);
+            if (!matchTo) return [fromStr, toStr];
+
+            const toPrefix = matchTo[1];
+            const digitsToStr = matchTo[2];
+            const numTo = parseInt(digitsToStr, 10);
+
+            const prefixMatches = !toPrefix || prefix.toLowerCase() === toPrefix.toLowerCase();
+
+            if (prefixMatches && !isNaN(numFrom) && !isNaN(numTo) && numFrom <= numTo) {
+                const count = Math.min(numTo - numFrom + 1, 1000);
+                const padLength = Math.max(digitsFromStr.length, digitsToStr.length);
+
+                const seq = [];
+                for (let i = 0; i < count; i++) {
+                    const currentNum = numFrom + i;
+                    const paddedNum = String(currentNum).padStart(padLength, '0');
+                    seq.push(prefix + paddedNum);
+                }
+                return seq;
+            }
+
+            return [fromStr, toStr];
+        }
 
         /* ═══ Sidebar ═══ */
         const menuToggle = document.getElementById('menuToggle');
@@ -855,18 +902,18 @@
             window.location.href = 'login.html';
         });
 
-        /* ═══ SHIP-OUT field config ═══ */
-        const STATUS_OPTIONS = ['Pending', 'Dispatched', 'On Hold', 'Cancelled'];
-        const SHIPOUT_FIELDS = [
+        /* ═══ FIELD RETURN UNITS field config ═══ */
+        const STATUS_OPTIONS = ['Open', 'In Progress', 'Resolved', 'Closed'];
+        const FIELDRETURN_FIELDS = [
             { key: 'date', label: 'Date', type: 'date' },
-            { key: 'model', label: 'Model', type: 'text' },
-            { key: 'oaNo', label: 'OA No', type: 'text' },
-            { key: 'customerNameAddress', label: 'Customer Name & Address', type: 'textarea' },
-            { key: 'shortShippedItems', label: 'Short Shipped Items', type: 'textarea' },
-            { key: 'qty', label: 'Qty', type: 'number' },
-            { key: 'remarks', label: 'Remarks', type: 'textarea' },
-            { key: 'dispatchDateShortshipped', label: 'Dispatch Date of Shortshipped Items', type: 'date' },
+            { key: 'product', label: 'Product', type: 'text' },
+            { key: 'unitSlNo', label: 'Unit Sl.No', type: 'text' },
+            { key: 'conf', label: 'Conf', type: 'text' },
+            { key: 'version', label: 'Version', type: 'text' },
             { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
+            { key: 'customerNameAddress', label: 'Customer Name and Address', type: 'textarea' },
+            { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
+            { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
         ];
 
         const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
@@ -876,7 +923,7 @@
         const recordCount = document.getElementById('recordCount');
         const searchInput = document.getElementById('searchInput');
 
-        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/shipout';
+        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/fieldreturn';
         function getToken() { return localStorage.getItem('token') || ''; }
         let entries = [];
 
@@ -885,9 +932,9 @@
 
         function statusPillClass(status) {
             const s = (status || '').trim().toLowerCase();
-            if (s === 'dispatched') return 'status-dispatched';
-            if (s === 'on hold') return 'status-onhold';
-            if (s === 'cancelled') return 'status-cancelled';
+            if (s === 'resolved') return 'status-dispatched';
+            if (s === 'in progress') return 'status-onhold';
+            if (s === 'closed') return 'status-cancelled';
             return 'status-pending';
         }
 
@@ -906,7 +953,7 @@
         }
 
         function renderTableHead() {
-            tableHeadRow.innerHTML = '<th>S/N</th>' + SHIPOUT_FIELDS.map(f => `<th>${f.label}</th>`).join('');
+            tableHeadRow.innerHTML = '<th>S/N</th>' + FIELDRETURN_FIELDS.map(f => `<th>${f.label}</th>`).join('');
         }
 
         function renderTable(list) {
@@ -914,14 +961,14 @@
             if (!total) {
                 tableBody.innerHTML = `
         <tr class="empty-row">
-          <td colspan="${SHIPOUT_FIELDS.length + 1}">
+          <td colspan="${FIELDRETURN_FIELDS.length + 1}">
             <span class="empty-icon">&#128203;</span>
             No records yet for ${activeDivision}. Click "Add New" to log the first entry.
           </td>
         </tr>`;
             } else {
                 tableBody.innerHTML = list.map((entry, i) => {
-                    const cells = SHIPOUT_FIELDS.map(f => {
+                    const cells = FIELDRETURN_FIELDS.map(f => {
                         if (f.key === 'status') {
                             const val = entry.values[f.key];
                             if (!val) return `<td>—</td>`;
@@ -941,7 +988,7 @@
         const openAddBtn = document.getElementById('openAddBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const cancelBtn = document.getElementById('cancelBtn');
-        const shipOutForm = document.getElementById('shipOutForm');
+        const fieldReturnForm = document.getElementById('fieldReturnForm');
         const formGrid = document.getElementById('formGrid');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
@@ -949,7 +996,17 @@
         function buildForm() {
             if (modalTitle) modalTitle.textContent = `Add New Entry`;
             if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
-            formGrid.innerHTML = SHIPOUT_FIELDS.map(f => {
+            formGrid.innerHTML = FIELDRETURN_FIELDS.map(f => {
+                if (isSerialKey(f.key, f.label)) {
+                    return `<div class="form-field">
+          <label for="f_${f.key}_from">${f.label} (From)</label>
+          <input type="text" id="f_${f.key}_from" placeholder="e.g. SN1001"/>
+        </div>
+        <div class="form-field">
+          <label for="f_${f.key}_to">${f.label} (To)</label>
+          <input type="text" id="f_${f.key}_to" placeholder="e.g. SN1005 (optional)"/>
+        </div>`;
+                }
                 const isFull = f.type === 'textarea';
                 let control;
                 if (f.type === 'select') {
@@ -970,7 +1027,7 @@
         }
 
         function openModal() { buildForm(); modalOverlay.classList.add('visible'); }
-        function closeModal() { modalOverlay.classList.remove('visible'); shipOutForm.reset(); }
+        function closeModal() { modalOverlay.classList.remove('visible'); fieldReturnForm.reset(); }
         openAddBtn.addEventListener('click', openModal);
         closeModalBtn.addEventListener('click', closeModal);
         cancelBtn.addEventListener('click', closeModal);
@@ -982,23 +1039,49 @@
             return div.innerHTML;
         }
 
-        shipOutForm.addEventListener('submit', async (e) => {
+        fieldReturnForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = shipOutForm.querySelector('button[type="submit"]');
+            const btn = fieldReturnForm.querySelector('button[type="submit"]');
             const oldText = btn ? btn.textContent : 'Save Entry';
             if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
 
-            const values = {};
-            SHIPOUT_FIELDS.forEach(f => {
-                const el = document.getElementById(`f_${f.key}`);
-                if (el) values[f.key] = escapeHtml(el.value.trim());
+            let serialKey = null;
+            let serials = [];
+            const baseValues = {};
+
+            FIELDRETURN_FIELDS.forEach(f => {
+                if (isSerialKey(f.key, f.label)) {
+                    serialKey = f.key;
+                    const fromEl = document.getElementById(`f_${f.key}_from`);
+                    const toEl = document.getElementById(`f_${f.key}_to`);
+                    const fromVal = fromEl ? fromEl.value.trim() : '';
+                    const toVal = toEl ? toEl.value.trim() : '';
+                    serials = generateSerialSequence(fromVal, toVal);
+                } else {
+                    const el = document.getElementById(`f_${f.key}`);
+                    if (el) baseValues[f.key] = escapeHtml(el.value.trim());
+                }
             });
 
-            const payload = {
-                division: activeDivision,
-                configKey: 'shipout',
-                values
-            };
+            if (serialKey && !serials.length) {
+                const fromEl = document.getElementById(`f_${serialKey}_from`);
+                if (fromEl && !fromEl.value.trim()) {
+                    alert('Please enter a From value for the unit serial number.');
+                    if (btn) { btn.textContent = oldText; btn.disabled = false; }
+                    return;
+                }
+            }
+
+            const serialList = serials.length ? serials : [''];
+            const payloadList = serialList.map(sn => {
+                const vals = { ...baseValues };
+                if (serialKey) vals[serialKey] = escapeHtml(sn);
+                return {
+                    division: activeDivision,
+                    configKey: 'fieldreturn',
+                    values: vals
+                };
+            });
 
             try {
                 const res = await fetch(API_BASE, {
@@ -1007,7 +1090,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + getToken()
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
                 });
                 if (!res.ok) throw new Error('Failed to save');
 
@@ -1039,10 +1122,10 @@
             const agNav = document.getElementById('agSidebarNav');
             const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
             const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const subOutNav = document.getElementById('subOutSidebarItem');
             if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
             if (fieldReturnNav) fieldReturnNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
@@ -1060,7 +1143,7 @@
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
-            if (h1) h1.textContent = 'SHIP-OUT - ' + activeDivision;
+            if (h1) h1.textContent = 'FIELD RETURN UNITS - ' + activeDivision;
 
             renderTableHead();
             renderTable(entries);
