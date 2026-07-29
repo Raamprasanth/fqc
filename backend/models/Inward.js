@@ -16,6 +16,7 @@ const inwardSchema = new mongoose.Schema({
   invoice: { type: String, default: '—' },
   problem: { type: String, default: '—' },
   remarks: { type: String, default: '—' },
+  airO2MixerSn: { type: String, default: '—' },
   division: { type: String, required: true },
   // Let's also track who created this record
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
