@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Batch Info — SchillerIndia Services</title>
+    <title>AG Batch Info — SchillerIndia Services</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
@@ -749,10 +749,10 @@
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html"
                     data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return
                     Accessories</a></li>
-            <li class="nav-item" id="batchInfoSidebarItem"><a href="batch-info.html" class="active" data-page="batch-info"><span class="nav-icon">&#128230;</span>Batch Info</a></li>
+            <li class="nav-item" id="batchInfoSidebarItem"><a href="batch-info.html" data-page="batch-info"><span class="nav-icon">&#128230;</span>Batch Info</a></li>
         </ul>
 
-        <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
+        <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG / Ganshorn Only</div>
         <ul class="nav-list" id="agSidebarNav" style="display:none;">
             <li class="nav-item"><a href="medilog-license.html" data-page="medilog-license"><span
                         class="nav-icon">&#128273;</span>Medilog License<span class="nav-badge">AG</span></a></li>
@@ -774,13 +774,13 @@
             <div class="topbar-left">
                 <button class="menu-toggle" id="menuToggle">&#9776;</button>
                 <div>
-                    <h1>Batch Info</h1>
-                    <div class="breadcrumb">Home / Operations / Batch Info</div>
+                    <h1>AG Batch Info</h1>
+                    <div class="breadcrumb">Home / Operations / AG Batch Info</div>
                 </div>
             </div>
             <div class="topbar-right">
                 <button class="btn btn-ghost" id="exportBtn"
-                    onclick="exportTableToExcel('biTable', 'Batch_Info')">&#128229; Export Excel</button>
+                    onclick="exportTableToExcel('biTable', 'AG_Batch_Info')">&#128229; Export Excel</button>
                 <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
@@ -799,21 +799,21 @@
                 <table id="biTable">
                     <thead>
                         <tr>
-                            <th>S/N</th>
-                            <th>BIR Reference No</th>
-                            <th>Inward Month</th>
-                            <th>Inward Date</th>
-                            <th>Ref Invoice No &amp; Date</th>
-                            <th>Supplier Warranty</th>
-                            <th>Model</th>
-                            <th>Unit S/N</th>
-                            <th>Conf</th>
-                            <th>Version</th>
+                            <th>S.NO</th>
+                            <th>BIR REF NO</th>
+                            <th>SAG WARRANTY</th>
+                            <th>MONTH</th>
+                            <th>INWARD DATE</th>
+                            <th>MODEL</th>
+                            <th>UNIT SR.NO.</th>
+                            <th>CONF</th>
+                            <th>VERSION</th>
+                            <th>REF INVOICE NO &amp; DATE</th>
                             <th>QTY</th>
-                            <th>Supplier Name</th>
-                            <th>Accessory Remarks</th>
-                            <th>Batch Lot S/N</th>
-                            <th>Remarks</th>
+                            <th>SW VER &amp; REMARKS</th>
+                            <th>HW VER &amp; REMARKS</th>
+                            <th>ACCESSORY REMARKS, BATCH, LOT, SR.NO.</th>
+                            <th>REMARKS</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -834,7 +834,7 @@
         <div class="modal">
             <div class="modal-head">
                 <div>
-                    <h2>Add New Batch Info Entry</h2>
+                    <h2>Add New AG Batch Info Entry</h2>
                     <p>Fill in the details below to log a new unit.</p>
                 </div>
                 <button class="modal-close" id="closeModalBtn">&#10005;</button>
@@ -843,12 +843,16 @@
                 <div class="modal-body">
                     <div class="form-grid">
                         <div class="form-field">
-                            <label for="fBirRefNo">BIR Reference No</label>
+                            <label for="fBirRefNo">BIR REF NO</label>
                             <input type="text" id="fBirRefNo" />
                         </div>
                         <div class="form-field">
-                            <label for="fInwardMonth">Inward Month</label>
-                            <select id="fInwardMonth">
+                            <label for="fSagWarranty">SAG WARRANTY</label>
+                            <input type="text" id="fSagWarranty" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fMonth">MONTH</label>
+                            <select id="fMonth">
                                 <option value="">Select month</option>
                                 <option>January</option>
                                 <option>February</option>
@@ -865,51 +869,47 @@
                             </select>
                         </div>
                         <div class="form-field">
-                            <label for="fInwardDate">Inward Date</label>
+                            <label for="fInwardDate">INWARD DATE</label>
                             <input type="date" id="fInwardDate" />
                         </div>
                         <div class="form-field">
-                            <label for="fRefInvoice">Ref Invoice No &amp; Date</label>
-                            <input type="text" id="fRefInvoice" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fSupplierWarranty">Supplier Warranty</label>
-                            <input type="text" id="fSupplierWarranty" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fModel">Model</label>
+                            <label for="fModel">MODEL</label>
                             <input type="text" id="fModel" />
                         </div>
                         <div class="form-field">
-                            <label for="fUnitSn">Unit S/N</label>
+                            <label for="fUnitSn">UNIT SR.NO.</label>
                             <input type="text" id="fUnitSn" />
                         </div>
                         <div class="form-field">
-                            <label for="fConf">Conf</label>
+                            <label for="fConf">CONF</label>
                             <input type="text" id="fConf" />
                         </div>
                         <div class="form-field">
-                            <label for="fVersion">Version</label>
+                            <label for="fVersion">VERSION</label>
                             <input type="text" id="fVersion" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fRefInvoice">REF INVOICE NO &amp; DATE</label>
+                            <input type="text" id="fRefInvoice" />
                         </div>
                         <div class="form-field">
                             <label for="fQty">QTY</label>
                             <input type="number" id="fQty" min="0" step="1" />
                         </div>
-                        <div class="form-field">
-                            <label for="fSupplierName">Supplier Name</label>
-                            <input type="text" id="fSupplierName" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fBatchLotSn">Batch Lot S/N</label>
-                            <input type="text" id="fBatchLotSn" />
+                        <div class="form-field full">
+                            <label for="fSwVer">SW VER &amp; REMARKS</label>
+                            <textarea id="fSwVer"></textarea>
                         </div>
                         <div class="form-field full">
-                            <label for="fAccessoryRemarks">Accessory Remarks</label>
+                            <label for="fHwVer">HW VER &amp; REMARKS</label>
+                            <textarea id="fHwVer"></textarea>
+                        </div>
+                        <div class="form-field full">
+                            <label for="fAccessoryRemarks">ACCESSORY REMARKS, BATCH, LOT, SR.NO.</label>
                             <textarea id="fAccessoryRemarks"></textarea>
                         </div>
                         <div class="form-field full">
-                            <label for="fRemarks">Remarks</label>
+                            <label for="fRemarks">REMARKS</label>
                             <textarea id="fRemarks"></textarea>
                         </div>
                     </div>
@@ -988,18 +988,18 @@
       <tr>
         <td><span class="sn-badge">${list.length - i}</span></td>
         <td>${e.birRefNo || '—'}</td>
-        <td>${e.inwardMonth || '—'}</td>
+        <td>${e.sagWarranty || '—'}</td>
+        <td>${e.month || '—'}</td>
         <td>${e.inwardDate || '—'}</td>
-        <td>${e.refInvoice || '—'}</td>
-        <td>${e.supplierWarranty || '—'}</td>
         <td>${e.model || '—'}</td>
         <td>${e.unitSn || '—'}</td>
         <td>${e.conf || '—'}</td>
         <td>${e.version || '—'}</td>
+        <td>${e.refInvoice || '—'}</td>
         <td>${e.qty || '—'}</td>
-        <td>${e.supplierName || '—'}</td>
+        <td class="wrap-cell">${e.swVer || '—'}</td>
+        <td class="wrap-cell">${e.hwVer || '—'}</td>
         <td class="wrap-cell">${e.accessoryRemarks || '—'}</td>
-        <td>${e.batchLotSn || '—'}</td>
         <td class="wrap-cell">${e.remarks || '—'}</td>
       </tr>
     `).join('');
@@ -1019,18 +1019,18 @@
             const data = {
                 division: activeDivision,
                 birRefNo: document.getElementById('fBirRefNo').value.trim(),
-                inwardMonth: document.getElementById('fInwardMonth').value.trim(),
+                sagWarranty: document.getElementById('fSagWarranty').value.trim(),
+                month: document.getElementById('fMonth').value,
                 inwardDate: document.getElementById('fInwardDate').value.trim(),
-                refInvoice: document.getElementById('fRefInvoice').value.trim(),
-                supplierWarranty: document.getElementById('fSupplierWarranty').value.trim(),
                 model: document.getElementById('fModel').value.trim(),
                 unitSn: document.getElementById('fUnitSn').value.trim(),
                 conf: document.getElementById('fConf').value.trim(),
                 version: document.getElementById('fVersion').value.trim(),
+                refInvoice: document.getElementById('fRefInvoice').value.trim(),
                 qty: document.getElementById('fQty').value.trim(),
-                supplierName: document.getElementById('fSupplierName').value.trim(),
+                swVer: document.getElementById('fSwVer').value.trim(),
+                hwVer: document.getElementById('fHwVer').value.trim(),
                 accessoryRemarks: document.getElementById('fAccessoryRemarks').value.trim(),
-                batchLotSn: document.getElementById('fBatchLotSn').value.trim(),
                 remarks: document.getElementById('fRemarks').value.trim(),
             };
 
@@ -1106,7 +1106,7 @@
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
-            if (h1) h1.textContent = 'Batch Info - ' + activeDivision;
+            if (h1) h1.textContent = 'AG Batch Info - ' + activeDivision;
 
             loadEntries();
         });
