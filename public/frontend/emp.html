@@ -503,10 +503,10 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
             <li class="nav-item" id="dg400SidebarItem"><a href="dg400.html" data-page="dg400-imp-test-report"><span class="nav-icon">&#128300;</span>DG400 IMP.Test Report</a></li>
             <li class="nav-item" id="dg400xSidebarItem"><a href="dg400x.html" data-page="dg400x-imp-test-report"><span class="nav-icon">&#128301;</span>DG400X IMP.Test Report</a></li>
-
             <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
+            <li class="nav-item" id="batchInfoSidebarItem"><a href="batch-info.html" data-page="batch-info"><span class="nav-icon">&#128230;</span>Batch Info</a></li>
         </ul>
 
   
@@ -875,7 +875,10 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
             if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
             
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            const batchInfoNav = document.getElementById('batchInfoSidebarItem');
+            if (batchInfoNav) batchInfoNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia') || lDiv2.includes('shipl')) ? '' : 'none';
+const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     
     // Update Sidebar User Info
