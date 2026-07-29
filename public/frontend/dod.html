@@ -489,6 +489,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
         </ul>
@@ -913,7 +914,13 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
-            
+            const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
+            if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
+
+            const dg400Nav = document.getElementById('dg400SidebarItem');
+            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
+            const dg400xNav = document.getElementById('dg400xSidebarItem');
+            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
             const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');

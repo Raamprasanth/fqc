@@ -735,6 +735,7 @@
             <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" class="active" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
         </ul>
@@ -1020,16 +1021,64 @@
 
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+
+            const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
+            if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
+
+            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
+            const isShipl = lDiv2.includes('shipl');
+            const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
+
+            const agSection = document.getElementById('agSidebarSection');
+            const agNav = document.getElementById('agSidebarNav');
+            if (agSection) agSection.style.display = isAg ? 'block' : 'none';
+            if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
+
+            // Vent/Anesthesia only
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const subOutNav = document.getElementById('subOutSidebarItem');
+            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const accInNav = document.getElementById('accInSidebarItem');
+            if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const accOutNav = document.getElementById('accOutSidebarItem');
+            if (accOutNav) accOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const batteryNav = document.getElementById('batteryChargingSidebarItem');
+            if (batteryNav) batteryNav.style.display = isVentOrAnesthesia ? '' : 'none';
+            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
+            // Vent/Anesthesia OR SHIPL
+            const shortshipmentNav = document.getElementById('shortshipmentSidebarItem');
+            if (shortshipmentNav) shortshipmentNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+            const dodNav = document.getElementById('dodSidebarItem');
+            if (dodNav) dodNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+            const doaWfNav = document.getElementById('doaWfSidebarItem');
+            if (doaWfNav) doaWfNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+            const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
+            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+
+            // SHIPL only
+            const aodNav = document.getElementById('aodSidebarItem');
+            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
+            const dg400Nav = document.getElementById('dg400SidebarItem');
+            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
+            const dg400xNav = document.getElementById('dg400xSidebarItem');
+            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
             const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');
             const roleEl = document.querySelector('.user-role');
-            if (avatar && user.name) avatar.textContent = user.name.charAt(0).toUpperCase();
-            if (nameEl && user.name) nameEl.textContent = user.name;
+            if (avatar) avatar.textContent = user.name.charAt(0).toUpperCase();
+            if (nameEl) nameEl.textContent = user.name;
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
             if (h1) h1.textContent = 'AOD - ' + activeDivision;
+
+            loadEntries();
         });
     </script>
 </body>
