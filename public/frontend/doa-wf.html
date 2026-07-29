@@ -673,8 +673,44 @@ td.wrap-cell{white-space:normal;min-width:220px;}
         {key:'replacementUnitSlNo', label:'Replacement Unit.Sl/No', type:'text'},
       ]
     },
-    'ag-monitors-ganshorn': {
-      label: 'Schiller AG, Monitors & Ganshorn',
+    'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
+        {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
+        {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusAg'},
+        {key:'product', label:'Product', type:'text'},
+        {key:'defectUnitSlNo', label:'Defect Unit Sl.No', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'customerNameAddress', label:'Customer Name and Address', type:'textarea'},
+        {key:'region', label:'Region', type:'text'},
+        {key:'reportedProblemDetails', label:'Reported Problem Details', type:'textarea'},
+        {key:'observedByFqc', label:'Observed by FQC', type:'textarea'},
+        {key:'rootCause', label:'Root Cause', type:'textarea'},
+        {key:'actionTaken', label:'Action Taken', type:'textarea'},
+        {key:'replUnitSendDate', label:'Repl.Unit.Send.Date', type:'date'},
+        {key:'replUnitSlNo', label:'Repl.Unit.Sl.No', type:'text'},
+      ]
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+        {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
+        {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusAg'},
+        {key:'product', label:'Product', type:'text'},
+        {key:'defectUnitSlNo', label:'Defect Unit Sl.No', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'customerNameAddress', label:'Customer Name and Address', type:'textarea'},
+        {key:'region', label:'Region', type:'text'},
+        {key:'reportedProblemDetails', label:'Reported Problem Details', type:'textarea'},
+        {key:'observedByFqc', label:'Observed by FQC', type:'textarea'},
+        {key:'rootCause', label:'Root Cause', type:'textarea'},
+        {key:'actionTaken', label:'Action Taken', type:'textarea'},
+        {key:'replUnitSendDate', label:'Repl.Unit.Send.Date', type:'date'},
+        {key:'replUnitSlNo', label:'Repl.Unit.Sl.No', type:'text'},
+      ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
       fields: [
         {key:'defectUnitRecdDate', label:'Defect Unit Recd Date', type:'date'},
         {key:'status', label:'Status', type:'datalist', options:['DOA','WF','Exchange'], datalistId:'doaStatusAg'},
@@ -703,8 +739,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
   let currentDivision = 'vent-anesthesia';
   const lDiv = activeDivision.toLowerCase();
-  if (lDiv.includes('schiller') || lDiv.includes('monitor') || lDiv.includes('ganshorn')) {
-    currentDivision = 'ag-monitors-ganshorn';
+  if (lDiv.includes('schiller')) {
+    currentDivision = 'schiller-ag';
+  } else if (lDiv.includes('monitor')) {
+    currentDivision = 'monitors';
+  } else if (lDiv.includes('ganshorn')) {
+    currentDivision = 'ganshorn';
   } else if (lDiv.includes('shipl')) {
     currentDivision = 'shipl';
   }

@@ -869,9 +869,9 @@
                     { key: 'verifiedBy', label: 'Verified By', type: 'text' },
                 ]
             },
-            'ag-monitors': {
-                label: 'Schiller AG & Monitors',
-                fields: [
+            'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
                     { key: 'description', label: 'Description', type: 'image-text' },
                     { key: 'newBatch', label: 'New Batch', type: 'image-text' },
                     { key: 'existingBatch', label: 'Existing Batch', type: 'image-text' },
@@ -879,7 +879,29 @@
                     { key: 'preparedBy', label: 'Prepared By', type: 'text' },
                     { key: 'verifiedBy', label: 'Verified By', type: 'text' },
                 ]
-            },
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+                    { key: 'description', label: 'Description', type: 'image-text' },
+                    { key: 'newBatch', label: 'New Batch', type: 'image-text' },
+                    { key: 'existingBatch', label: 'Existing Batch', type: 'image-text' },
+                    { key: 'remarks', label: 'Remarks', type: 'textarea' },
+                    { key: 'preparedBy', label: 'Prepared By', type: 'text' },
+                    { key: 'verifiedBy', label: 'Verified By', type: 'text' },
+                ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
+      fields: [
+                    { key: 'description', label: 'Description', type: 'image-text' },
+                    { key: 'newBatch', label: 'New Batch', type: 'image-text' },
+                    { key: 'existingBatch', label: 'Existing Batch', type: 'image-text' },
+                    { key: 'remarks', label: 'Remarks', type: 'textarea' },
+                    { key: 'preparedBy', label: 'Prepared By', type: 'text' },
+                    { key: 'verifiedBy', label: 'Verified By', type: 'text' },
+                ]
+    },
             'shipl': {
                 label: 'SHIPL & Ganshorn',
                 fields: [
@@ -899,11 +921,15 @@
         const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator & Anesthesia';
         const lDiv = activeDivision.toLowerCase();
         let currentDivision = 'vent-anesthesia';
-        if (lDiv.includes('schiller') || lDiv.includes('monitor')) {
-            currentDivision = 'ag-monitors';
-        } else if (lDiv.includes('shipl') || lDiv.includes('ganshorn')) {
-            currentDivision = 'shipl';
-        }
+        if (lDiv.includes('schiller')) {
+    currentDivision = 'schiller-ag';
+  } else if (lDiv.includes('monitor')) {
+    currentDivision = 'monitors';
+  } else if (lDiv.includes('ganshorn')) {
+    currentDivision = 'ganshorn';
+  } else if (lDiv.includes('shipl')) {
+    currentDivision = 'shipl';
+  }
 
         // Image upload previews mapping
         const attachedImages = {};

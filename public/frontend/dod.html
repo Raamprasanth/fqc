@@ -634,8 +634,36 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   const STATUS_OPTIONS = ['Pending', 'Completed', 'In Progress'];
 
   const divisions = {
-    'ag-monitors-ganshorn': {
-      label: 'Schiller AG, Monitors & Ganshorn',
+    'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
+        {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusAg'},
+        {key:'inwardDate', label:'Inward Date', type:'date'},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSlNo', label:'Unit Sl.No', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'invoiceNoDate', label:'Invoice No and Date', type:'text'},
+        {key:'problemDetail', label:'Problem Detail', type:'textarea'},
+        {key:'actionTakenByService', label:'Action Taken by Service', type:'textarea'},
+      ]
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+        {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusAg'},
+        {key:'inwardDate', label:'Inward Date', type:'date'},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSlNo', label:'Unit Sl.No', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'invoiceNoDate', label:'Invoice No and Date', type:'text'},
+        {key:'problemDetail', label:'Problem Detail', type:'textarea'},
+        {key:'actionTakenByService', label:'Action Taken by Service', type:'textarea'},
+      ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
       fields: [
         {key:'status', label:'Status', type:'datalist', options:['DOA-IN','DOA-OUT'], datalistId:'dodStatusAg'},
         {key:'inwardDate', label:'Inward Date', type:'date'},
@@ -694,8 +722,12 @@ td.wrap-cell{white-space:normal;min-width:220px;}
 
   let currentDivision = 'vent-anesthesia';
   const lDiv = activeDivision.toLowerCase();
-  if (lDiv.includes('schiller') || lDiv.includes('monitor') || lDiv.includes('ganshorn')) {
-    currentDivision = 'ag-monitors-ganshorn';
+  if (lDiv.includes('schiller')) {
+    currentDivision = 'schiller-ag';
+  } else if (lDiv.includes('monitor')) {
+    currentDivision = 'monitors';
+  } else if (lDiv.includes('ganshorn')) {
+    currentDivision = 'ganshorn';
   } else if (lDiv.includes('shipl')) {
     currentDivision = 'shipl';
   }

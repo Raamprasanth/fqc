@@ -653,8 +653,38 @@ td.wrap-cell{white-space:normal;min-width:220px;}
         {key:'remarks', label:'Remarks', type:'textarea'},
       ]
     },
-    'ag-monitors-vent-anesthesia-ganshorn': {
-      label: 'Schiller AG, Monitors, Ventilator, Anesthesia & Ganshorn',
+    'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
+        {key:'dateOfTesting', label:'Date of Testing', type:'date'},
+        {key:'division', label:'Division', type:'select', options:SUB_DIVISIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSn', label:'Unit S.N', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'batteryStatus', label:'Battery Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'functionalStatus', label:'Functional Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'cabinetStatus', label:'Cabinet Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+        {key:'dateOfTesting', label:'Date of Testing', type:'date'},
+        {key:'division', label:'Division', type:'select', options:SUB_DIVISIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSn', label:'Unit S.N', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'batteryStatus', label:'Battery Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'functionalStatus', label:'Functional Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'cabinetStatus', label:'Cabinet Status', type:'select', options:HEALTH_OPTIONS},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
       fields: [
         {key:'dateOfTesting', label:'Date of Testing', type:'date'},
         {key:'division', label:'Division', type:'select', options:SUB_DIVISIONS},

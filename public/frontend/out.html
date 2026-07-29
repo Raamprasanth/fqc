@@ -647,8 +647,8 @@ td.wrap-cell{white-space:normal;min-width:200px;}
       ]
     },
 
-    'ag-monitors': {
-      label: 'Schiller AG & Monitors',
+    'schiller-ag': {
+      label: 'Schiller AG',
       fields: [
         {key:'fqcEngr', label:'FQC Engr', type:'text'},
         {key:'month', label:'Month', type:'select', options:MONTHS},
@@ -670,8 +670,54 @@ td.wrap-cell{white-space:normal;min-width:200px;}
         {key:'remarks', label:'Remarks', type:'textarea'},
       ]
     },
-    'shipl-ganshorn': {
-      label: 'SHIPL & Ganshorn',
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+        {key:'fqcEngr', label:'FQC Engr', type:'text'},
+        {key:'month', label:'Month', type:'select', options:MONTHS},
+        {key:'date', label:'Date', type:'date'},
+        {key:'oaNo', label:'OA No', type:'text'},
+        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSrNo', label:'Unit Sr.No.', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'warrantyAmcDetails', label:'Warranty/AMC Details', type:'text'},
+        {key:'customerDetails', label:'Customer Details', type:'textarea'},
+        {key:'standard10LeadCable', label:'Standard 10Lead Cable Type / Part No', type:'text'},
+        {key:'additional10LeadCable', label:'Additional 10Lead Cable Type / Part No', type:'text'},
+        {key:'accessoriesRemarks', label:'Accessories Remarks', type:'textarea'},
+        {key:'hostId', label:'Host ID / Hardware ID / System Identifier', type:'text'},
+        {key:'activationKey', label:'Activation Key/Product Key', type:'text'},
+        {key:'licenseKey', label:'License Key', type:'text'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
+      fields: [
+        {key:'fqcEngr', label:'FQC Engr', type:'text'},
+        {key:'month', label:'Month', type:'select', options:MONTHS},
+        {key:'date', label:'Date', type:'date'},
+        {key:'oaNo', label:'OA No', type:'text'},
+        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'unitSrNo', label:'Unit Sr.No.', type:'text'},
+        {key:'conf', label:'Conf', type:'text'},
+        {key:'version', label:'Version', type:'text'},
+        {key:'warrantyAmcDetails', label:'Warranty/AMC Details', type:'text'},
+        {key:'customerDetails', label:'Customer Details', type:'textarea'},
+        {key:'standard10LeadCable', label:'Standard 10Lead Cable Type / Part No', type:'text'},
+        {key:'additional10LeadCable', label:'Additional 10Lead Cable Type / Part No', type:'text'},
+        {key:'accessoriesRemarks', label:'Accessories Remarks', type:'textarea'},
+        {key:'hostId', label:'Host ID / Hardware ID / System Identifier', type:'text'},
+        {key:'activationKey', label:'Activation Key/Product Key', type:'text'},
+        {key:'licenseKey', label:'License Key', type:'text'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'shipl': {
+      label: 'SHIPL',
       fields: [
         {key:'fqcEngg', label:'FQC Engg', type:'text'},
         {key:'dateOfDispatch', label:'Date of Dispatch', type:'date'},
@@ -702,10 +748,14 @@ td.wrap-cell{white-space:normal;min-width:200px;}
 
   let currentDivision = 'vent-anesthesia';
   const lDiv = activeDivision.toLowerCase();
-  if (lDiv.includes('schiller') || lDiv.includes('monitor')) {
-    currentDivision = 'ag-monitors';
-  } else if (lDiv.includes('shipl') || lDiv.includes('ganshorn')) {
-    currentDivision = 'shipl-ganshorn';
+  if (lDiv.includes('schiller')) {
+    currentDivision = 'schiller-ag';
+  } else if (lDiv.includes('monitor')) {
+    currentDivision = 'monitors';
+  } else if (lDiv.includes('ganshorn')) {
+    currentDivision = 'ganshorn';
+  } else if (lDiv.includes('shipl')) {
+    currentDivision = 'shipl';
   }
 
   const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/outward';

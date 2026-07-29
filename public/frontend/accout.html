@@ -646,8 +646,34 @@ td.wrap-cell{white-space:normal;min-width:220px;}
         {key:'remarks', label:'Remarks', type:'textarea'},
       ]
     },
-    'ag-monitors-ganshorn': {
-      label: 'Schiller AG, Monitors & Ganshorn',
+    'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
+        {key:'dateOfDespatch', label:'Date of Despatch', type:'date'},
+        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'descriptionOfGoods', label:'Description of Goods', type:'textarea'},
+        {key:'qty', label:'Qty', type:'number'},
+        {key:'oa', label:'OA', type:'text'},
+        {key:'customerAddress', label:'Customer Address', type:'textarea'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+        {key:'dateOfDespatch', label:'Date of Despatch', type:'date'},
+        {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
+        {key:'model', label:'Model', type:'text'},
+        {key:'descriptionOfGoods', label:'Description of Goods', type:'textarea'},
+        {key:'qty', label:'Qty', type:'number'},
+        {key:'oa', label:'OA', type:'text'},
+        {key:'customerAddress', label:'Customer Address', type:'textarea'},
+        {key:'remarks', label:'Remarks', type:'textarea'},
+      ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
       fields: [
         {key:'dateOfDespatch', label:'Date of Despatch', type:'date'},
         {key:'status', label:'Status', type:'select', options:STATUS_OPTIONS},
@@ -675,7 +701,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
   };
 
   let currentDivision = 'vent-anesthesia';
-  const entriesByDivision = { 'vent-anesthesia': [], 'ag-monitors-ganshorn': [], 'shipl': [] };
+  const entriesByDivision = { 'vent-anesthesia': [], 'schiller-ag': [], 'monitors': [], 'ganshorn': [], 'shipl': [] };
 
   /* ═══ Division tabs ═══ */
   const divisionTabs = document.getElementById('divisionTabs');

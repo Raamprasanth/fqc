@@ -708,21 +708,32 @@ td.wrap-cell{white-space:normal;min-width:220px;}
       fields: [...formFields],
       tableFields: [...tableFields]
     },
-    'ag-monitors': {
-      label: 'Schiller AG & Monitors',
+    'schiller-ag': {
+      label: 'Schiller AG',
       fields: [...formFields],
       tableFields: [...tableFields]
     },
-    'shipl-ganshorn': {
-      label: 'SHIPL & Ganshorn',
-      fields: [...shiplFormFields],
-      tableFields: [...shiplTableFields]
+    'monitors': {
+      label: 'Monitors',
+      fields: [...formFields],
+      tableFields: [...tableFields]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
+      fields: [...formFields],
+      tableFields: [...tableFields]
+    },
+    'shipl': {
+      label: 'SHIPL',
+      fields: [undefined]
     }
   };
 
   const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
   let currentDivision = 'vent-anesthesia';
-  if (activeDivision === 'Schiller AG') currentDivision = 'ag-monitors';
+  if (activeDivision === 'Schiller AG') currentDivision = 'schiller-ag';
+  if (activeDivision === 'Monitors') currentDivision = 'monitors';
+  if (activeDivision === 'Ganshorn') currentDivision = 'ganshorn';
   if (activeDivision === 'SHIPL') currentDivision = 'shipl-ganshorn';
 
   let entries = [];

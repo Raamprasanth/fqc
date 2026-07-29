@@ -947,9 +947,9 @@
                     { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
                 ]
             },
-            'ag-monitors': {
-                label: 'Schiller AG & Monitors',
-                fields: [
+            'schiller-ag': {
+      label: 'Schiller AG',
+      fields: [
                     { key: 'date', label: 'Date', type: 'date' },
                     { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
                     { key: 'product', label: 'Product / Model', type: 'text' },
@@ -960,7 +960,35 @@
                     { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
                     { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
                 ]
-            },
+    },
+    'monitors': {
+      label: 'Monitors',
+      fields: [
+                    { key: 'date', label: 'Date', type: 'date' },
+                    { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
+                    { key: 'product', label: 'Product / Model', type: 'text' },
+                    { key: 'unitSlNo', label: 'Unit Sl.No', type: 'text' },
+                    { key: 'conf', label: 'Conf', type: 'text' },
+                    { key: 'version', label: 'Version', type: 'text' },
+                    { key: 'customerNameAddress', label: 'Customer Name and Address', type: 'textarea' },
+                    { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
+                    { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
+                ]
+    },
+    'ganshorn': {
+      label: 'Ganshorn',
+      fields: [
+                    { key: 'date', label: 'Date', type: 'date' },
+                    { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
+                    { key: 'product', label: 'Product / Model', type: 'text' },
+                    { key: 'unitSlNo', label: 'Unit Sl.No', type: 'text' },
+                    { key: 'conf', label: 'Conf', type: 'text' },
+                    { key: 'version', label: 'Version', type: 'text' },
+                    { key: 'customerNameAddress', label: 'Customer Name and Address', type: 'textarea' },
+                    { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
+                    { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
+                ]
+    },
             'shipl': {
                 label: 'SHIPL',
                 fields: [
@@ -984,11 +1012,15 @@
         const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator & Anesthesia';
         const lDiv = activeDivision.toLowerCase();
         let currentDivision = 'vent-anesthesia';
-        if (lDiv.includes('schiller') || lDiv.includes('monitor')) {
-            currentDivision = 'ag-monitors';
-        } else if (lDiv.includes('shipl') || lDiv.includes('ganshorn')) {
-            currentDivision = 'shipl';
-        }
+        if (lDiv.includes('schiller')) {
+    currentDivision = 'schiller-ag';
+  } else if (lDiv.includes('monitor')) {
+    currentDivision = 'monitors';
+  } else if (lDiv.includes('ganshorn')) {
+    currentDivision = 'ganshorn';
+  } else if (lDiv.includes('shipl')) {
+    currentDivision = 'shipl';
+  }
 
         const tableHeadRow = document.getElementById('tableHeadRow');
         const tableBody = document.getElementById('tableBody');
