@@ -4,40 +4,40 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FIELD RETURN ACCESSORIES — SchillerIndia Services</title>
+    <title>DG400 IMP.Test Report — SchillerIndia Services</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
-    function exportTableToExcel(tableId, fileName) {
-      const table = document.getElementById(tableId);
-      if (!table) { alert('No table data available to export.'); return; }
-      const activeDiv = (typeof activeDivision !== 'undefined') ? activeDivision : (localStorage.getItem('activeDivision') || 'Export');
-      const name = (fileName || 'export') + '_' + activeDiv + '_' + new Date().toISOString().slice(0, 10);
-      if (typeof XLSX !== 'undefined') {
-        const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-        XLSX.writeFile(wb, name + '.xlsx');
-      } else {
-        let csv = [];
-        const rows = table.querySelectorAll('tr');
-        for (let i = 0; i < rows.length; i++) {
-          const row = [], cols = rows[i].querySelectorAll('td, th');
-          for (let j = 0; j < cols.length; j++) {
-            let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
-            row.push('"' + data + '"');
-          }
-          csv.push(row.join(','));
+        function exportTableToExcel(tableId, fileName) {
+            const table = document.getElementById(tableId);
+            if (!table) { alert('No table data available to export.'); return; }
+            const activeDiv = (typeof activeDivision !== 'undefined') ? activeDivision : (localStorage.getItem('activeDivision') || 'Export');
+            const name = (fileName || 'export') + '_' + activeDiv + '_' + new Date().toISOString().slice(0, 10);
+            if (typeof XLSX !== 'undefined') {
+                const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+                XLSX.writeFile(wb, name + '.xlsx');
+            } else {
+                let csv = [];
+                const rows = table.querySelectorAll('tr');
+                for (let i = 0; i < rows.length; i++) {
+                    const row = [], cols = rows[i].querySelectorAll('td, th');
+                    for (let j = 0; j < cols.length; j++) {
+                        let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, ' ').replace(/"/g, '""');
+                        row.push('"' + data + '"');
+                    }
+                    csv.push(row.join(','));
+                }
+                const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.setAttribute('download', name + '.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
-        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute('download', name + '.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }
     </script>
     <style>
         *,
@@ -190,6 +190,17 @@
             flex-shrink: 0;
         }
 
+        .nav-badge {
+            margin-left: auto;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            background: rgba(198, 122, 82, 0.24);
+            color: #f3d7c4;
+            padding: 2px 7px;
+            border-radius: 6px;
+        }
+
         .sidebar-footer {
             margin-top: auto;
             padding: 20px 24px 26px;
@@ -334,6 +345,21 @@
             background: rgba(92, 122, 99, 0.14);
         }
 
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 12.5px;
+            border-radius: 10px;
+        }
+
+        .btn-danger-ghost {
+            background: rgba(198, 90, 82, 0.1);
+            color: #a0473f;
+        }
+
+        .btn-danger-ghost:hover {
+            background: rgba(198, 90, 82, 0.18);
+        }
+
         .icon-btn {
             width: 38px;
             height: 38px;
@@ -356,43 +382,6 @@
         .content {
             padding: 36px;
             flex: 1;
-        }
-
-        /* ═══ DIVISION TABS ═══ */
-        .division-tabs {
-            display: flex;
-            gap: 8px;
-            background: #f4efe3;
-            padding: 6px;
-            border-radius: 14px;
-            margin-bottom: 22px;
-            flex-wrap: wrap;
-            width: fit-content;
-            max-width: 100%;
-        }
-
-        .division-tab {
-            border: none;
-            background: transparent;
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 10px 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background .2s, color .2s, box-shadow .2s;
-            white-space: nowrap;
-        }
-
-        .division-tab:hover {
-            color: var(--dark);
-        }
-
-        .division-tab.active {
-            background: #fff;
-            color: var(--clay);
-            box-shadow: 0 4px 12px rgba(45, 58, 48, 0.08);
         }
 
         .toolbar-row {
@@ -445,7 +434,7 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            min-width: 1000px;
+            min-width: 1500px;
             font-size: 12.8px;
         }
 
@@ -455,8 +444,8 @@
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
-            font-size: 10.6px;
+            letter-spacing: 0.04em;
+            font-size: 10.8px;
             text-align: left;
             padding: 14px 16px;
             white-space: nowrap;
@@ -465,8 +454,12 @@
             border-bottom: 1px solid var(--border);
         }
 
+        thead th:first-child {
+            border-top-left-radius: 20px;
+        }
+
         tbody td {
-            padding: 13px 16px;
+            padding: 14px 16px;
             border-bottom: 1px solid var(--border);
             color: var(--text);
             white-space: nowrap;
@@ -482,7 +475,7 @@
 
         td.wrap-cell {
             white-space: normal;
-            min-width: 220px;
+            min-width: 200px;
         }
 
         .sn-badge {
@@ -498,33 +491,16 @@
             font-size: 11.5px;
         }
 
-        .status-pill {
+        .unit-group-badge {
             display: inline-flex;
             align-items: center;
-            padding: 4px 11px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background: rgba(198, 122, 82, 0.14);
+            padding: 2px 9px;
+            border-radius: 8px;
+            background: rgba(198, 122, 82, 0.12);
             color: var(--clay);
-        }
-
-        .status-dispatched {
-            background: rgba(92, 122, 99, 0.14);
-            color: var(--sage-dark);
-        }
-
-        .status-onhold {
-            background: rgba(45, 58, 48, 0.08);
-            color: var(--dark);
-        }
-
-        .status-cancelled {
-            background: rgba(45, 58, 48, 0.08);
-            color: var(--dark);
+            font-weight: 600;
+            font-size: 10.5px;
+            letter-spacing: 0.02em;
         }
 
         .empty-row td {
@@ -681,6 +657,108 @@
             box-shadow: 0 0 0 3px rgba(198, 122, 82, 0.14);
         }
 
+        /* ═══ Section divider ═══ */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0 16px;
+            padding-top: 22px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .section-divider h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .section-divider p {
+            font-size: 11.5px;
+            color: #96a599;
+            margin-top: 2px;
+        }
+
+        /* ═══ Repeatable test-point rows table ═══ */
+        .tp-table-wrap {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+
+        .tp-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .tp-table thead th {
+            background: #f4efe3;
+            color: var(--dark);
+            font-size: 10.3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            text-align: left;
+            padding: 11px 12px;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tp-table tbody td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .tp-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tp-table input {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 8px 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--dark);
+            background: #fdfcf9;
+            outline: none;
+            width: 100%;
+            min-width: 110px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .tp-table input:focus {
+            border-color: var(--clay);
+            box-shadow: 0 0 0 3px rgba(198, 122, 82, 0.14);
+        }
+
+        .tp-remove-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(198, 90, 82, 0.1);
+            color: #a0473f;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+        }
+
+        .tp-remove-btn:hover {
+            background: rgba(198, 90, 82, 0.2);
+        }
+
+        .tp-table-wrap {
+            overflow-x: auto;
+        }
+
         .modal-footer {
             display: flex;
             align-items: center;
@@ -775,19 +853,32 @@
 
         <div class="sidebar-section-label">Operations</div>
         <ul class="nav-list">
-            <li class="nav-item" id="inSidebarItem"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
-            <li class="nav-item" id="outSidebarItem"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
-            <li class="nav-item" id="shortshipmentSidebarItem"><a href="shortshipment.html" data-page="shortshipment"><span class="nav-icon">&#128230;</span>Shortshipment</a></li>
-            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="shipout"><span class="nav-icon">&#128230;</span>SHIP-OUT</a></li>
-            <li class="nav-item" id="dodSidebarItem"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
-            <li class="nav-item" id="doaWfSidebarItem"><a href="doa-wf.html" data-page="doa-wf"><span class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
-            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span class="nav-icon">&#128229;</span>ACC-IN</a></li>
-            <li class="nav-item" id="accOutSidebarItem"><a href="acc-out.html" data-page="acc-out"><span class="nav-icon">&#128203;</span>ACC-OUT</a></li>
-            <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
-            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
-            <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
-            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
-            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" class="active" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
+            <li class="nav-item"><a href="in.html" data-page="in"><span class="nav-icon">&#128229;</span>In</a></li>
+            <li class="nav-item"><a href="out.html" data-page="out"><span class="nav-icon">&#128228;</span>Out</a></li>
+            <li class="nav-item"><a href="shortshipment.html" data-page="shortshipment"><span
+                        class="nav-icon">&#128230;</span>Shortshipment</a></li>
+            <li class="nav-item" id="shipOutSidebarItem"><a href="shipout.html" data-page="ship-out"><span
+                        class="nav-icon">&#128666;</span>SHIP-OUT</a></li>
+            <li class="nav-item"><a href="dod.html" data-page="dod"><span class="nav-icon">&#128666;</span>DOD</a></li>
+            <li class="nav-item"><a href="doa-wf.html" data-page="doa-wf"><span
+                        class="nav-icon">&#9888;&#65039;</span>DOA+WF</a></li>
+            <li class="nav-item"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
+            <li class="nav-item"><a href="dg400-imp-test-report.html" class="active"
+                    data-page="dg400-imp-test-report"><span class="nav-icon">&#128300;</span>DG400 IMP.Test Report</a>
+            </li>
+            <li class="nav-item" id="accInSidebarItem"><a href="acc-in.html" data-page="acc-in"><span
+                        class="nav-icon">&#128229;</span>ACC-IN</a></li>
+            <li class="nav-item"><a href="acc-out.html" data-page="acc-out"><span
+                        class="nav-icon">&#128203;</span>ACC-OUT</a></li>
+            <li class="nav-item"><a href="battery-charging.html" data-page="battery-charging"><span
+                        class="nav-icon">&#128267;</span>Battery Charging</a></li>
+            <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span
+                        class="nav-icon">&#128230;</span>SUB-OUT</a></li>
+            <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span
+                        class="nav-icon">&#128260;</span>Field Return Units</a></li>
+            <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html"
+                    data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return
+                    Accessories</a></li>
         </ul>
 
         <div class="sidebar-section-label" id="agSidebarSection" style="display:none;">Schiller AG Only</div>
@@ -812,34 +903,53 @@
             <div class="topbar-left">
                 <button class="menu-toggle" id="menuToggle">&#9776;</button>
                 <div>
-                    <h1>FIELD RETURN ACCESSORIES</h1>
-                    <div class="breadcrumb">Home / Operations / Field Return Accessories</div>
+                    <h1>DG400 IMP.Test Report</h1>
+                    <div class="breadcrumb">Home / Operations / DG400 IMP.Test Report</div>
                 </div>
             </div>
             <div class="topbar-right">
-                <button class="btn btn-ghost" id="exportBtn" onclick="exportTableToExcel('fieldReturnAccTable', 'Field_Return_Accessories')">&#128229; Export Excel</button>
+                <button class="btn btn-ghost" id="exportBtn"
+                    onclick="exportTableToExcel('dgTable', 'DG400_IMP_Test_Report')">&#128229; Export Excel</button>
                 <button class="btn btn-primary" id="openAddBtn">&#10010; Add New</button>
                 <button class="icon-btn">&#9881;&#65039;</button>
             </div>
         </div>
 
         <div class="content">
-            <div class="division-tabs" id="divisionTabs"></div>
-
             <div class="toolbar-row">
                 <div class="search-box">
                     <span>&#128269;</span>
-                    <input type="text" id="searchInput" placeholder="Search this division's records..." />
+                    <input type="text" id="searchInput" />
                 </div>
                 <div class="record-count" id="recordCount">0 records</div>
             </div>
 
             <div class="table-wrap">
-                <table id="fieldReturnAccTable">
+                <table id="dgTable">
                     <thead>
-                        <tr id="tableHeadRow"></tr>
+                        <tr>
+                            <th>SN</th>
+                            <th>Month</th>
+                            <th>Model</th>
+                            <th>Unit SN</th>
+                            <th>Test Point</th>
+                            <th>Imp.Value Min</th>
+                            <th>Imp.Value Max</th>
+                            <th>Inward Date</th>
+                            <th>Tested Imp.Value - Inward</th>
+                            <th>Outward Date</th>
+                            <th>Leaf Spring Height - Outward</th>
+                            <th>Tested Imp.Value - Outward</th>
+                        </tr>
                     </thead>
-                    <tbody id="tableBody"></tbody>
+                    <tbody id="tableBody">
+                        <tr class="empty-row" id="emptyRow">
+                            <td colspan="12">
+                                <span class="empty-icon">&#128203;</span>
+                                No records yet. Click "Add New" to log the first entry.
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -850,14 +960,77 @@
         <div class="modal">
             <div class="modal-head">
                 <div>
-                    <h2 id="modalTitle">Add New Field Return Accessory Entry</h2>
-                    <p id="modalSubtitle">Fill in the details below to log a new field-returned accessory.</p>
+                    <h2>Add New DG400 IMP.Test Entry</h2>
+                    <p>Fill in the unit details, then add one row per test point below.</p>
                 </div>
                 <button class="modal-close" id="closeModalBtn">&#10005;</button>
             </div>
-            <form id="fieldReturnAccForm">
+            <form id="dgForm">
                 <div class="modal-body">
-                    <div class="form-grid" id="formGrid"></div>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="fMonth">Month</label>
+                            <select id="fMonth">
+                                <option value="">Select month</option>
+                                <option>January</option>
+                                <option>February</option>
+                                <option>March</option>
+                                <option>April</option>
+                                <option>May</option>
+                                <option>June</option>
+                                <option>July</option>
+                                <option>August</option>
+                                <option>September</option>
+                                <option>October</option>
+                                <option>November</option>
+                                <option>December</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="fModel">Model</label>
+                            <input type="text" id="fModel" value="DG400" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fUnitSn">Unit SN</label>
+                            <input type="text" id="fUnitSn" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fInwardDate">Inward Date</label>
+                            <input type="date" id="fInwardDate" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fOutwardDate">Outward Date</label>
+                            <input type="date" id="fOutwardDate" />
+                        </div>
+                        <div class="form-field">
+                            <label for="fLeafSpringHeightOutward">Leaf Spring Height - Outward</label>
+                            <input type="text" id="fLeafSpringHeightOutward" />
+                        </div>
+                    </div>
+
+                    <div class="section-divider">
+                        <div>
+                            <h3>Test Points</h3>
+                            <p>Add a row for each test point on this unit.</p>
+                        </div>
+                        <button type="button" class="btn btn-ghost btn-sm" id="addRowBtn">&#10010; Add Row</button>
+                    </div>
+
+                    <div class="tp-table-wrap">
+                        <table class="tp-table">
+                            <thead>
+                                <tr>
+                                    <th>Test Point</th>
+                                    <th>Imp.Value Min</th>
+                                    <th>Imp.Value Max</th>
+                                    <th>Tested Imp.Value - Inward</th>
+                                    <th>Tested Imp.Value - Outward</th>
+                                    <th style="width:44px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tpTableBody"></tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
@@ -868,54 +1041,102 @@
     </div>
 
     <script>
-
-        /* ═══ Sidebar ═══ */
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
-        function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('visible'); }
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible');
+        }
         if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
+
         document.getElementById('logoutBtn').addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             window.location.href = 'login.html';
         });
 
-        /* ═══ FIELD RETURN ACCESSORIES field config ═══ */
-        const STATUS_OPTIONS = ['Open', 'In Progress', 'Resolved', 'Closed'];
-        const FIELDRETURN_ACC_FIELDS = [
-            { key: 'date', label: 'Date', type: 'date' },
-            { key: 'description', label: 'Description', type: 'textarea' },
-            { key: 'recQty', label: 'Rec Qty', type: 'number' },
-            { key: 'status', label: 'Status', type: 'select', options: STATUS_OPTIONS },
-            { key: 'customerNameAddress', label: 'Customer Name and Address', type: 'textarea' },
-            { key: 'reportedProblemDetails', label: 'Reported Problem Details', type: 'textarea' },
-            { key: 'observedByFqc', label: 'Observed by FQC', type: 'text' },
-        ];
+        // ═══ Modal open/close ═══
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openAddBtn = document.getElementById('openAddBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const dgForm = document.getElementById('dgForm');
 
-        const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator';
+        function openModal() { modalOverlay.classList.add('visible'); }
+        function closeModal() {
+            modalOverlay.classList.remove('visible');
+            dgForm.reset();
+            resetTpRows();
+        }
+        openAddBtn.addEventListener('click', openModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
 
-        const tableHeadRow = document.getElementById('tableHeadRow');
-        const tableBody = document.getElementById('tableBody');
-        const recordCount = document.getElementById('recordCount');
-        const searchInput = document.getElementById('searchInput');
+        // ═══ Repeatable test-point rows ═══
+        const tpTableBody = document.getElementById('tpTableBody');
+        const addRowBtn = document.getElementById('addRowBtn');
+        let tpRowCounter = 0;
 
-        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/fieldreturnacc';
-        function getToken() { return localStorage.getItem('token') || ''; }
-        let entries = [];
-
-        const divisionTabs = document.getElementById('divisionTabs');
-        if (divisionTabs) divisionTabs.style.display = 'none';
-
-        function statusPillClass(status) {
-            const s = (status || '').trim().toLowerCase();
-            if (s === 'resolved') return 'status-dispatched';
-            if (s === 'in progress') return 'status-onhold';
-            if (s === 'closed') return 'status-cancelled';
-            return 'status-pending';
+        function addTpRow() {
+            tpRowCounter++;
+            const tr = document.createElement('tr');
+            tr.dataset.rowId = tpRowCounter;
+            tr.innerHTML = `
+      <td><input type="text" class="tp-testPoint" placeholder="e.g. Point A"/></td>
+      <td><input type="text" class="tp-impMin" placeholder="Min"/></td>
+      <td><input type="text" class="tp-impMax" placeholder="Max"/></td>
+      <td><input type="text" class="tp-testedInward" placeholder="Inward"/></td>
+      <td><input type="text" class="tp-testedOutward" placeholder="Outward"/></td>
+      <td><button type="button" class="tp-remove-btn" title="Remove row">&#10005;</button></td>
+    `;
+            tr.querySelector('.tp-remove-btn').addEventListener('click', () => {
+                if (tpTableBody.children.length > 1) {
+                    tr.remove();
+                } else {
+                    tr.querySelectorAll('input').forEach(inp => inp.value = '');
+                }
+            });
+            tpTableBody.appendChild(tr);
         }
 
+        function resetTpRows() {
+            tpTableBody.innerHTML = '';
+            addTpRow();
+        }
+
+        addRowBtn.addEventListener('click', addTpRow);
+        resetTpRows();
+
+        function collectTpRows() {
+            const rows = [];
+            tpTableBody.querySelectorAll('tr').forEach(tr => {
+                const testPoint = tr.querySelector('.tp-testPoint').value.trim();
+                const impValueMin = tr.querySelector('.tp-impMin').value.trim();
+                const impValueMax = tr.querySelector('.tp-impMax').value.trim();
+                const testedImpInward = tr.querySelector('.tp-testedInward').value.trim();
+                const testedImpOutward = tr.querySelector('.tp-testedOutward').value.trim();
+                if (testPoint || impValueMin || impValueMax || testedImpInward || testedImpOutward) {
+                    rows.push({ testPoint, impValueMin, impValueMax, testedImpInward, testedImpOutward });
+                }
+            });
+            return rows;
+        }
+
+        // ═══ Table state & API ═══
+        let entries = [];
+        const tableBody = document.getElementById('tableBody');
+        const emptyRow = document.getElementById('emptyRow');
+        const recordCount = document.getElementById('recordCount');
+        const searchInput = document.getElementById('searchInput');
+        const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/dg400-imp-test';
+
+        function getToken() { return localStorage.getItem('token') || ''; }
+
+        const activeDivision = localStorage.getItem('activeDivision') || 'Default';
         async function loadEntries() {
             try {
                 const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
@@ -930,100 +1151,54 @@
             }
         }
 
-        function renderTableHead() {
-            tableHeadRow.innerHTML = '<th>S/N</th>' + FIELDRETURN_ACC_FIELDS.map(f => `<th>${f.label}</th>`).join('');
-        }
-
         function renderTable(list) {
-            const total = list.length;
-            if (!total) {
-                tableBody.innerHTML = `
-        <tr class="empty-row">
-          <td colspan="${FIELDRETURN_ACC_FIELDS.length + 1}">
-            <span class="empty-icon">&#128203;</span>
-            No records yet for ${activeDivision}. Click "Add New" to log the first entry.
-          </td>
-        </tr>`;
-            } else {
-                tableBody.innerHTML = list.map((entry, i) => {
-                    const cells = FIELDRETURN_ACC_FIELDS.map(f => {
-                        if (f.key === 'status') {
-                            const val = entry.values[f.key];
-                            if (!val) return `<td>—</td>`;
-                            return `<td><span class="status-pill ${statusPillClass(val)}">${val}</span></td>`;
-                        }
-                        const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
-                        return `<td${wrap}>${entry.values[f.key] || '—'}</td>`;
-                    }).join('');
-                    return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
-                }).join('');
-            }
-            recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
+            const rows = list.map((e, i) => `
+      <tr>
+        <td><span class="sn-badge">${list.length - i}</span></td>
+        <td>${e.month || '—'}</td>
+        <td>${e.model || '—'}</td>
+        <td>${e.unitSn || '—'}</td>
+        <td>${e.testPoint || '—'}</td>
+        <td>${e.impValueMin || '—'}</td>
+        <td>${e.impValueMax || '—'}</td>
+        <td>${e.inwardDate || '—'}</td>
+        <td>${e.testedImpInward || '—'}</td>
+        <td>${e.outwardDate || '—'}</td>
+        <td>${e.leafSpringHeightOutward || '—'}</td>
+        <td>${e.testedImpOutward || '—'}</td>
+      </tr>
+    `).join('');
+
+            tableBody.innerHTML = list.length ? rows : '';
+            if (!list.length) tableBody.appendChild(emptyRow);
+            recordCount.textContent = `${entries.length} record${entries.length === 1 ? '' : 's'}`;
         }
 
-        /* ═══ Modal ═══ */
-        const modalOverlay = document.getElementById('modalOverlay');
-        const openAddBtn = document.getElementById('openAddBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const fieldReturnAccForm = document.getElementById('fieldReturnAccForm');
-        const formGrid = document.getElementById('formGrid');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalSubtitle = document.getElementById('modalSubtitle');
-
-        function buildForm() {
-            if (modalTitle) modalTitle.textContent = `Add New Entry`;
-            if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
-            formGrid.innerHTML = FIELDRETURN_ACC_FIELDS.map(f => {
-                const isFull = f.type === 'textarea';
-                let control;
-                if (f.type === 'select') {
-                    control = `<select id="f_${f.key}">
-          <option value="">Select ${f.label.toLowerCase()}</option>
-          ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
-        </select>`;
-                } else if (f.type === 'textarea') {
-                    control = `<textarea id="f_${f.key}"></textarea>`;
-                } else {
-                    control = `<input type="${f.type}" id="f_${f.key}"/>`;
-                }
-                return `<div class="form-field${isFull ? ' full' : ''}">
-        <label for="f_${f.key}">${f.label}</label>
-        ${control}
-      </div>`;
-            }).join('');
-        }
-
-        function openModal() { buildForm(); modalOverlay.classList.add('visible'); }
-        function closeModal() { modalOverlay.classList.remove('visible'); fieldReturnAccForm.reset(); }
-        openAddBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        fieldReturnAccForm.addEventListener('submit', async (e) => {
+        dgForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = fieldReturnAccForm.querySelector('button[type="submit"]');
-            const oldText = btn ? btn.textContent : 'Save Entry';
-            if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
+            const btn = dgForm.querySelector('button[type="submit"]');
+            const oldText = btn.textContent;
 
-            const values = {};
-            FIELDRETURN_ACC_FIELDS.forEach(f => {
-                const el = document.getElementById(`f_${f.key}`);
-                if (el) values[f.key] = escapeHtml(el.value.trim());
-            });
+            const tpRows = collectTpRows();
+            if (!tpRows.length) {
+                alert('Please add at least one test point row.');
+                return;
+            }
 
-            const payload = {
+            btn.textContent = 'Saving...';
+            btn.disabled = true;
+
+            const baseData = {
                 division: activeDivision,
-                configKey: 'fieldreturnacc',
-                values
+                month: document.getElementById('fMonth').value.trim(),
+                model: document.getElementById('fModel').value.trim(),
+                unitSn: document.getElementById('fUnitSn').value.trim(),
+                inwardDate: document.getElementById('fInwardDate').value.trim(),
+                outwardDate: document.getElementById('fOutwardDate').value.trim(),
+                leafSpringHeightOutward: document.getElementById('fLeafSpringHeightOutward').value.trim(),
             };
+
+            const payloadList = tpRows.map(tp => ({ ...baseData, ...tp }));
 
             try {
                 const res = await fetch(API_BASE, {
@@ -1032,7 +1207,7 @@
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + getToken()
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(payloadList.length === 1 ? payloadList[0] : payloadList)
                 });
                 if (!res.ok) throw new Error('Failed to save');
 
@@ -1044,50 +1219,46 @@
             } catch (err) {
                 alert('Error saving entry: ' + err.message);
             } finally {
-                if (btn) { btn.textContent = oldText; btn.disabled = false; }
+                btn.textContent = oldText;
+                btn.disabled = false;
             }
         });
 
         searchInput.addEventListener('input', () => {
             const q = searchInput.value.trim().toLowerCase();
             if (!q) { renderTable(entries); return; }
-            const filtered = entries.filter(entry =>
-                Object.values(entry.values).some(v => String(v).toLowerCase().includes(q))
+            const filtered = entries.filter(e =>
+                Object.values(e).some(v => String(v).toLowerCase().includes(q))
             );
             renderTable(filtered);
         });
 
-        /* ═══ Init Context ═══ */
+        // Update Sidebar User Info
         document.addEventListener('DOMContentLoaded', () => {
-            // Sidebar visibility based on division
-            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
-            const isVentOrAnesthesia = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-            const isShipl = lDiv2.includes('shipl');
-            const isAg = lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn');
 
             const agSection = document.getElementById('agSidebarSection');
             const agNav = document.getElementById('agSidebarNav');
-            if (agSection) agSection.style.display = isAg ? 'block' : 'none';
-            if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
-
-            const shipOutNav = document.getElementById('shipOutSidebarItem');
-            if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
-            const accInNav = document.getElementById('accInSidebarItem');
-            if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
+            const lDiv2 = (typeof activeDivision !== 'undefined' ? activeDivision : (localStorage.getItem('activeDivision') || '')).toLowerCase();
+            if (lDiv2.includes('schiller') || lDiv2.includes('monitor') || lDiv2.includes('ganshorn')) {
+                if (agSection) agSection.style.display = 'block';
+                if (agNav) agNav.style.display = 'flex';
+            }
             const subOutNav = document.getElementById('subOutSidebarItem');
-            if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
+            if (subOutNav) {
+                subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+            }
+            const shipOutNav = document.getElementById('shipOutSidebarItem');
+            if (shipOutNav) {
+                shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+            }
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
-            if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-
+            if (fieldReturnNav) {
+                fieldReturnNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+            }
             const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
-
-            const aodNav = document.getElementById('aodSidebarItem');
-            if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-
+            if (fieldReturnAccNav) {
+                fieldReturnAccNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+            }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');
@@ -1098,13 +1269,10 @@
             if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDivision + ')';
 
             const h1 = document.querySelector('.topbar-left h1');
-            if (h1) h1.textContent = 'FIELD RETURN ACCESSORIES - ' + activeDivision;
+            if (h1) h1.textContent = 'DG400 IMP.Test Report - ' + activeDivision;
 
-            renderTableHead();
-            renderTable(entries);
             loadEntries();
         });
-
     </script>
 </body>
 

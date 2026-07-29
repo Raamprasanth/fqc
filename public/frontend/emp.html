@@ -857,9 +857,7 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
     if (avatar) avatar.textContent = user.name.charAt(0).toUpperCase();
     if (nameEl) nameEl.textContent = user.name;
 
-    // Division context
     const activeDiv = localStorage.getItem('activeDivision') || 'Default';
-    const lDiv2 = activeDiv.toLowerCase();
     if (roleEl) roleEl.textContent = (user.designation || 'Service Team') + ' (' + activeDiv + ')';
     const pageHeading = document.getElementById('pageHeading');
     if (pageHeading) pageHeading.textContent = 'Dashboard - ' + activeDiv;
@@ -873,20 +871,6 @@ tbody tr:hover{background:rgba(92,122,99,0.05);}
         codesTabNav.style.display = 'none';
       }
     }
-
-    const accInNav = document.getElementById('accInSidebarItem');
-    if (accInNav) {
-      accInNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia') || !lDiv2 || lDiv2 === 'default') ? '' : 'none';
-    }
-    const isVentOrAnesthesiaEmp = lDiv2.includes('vent') || lDiv2.includes('anesthesia');
-    const subOutNavEmp = document.getElementById('subOutSidebarItem');
-    if (subOutNavEmp) subOutNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
-    const shipOutNavEmp = document.getElementById('shipOutSidebarItem');
-    if (shipOutNavEmp) shipOutNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
-    const fieldReturnNavEmp = document.getElementById('fieldReturnSidebarItem');
-    if (fieldReturnNavEmp) fieldReturnNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
-    const fieldReturnAccNavEmp = document.getElementById('fieldReturnAccSidebarItem');
-    if (fieldReturnAccNavEmp) fieldReturnAccNavEmp.style.display = isVentOrAnesthesiaEmp ? '' : 'none';
 
     // Fetch Stats
     try {
