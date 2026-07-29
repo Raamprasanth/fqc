@@ -861,6 +861,10 @@ td.wrap-cell{white-space:normal;min-width:220px;}
     if (subOutNav) {
       subOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
     }
+    const shipOutNav = document.getElementById('shipOutSidebarItem');
+    if (shipOutNav) {
+      shipOutNav.style.display = (lDiv2.includes('vent') || lDiv2.includes('anesthesia')) ? '' : 'none';
+    }
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');
