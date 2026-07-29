@@ -1229,7 +1229,7 @@
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
-            if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
+            if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const avatar = document.querySelector('.user-avatar');
             const nameEl = document.querySelector('.user-name');

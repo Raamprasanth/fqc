@@ -929,7 +929,7 @@ td.wrap-cell{white-space:normal;min-width:220px;}
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
 
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
-            if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
+            if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
             const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!user.name) { window.location.href = 'login.html'; return; }
     const avatar = document.querySelector('.user-avatar');

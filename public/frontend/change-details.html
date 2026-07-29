@@ -13,7 +13,7 @@
         function exportTableToExcel(tableId, fileName) {
             const table = document.getElementById(tableId);
             if (!table) { alert('No table data available to export.'); return; }
-            const activeDiv = (typeof activeDivision !== 'undefined') ? activeDivision : (localStorage.getItem('activeDivision') || 'Export');
+            const activeDiv = localStorage.getItem('activeDivision') || 'Export';
             const name = (fileName || 'export') + '_' + activeDiv + '_' + new Date().toISOString().slice(0, 10);
             if (typeof XLSX !== 'undefined') {
                 const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
@@ -190,24 +190,14 @@
             flex-shrink: 0;
         }
 
-        .nav-badge {
-            margin-left: auto;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            background: rgba(198, 122, 82, 0.24);
-            color: #f3d7c4;
-            padding: 2px 7px;
-            border-radius: 6px;
-        }
-
         .sidebar-footer {
             margin-top: auto;
-            padding: 20px 24px 26px;
+            padding: 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            position: relative;
         }
 
         .user-avatar {
@@ -219,75 +209,72 @@
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-family: 'Fraunces', serif;
             font-weight: 600;
             font-size: 14px;
-            flex-shrink: 0;
         }
 
-        .user-info .user-name {
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
             font-size: 13.5px;
             font-weight: 600;
             color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .user-info .user-role {
+        .user-role {
             font-size: 11px;
             color: #a9c2ad;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .logout-btn {
-            margin-left: auto;
-            background: none;
+            background: transparent;
             border: none;
             color: #a9c2ad;
+            font-size: 18px;
             cursor: pointer;
-            font-size: 16px;
-            padding: 6px;
-            border-radius: 8px;
-            transition: background .2s, color .2s;
+            transition: color .2s;
         }
 
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
+            color: var(--clay);
         }
 
-        /* ═══ MAIN AREA ═══ */
+        /* ═══ MAIN ═══ */
         .main {
-            margin-left: 264px;
             flex: 1;
-            min-width: 0;
+            margin-left: 264px;
             display: flex;
             flex-direction: column;
+            min-width: 0;
+            transition: margin-left .3s;
         }
 
         .topbar {
-            min-height: 76px;
-            background: #fff;
+            height: 84px;
+            background: var(--card);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 36px;
+            padding: 0 40px;
             position: sticky;
             top: 0;
             z-index: 40;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
             gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .topbar h1 {
-            font-family: 'Fraunces', serif;
-            font-size: 21px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .topbar .breadcrumb {
-            font-size: 12px;
-            color: #96a599;
-            margin-top: 2px;
         }
 
         .menu-toggle {
@@ -297,12 +284,21 @@
             font-size: 20px;
             color: var(--dark);
             cursor: pointer;
-            margin-right: 16px;
         }
 
-        .topbar-left {
-            display: flex;
-            align-items: center;
+        .topbar-left h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .breadcrumb {
+            font-size: 11px;
+            color: var(--text);
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
         .topbar-right {
@@ -315,57 +311,37 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            border: none;
+            padding: 10px 18px;
             border-radius: 12px;
-            padding: 11px 20px;
             font-family: 'Inter', sans-serif;
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: background .2s, transform .15s, box-shadow .2s;
+            transition: background .2s, border-color .2s;
         }
 
         .btn-primary {
-            background: var(--clay);
+            background: var(--sage);
+            border: none;
             color: #fff;
-            box-shadow: 0 6px 16px rgba(198, 122, 82, 0.28);
         }
 
         .btn-primary:hover {
-            background: #b56a44;
-            transform: translateY(-1px);
+            background: var(--sage-dark);
         }
 
         .btn-ghost {
-            background: #f4efe3;
-            color: var(--dark);
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--sage);
         }
 
         .btn-ghost:hover {
-            background: rgba(92, 122, 99, 0.14);
-        }
-
-        .icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #f4efe3;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background .2s;
-            position: relative;
-        }
-
-        .icon-btn:hover {
-            background: rgba(92, 122, 99, 0.12);
+            background: rgba(92, 122, 99, 0.05);
         }
 
         .content {
-            padding: 36px;
+            padding: 40px;
             flex: 1;
         }
 
@@ -373,38 +349,44 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 24px;
             gap: 16px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
         .search-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 16px;
-            min-width: 260px;
-            flex: 1;
-            max-width: 360px;
+            position: relative;
+            width: 320px;
+        }
+
+        .search-box span {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text);
+            font-size: 14px;
         }
 
         .search-box input {
-            border: none;
-            outline: none;
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             font-family: 'Inter', sans-serif;
             font-size: 13.5px;
-            color: var(--text);
-            width: 100%;
-            background: transparent;
+            outline: none;
+            background: var(--card);
+            transition: border-color .2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--clay);
         }
 
         .record-count {
-            font-size: 12.5px;
-            color: #96a599;
+            font-size: 13px;
             font-weight: 500;
+            color: var(--text);
         }
 
         /* ═══ TABLE ═══ */
@@ -412,102 +394,96 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            box-shadow: 0 4px 16px rgba(45, 58, 48, 0.05);
-            overflow: auto;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(45, 58, 48, 0.03);
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
-            min-width: 1100px;
-            font-size: 12.8px;
+            border-collapse: collapse;
+            text-align: left;
         }
 
-        thead th {
-            background: #f4efe3;
-            color: var(--dark);
-            font-family: 'Inter', sans-serif;
+        th {
+            background: rgba(92, 122, 99, 0.06);
+            padding: 16px 20px;
+            font-size: 11.5px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            font-size: 10.8px;
-            text-align: left;
-            padding: 14px 16px;
-            white-space: nowrap;
-            position: sticky;
-            top: 0;
+            letter-spacing: 0.08em;
+            color: var(--sage-dark);
             border-bottom: 1px solid var(--border);
         }
 
-        thead th:first-child {
-            border-top-left-radius: 20px;
-        }
-
-        tbody td {
-            padding: 14px 16px;
+        td {
+            padding: 16px 20px;
+            font-size: 13px;
+            color: var(--dark);
             border-bottom: 1px solid var(--border);
-            color: var(--text);
-            white-space: nowrap;
+            vertical-align: middle;
         }
 
-        tbody tr:last-child td {
+        tr:last-child td {
             border-bottom: none;
         }
 
-        tbody tr:hover {
-            background: rgba(92, 122, 99, 0.05);
-        }
-
-        td.wrap-cell {
+        .wrap-cell {
             white-space: normal;
-            min-width: 240px;
+            word-break: break-word;
+            max-width: 260px;
+            line-height: 1.45;
         }
 
         .sn-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: rgba(92, 122, 99, 0.12);
+            background: var(--cream);
             color: var(--sage-dark);
+            padding: 4px 8px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 11.5px;
         }
 
-        .empty-row td {
+        .empty-row {
             text-align: center;
-            padding: 56px 20px;
-            color: #96a599;
         }
 
-        .empty-row .empty-icon {
-            font-size: 30px;
+        .empty-row td {
+            padding: 60px 0;
+            color: var(--text);
+        }
+
+        .empty-icon {
             display: block;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        /* Thumbnail styling */
+        .table-thumbnail {
+            max-height: 40px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin-top: 6px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .table-thumbnail:hover {
+            transform: scale(1.15);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         /* ═══ MODAL ═══ */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 264px;
-            background: var(--background, #f5f7f6);
-            z-index: 45;
-            align-items: flex-start;
+            inset: 0;
+            background: rgba(45, 58, 48, 0.4);
+            z-index: 100;
+            align-items: center;
             justify-content: center;
-            padding: 0;
-            overflow-y: auto;
-        }
-
-        @media (max-width: 960px) {
-            .modal-overlay {
-                left: 0;
-            }
+            padding: 20px;
         }
 
         .modal-overlay.visible {
@@ -515,17 +491,27 @@
         }
 
         .modal {
-            background: var(--card, #fff);
-            border-radius: 0;
+            background: var(--card);
+            border-radius: 24px;
             width: 100%;
-            min-height: 100%;
-            height: auto;
-            max-width: none;
-            box-shadow: none;
-            margin: 0;
-            overflow: hidden;
+            max-width: 800px;
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 20px 50px rgba(45, 58, 48, 0.15);
+            overflow: hidden;
+            animation: modalSlideUp .3s ease-out;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-head {
@@ -575,7 +561,8 @@
         }
 
         .modal-body {
-            padding: 28px 32px 8px;
+            padding: 28px 32px;
+            overflow-y: auto;
         }
 
         .form-grid {
@@ -588,6 +575,7 @@
             display: flex;
             flex-direction: column;
             gap: 7px;
+            grid-column: span 2;
         }
 
         .form-field.full {
@@ -620,7 +608,6 @@
         .form-field textarea {
             resize: vertical;
             min-height: 70px;
-            font-family: 'Inter', sans-serif;
         }
 
         .form-field input:focus,
@@ -630,29 +617,80 @@
             box-shadow: 0 0 0 3px rgba(198, 122, 82, 0.14);
         }
 
+        /* Image upload wrappers styling */
+        .image-upload-wrapper {
+            background: rgba(92,122,99,0.03);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .img-upload-input {
+            font-size: 12px;
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+        }
+
+        .img-preview-box {
+            font-size: 11.5px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .modal-footer {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             gap: 12px;
             padding: 20px 32px;
-            flex-shrink: 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background: var(--card);
+            border-top: 1px solid var(--border);
+            background: #faf9f6;
         }
 
-        .overlay {
+        /* Lightbox modal overlay */
+        .lightbox-overlay {
             display: none;
             position: fixed;
-            inset: 0;
-            background: rgba(45, 58, 48, 0.4);
-            z-index: 45;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(45, 58, 48, 0.9);
+            justify-content: center;
+            align-items: center;
         }
 
-        @media (max-width:1200px) {
-            .form-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .lightbox-overlay.visible {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #faf6ee;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--clay);
         }
 
         @media (max-width:960px) {
@@ -671,39 +709,11 @@
             .menu-toggle {
                 display: block;
             }
-
-            .overlay.visible {
-                display: block;
-            }
-        }
-
-        @media (max-width:768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width:560px) {
-            .content {
-                padding: 20px;
-            }
-
-            .topbar {
-                padding: 14px 20px;
-            }
-
-            .modal-body,
-            .modal-head,
-            .modal-footer {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
         }
     </style>
 </head>
 
 <body>
-
     <div class="overlay" id="overlay"></div>
 
     <!-- ═══ SIDEBAR ═══ -->
@@ -735,8 +745,6 @@
             <li class="nav-item" id="batteryChargingSidebarItem"><a href="battery-charging.html" data-page="battery-charging"><span class="nav-icon">&#128267;</span>Battery Charging</a></li>
             <li class="nav-item" id="subOutSidebarItem"><a href="subout.html" data-page="sub-out"><span class="nav-icon">&#128230;</span>SUB-OUT</a></li>
             <li class="nav-item" id="aodSidebarItem"><a href="aod.html" data-page="aod"><span class="nav-icon">&#128203;</span>AOD</a></li>
-            <li class="nav-item" id="dg400SidebarItem"><a href="dg400.html" data-page="dg400-imp-test-report"><span class="nav-icon">&#128300;</span>DG400 IMP.Test Report</a></li>
-            <li class="nav-item" id="dg400xSidebarItem"><a href="dg400x.html" data-page="dg400x-imp-test-report"><span class="nav-icon">&#128301;</span>DG400X IMP.Test Report</a></li>
             <li class="nav-item" id="changeDetailsSidebarItem"><a href="change-details.html" class="active" data-page="change-details"><span class="nav-icon">&#128260;</span>Change Details</a></li>
             <li class="nav-item" id="fieldReturnSidebarItem"><a href="fuu.html" data-page="field-return-units"><span class="nav-icon">&#128260;</span>Field Return Units</a></li>
             <li class="nav-item" id="fieldReturnAccSidebarItem"><a href="fua.html" data-page="field-return-accessories"><span class="nav-icon">&#128260;</span>Field Return Accessories</a></li>
@@ -780,7 +788,7 @@
             <div class="toolbar-row">
                 <div class="search-box">
                     <span>&#128269;</span>
-                    <input type="text" id="searchInput" />
+                    <input type="text" id="searchInput" placeholder="Search records..." />
                 </div>
                 <div class="record-count" id="recordCount">0 records</div>
             </div>
@@ -788,26 +796,12 @@
             <div class="table-wrap">
                 <table id="cdTable">
                     <thead>
-                        <tr>
-                            <th>SL No</th>
-                            <th>FG Date</th>
-                            <th>Model</th>
-                            <th>Unit SL No</th>
-                            <th>Config</th>
-                            <th>Version</th>
-                            <th>QTY</th>
-                            <th>BIR No</th>
-                            <th>Change Made Tech/Accessories</th>
-                            <th>Remarks</th>
+                        <tr id="tableHeadRow">
+                            <!-- Dynamically loaded -->
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <tr class="empty-row" id="emptyRow">
-                            <td colspan="10">
-                                <span class="empty-icon">&#128203;</span>
-                                No records yet. Click "Add New" to log the first entry.
-                            </td>
-                        </tr>
+                        <!-- Dynamically loaded -->
                     </tbody>
                 </table>
             </div>
@@ -819,50 +813,15 @@
         <div class="modal">
             <div class="modal-head">
                 <div>
-                    <h2>Add New Change Details Entry</h2>
-                    <p>Fill in the details below to log a new unit.</p>
+                    <h2 id="modalTitle">Add New Change Details Entry</h2>
+                    <p id="modalSubtitle">Fill in the details below to log a new entry.</p>
                 </div>
                 <button class="modal-close" id="closeModalBtn">&#10005;</button>
             </div>
             <form id="cdForm">
                 <div class="modal-body">
-                    <div class="form-grid">
-                        <div class="form-field">
-                            <label for="fFgDate">FG Date</label>
-                            <input type="date" id="fFgDate" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fModel">Model</label>
-                            <input type="text" id="fModel" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fUnitSlNo">Unit SL No</label>
-                            <input type="text" id="fUnitSlNo" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fConfig">Config</label>
-                            <input type="text" id="fConfig" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fVersion">Version</label>
-                            <input type="text" id="fVersion" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fQty">QTY</label>
-                            <input type="number" id="fQty" min="0" step="1" />
-                        </div>
-                        <div class="form-field">
-                            <label for="fBirNo">BIR No</label>
-                            <input type="text" id="fBirNo" />
-                        </div>
-                        <div class="form-field full">
-                            <label for="fChangeMade">Change Made Tech/Accessories</label>
-                            <textarea id="fChangeMade"></textarea>
-                        </div>
-                        <div class="form-field full">
-                            <label for="fRemarks">Remarks</label>
-                            <textarea id="fRemarks"></textarea>
-                        </div>
+                    <div class="form-grid" id="formGrid">
+                        <!-- Dynamically loaded -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -871,6 +830,12 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImg" class="lightbox-img" src="" alt="Enlarged view" />
     </div>
 
     <script>
@@ -891,35 +856,137 @@
             window.location.href = 'login.html';
         });
 
-        // ═══ Modal open/close ═══
-        const modalOverlay = document.getElementById('modalOverlay');
-        const openAddBtn = document.getElementById('openAddBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const cdForm = document.getElementById('cdForm');
+        /* ═══ Division field configs ═══ */
+        const divisions = {
+            'vent-anesthesia': {
+                label: 'Ventilator & Anesthesia',
+                fields: [
+                    { key: 'description', label: 'Description', type: 'image-text' },
+                    { key: 'newBatch', label: 'New Batch', type: 'image-text' },
+                    { key: 'existingBatch', label: 'Existing Batch', type: 'image-text' },
+                    { key: 'remarks', label: 'Remarks', type: 'textarea' },
+                    { key: 'preparedBy', label: 'Prepared By', type: 'text' },
+                    { key: 'verifiedBy', label: 'Verified By', type: 'text' },
+                ]
+            },
+            'ag-monitors': {
+                label: 'Schiller AG & Monitors',
+                fields: [
+                    { key: 'description', label: 'Description', type: 'image-text' },
+                    { key: 'newBatch', label: 'New Batch', type: 'image-text' },
+                    { key: 'existingBatch', label: 'Existing Batch', type: 'image-text' },
+                    { key: 'remarks', label: 'Remarks', type: 'textarea' },
+                    { key: 'preparedBy', label: 'Prepared By', type: 'text' },
+                    { key: 'verifiedBy', label: 'Verified By', type: 'text' },
+                ]
+            },
+            'shipl': {
+                label: 'SHIPL & Ganshorn',
+                fields: [
+                    { key: 'fgDate', label: 'FG Date', type: 'date' },
+                    { key: 'model', label: 'Model', type: 'text' },
+                    { key: 'unitSlNo', label: 'Unit SL No', type: 'text' },
+                    { key: 'config', label: 'Config', type: 'text' },
+                    { key: 'version', label: 'Version', type: 'text' },
+                    { key: 'qty', label: 'QTY', type: 'number' },
+                    { key: 'birNo', label: 'BIR No', type: 'text' },
+                    { key: 'changeMade', label: 'Change Made Tech/Accessories', type: 'textarea' },
+                    { key: 'remarks', label: 'Remarks', type: 'textarea' },
+                ]
+            }
+        };
 
-        function openModal() { modalOverlay.classList.add('visible'); }
-        function closeModal() {
-            modalOverlay.classList.remove('visible');
-            cdForm.reset();
+        const activeDivision = localStorage.getItem('activeDivision') || 'Ventilator & Anesthesia';
+        const lDiv = activeDivision.toLowerCase();
+        let currentDivision = 'vent-anesthesia';
+        if (lDiv.includes('schiller') || lDiv.includes('monitor')) {
+            currentDivision = 'ag-monitors';
+        } else if (lDiv.includes('shipl') || lDiv.includes('ganshorn')) {
+            currentDivision = 'shipl';
         }
-        openAddBtn.addEventListener('click', openModal);
-        closeModalBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
 
+        // Image upload previews mapping
+        const attachedImages = {};
+
+        function previewUploadImage(input, key) {
+            const previewDiv = document.getElementById(`f_${key}_img_preview`);
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+
+                        const maxDim = 600;
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > height) {
+                            if (width > maxDim) {
+                                height = Math.round(height * (maxDim / width));
+                                width = maxDim;
+                            }
+                        } else {
+                            if (height > maxDim) {
+                                width = Math.round(width * (maxDim / height));
+                                height = maxDim;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                        attachedImages[key] = compressedBase64;
+
+                        previewDiv.innerHTML = `<div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                            <img src="${compressedBase64}" style="max-height: 50px; border-radius: 4px; border: 1px solid var(--border);" />
+                            <button type="button" class="btn btn-ghost" style="padding: 2px 6px; font-size: 11px; color: #c67a52;" onclick="clearUploadedImage('${key}')">Remove</button>
+                        </div>`;
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearUploadedImage(key) {
+            delete attachedImages[key];
+            const fileInput = document.getElementById(`f_${key}_img`);
+            if (fileInput) fileInput.value = '';
+            const previewDiv = document.getElementById(`f_${key}_img_preview`);
+            if (previewDiv) previewDiv.textContent = 'No image attached';
+        }
+
+        /* Lightbox modal triggers */
+        function openLightbox(imgSrc) {
+            const overlay = document.getElementById('lightboxOverlay');
+            const img = document.getElementById('lightboxImg');
+            if (overlay && img) {
+                img.src = imgSrc;
+                overlay.classList.add('visible');
+            }
+        }
+
+        function closeLightbox() {
+            const overlay = document.getElementById('lightboxOverlay');
+            if (overlay) {
+                overlay.classList.remove('visible');
+            }
+        }
 
         // ═══ Table state & API ═══
         let entries = [];
+        const tableHeadRow = document.getElementById('tableHeadRow');
         const tableBody = document.getElementById('tableBody');
-        const emptyRow = document.getElementById('emptyRow');
         const recordCount = document.getElementById('recordCount');
         const searchInput = document.getElementById('searchInput');
         const API_BASE = (window.location.protocol === 'file:' ? 'http://localhost:3001' : '') + '/api/change-details';
 
         function getToken() { return localStorage.getItem('token') || ''; }
 
-        const activeDivision = localStorage.getItem('activeDivision') || 'Default';
         async function loadEntries() {
             try {
                 const res = await fetch(API_BASE + '?division=' + encodeURIComponent(activeDivision), {
@@ -934,78 +1001,170 @@
             }
         }
 
-        function renderTable(list) {
-            const rows = list.map((e, i) => `
-      <tr>
-        <td><span class="sn-badge">${list.length - i}</span></td>
-        <td>${e.fgDate || '—'}</td>
-        <td>${e.model || '—'}</td>
-        <td>${e.unitSlNo || '—'}</td>
-        <td>${e.config || '—'}</td>
-        <td>${e.version || '—'}</td>
-        <td>${e.qty || '—'}</td>
-        <td>${e.birNo || '—'}</td>
-        <td class="wrap-cell">${e.changeMade || '—'}</td>
-        <td class="wrap-cell">${e.remarks || '—'}</td>
-      </tr>
-    `).join('');
-
-            tableBody.innerHTML = list.length ? rows : '';
-            if (!list.length) tableBody.appendChild(emptyRow);
-            recordCount.textContent = `${entries.length} record${entries.length === 1 ? '' : 's'}`;
+        function renderTableHead() {
+            const fields = divisions[currentDivision].fields;
+            tableHeadRow.innerHTML = '<th>S/N</th>' + fields.map(f => `<th>${f.label}</th>`).join('');
         }
 
-        cdForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = cdForm.querySelector('button[type="submit"]');
-            const oldText = btn.textContent;
-            btn.textContent = 'Saving...';
-            btn.disabled = true;
+        function renderTable(list) {
+            const fields = divisions[currentDivision].fields;
+            const total = list.length;
+            if (!total) {
+                tableBody.innerHTML = `
+        <tr class="empty-row">
+          <td colspan="${fields.length + 1}">
+            <span class="empty-icon">&#128203;</span>
+            No records yet for ${divisions[currentDivision].label}. Click "Add New" to log the first entry.
+          </td>
+        </tr>`;
+            } else {
+                tableBody.innerHTML = list.map((entry, i) => {
+                    const vals = entry.values || entry;
+                    const cells = fields.map(f => {
+                        let textVal = vals[f.key] !== undefined ? vals[f.key] : entry[f.key];
+                        textVal = textVal || '';
 
-            const data = {
-                division: activeDivision,
-                fgDate: document.getElementById('fFgDate').value.trim(),
-                model: document.getElementById('fModel').value.trim(),
-                unitSlNo: document.getElementById('fUnitSlNo').value.trim(),
-                config: document.getElementById('fConfig').value.trim(),
-                version: document.getElementById('fVersion').value.trim(),
-                qty: document.getElementById('fQty').value.trim(),
-                birNo: document.getElementById('fBirNo').value.trim(),
-                changeMade: document.getElementById('fChangeMade').value.trim(),
-                remarks: document.getElementById('fRemarks').value.trim(),
-            };
+                        if (f.type === 'image-text') {
+                            const imgVal = vals[f.key + '_img'] || entry[f.key + '_img'];
+                            let imgHTML = '';
+                            if (imgVal) {
+                                imgHTML = `<div style="margin-top: 6px;">
+                                    <img src="${imgVal}" class="table-thumbnail" onclick="openLightbox('${imgVal}')" />
+                                </div>`;
+                            }
+                            return `<td class="wrap-cell">
+                                <div style="font-weight: 500;">${textVal || '—'}</div>
+                                ${imgHTML}
+                            </td>`;
+                        }
 
-            try {
-                const res = await fetch(API_BASE, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + getToken()
-                    },
-                    body: JSON.stringify(data)
-                });
-                if (!res.ok) throw new Error('Failed to save');
+                        const wrap = f.type === 'textarea' ? ' class="wrap-cell"' : '';
+                        return `<td${wrap}>${textVal || '—'}</td>`;
+                    }).join('');
 
-                const saved = await res.json();
-                entries.unshift(saved);
-                renderTable(entries);
-                closeModal();
-            } catch (err) {
-                alert('Error saving entry: ' + err.message);
-            } finally {
-                btn.textContent = oldText;
-                btn.disabled = false;
+                    return `<tr><td><span class="sn-badge">${total - i}</span></td>${cells}</tr>`;
+                }).join('');
             }
-        });
+            recordCount.textContent = `${total} record${total === 1 ? '' : 's'}`;
+        }
 
-        searchInput.addEventListener('input', () => {
-            const q = searchInput.value.trim().toLowerCase();
-            if (!q) { renderTable(entries); return; }
-            const filtered = entries.filter(e =>
-                Object.values(e).some(v => String(v).toLowerCase().includes(q))
-            );
-            renderTable(filtered);
-        });
+        /* ═══ Modal open/close ═══ */
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openAddBtn = document.getElementById('openAddBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const cdForm = document.getElementById('cdForm');
+        const formGrid = document.getElementById('formGrid');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+
+        function buildForm() {
+            const fields = divisions[currentDivision].fields;
+            if (modalTitle) modalTitle.textContent = `Add New Change Details Entry`;
+            if (modalSubtitle) modalSubtitle.textContent = `Division: ${activeDivision}`;
+            formGrid.innerHTML = fields.map(f => {
+                const isFull = f.type === 'textarea' || f.type === 'image-text';
+                let control = '';
+                if (f.type === 'image-text') {
+                    control = `<textarea id="f_${f.key}" placeholder="Type description/details..."></textarea>
+                    <div class="image-upload-wrapper" style="margin-top: 8px;">
+                        <input type="file" id="f_${f.key}_img" accept="image/*" class="img-upload-input" onchange="previewUploadImage(this, '${f.key}')" />
+                        <div id="f_${f.key}_img_preview" class="img-preview-box" style="margin-top: 5px; font-size: 11px; color: #888;">No image attached</div>
+                    </div>`;
+                } else if (f.type === 'textarea') {
+                    control = `<textarea id="f_${f.key}"></textarea>`;
+                } else {
+                    control = `<input type="${f.type}" id="f_${f.key}"/>`;
+                }
+                return `<div class="form-field${isFull ? ' full' : ''}">
+        <label for="f_${f.key}">${f.label}</label>
+        ${control}
+      </div>`;
+            }).join('');
+        }
+
+        function openModal() { buildForm(); modalOverlay.classList.add('visible'); }
+        function closeModal() {
+            modalOverlay.classList.remove('visible');
+            if (cdForm) cdForm.reset();
+            const fields = divisions[currentDivision].fields;
+            fields.forEach(f => {
+                if (f.type === 'image-text') {
+                    clearUploadedImage(f.key);
+                }
+            });
+        }
+        if (openAddBtn) openAddBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
+        }
+
+        if (cdForm) {
+            cdForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = cdForm.querySelector('button[type="submit"]');
+                const oldText = btn ? btn.textContent : 'Save Entry';
+                if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; }
+
+                const fields = divisions[currentDivision].fields;
+                const baseValues = {};
+
+                fields.forEach(f => {
+                    const el = document.getElementById(`f_${f.key}`);
+                    const val = el ? el.value.trim() : '';
+                    baseValues[f.key] = escapeHtml(val);
+
+                    if (f.type === 'image-text') {
+                        baseValues[f.key + '_img'] = attachedImages[f.key] || '';
+                    }
+                });
+
+                const data = {
+                    division: activeDivision,
+                    configKey: currentDivision,
+                    values: baseValues
+                };
+
+                try {
+                    const res = await fetch(API_BASE, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (!res.ok) throw new Error('Failed to save');
+
+                    const saved = await res.json();
+                    entries.unshift(saved);
+                    renderTable(entries);
+                    closeModal();
+                } catch (err) {
+                    alert('Error saving entry: ' + err.message);
+                } finally {
+                    if (btn) { btn.textContent = oldText; btn.disabled = false; }
+                }
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.trim().toLowerCase();
+                if (!q) { renderTable(entries); return; }
+                const filtered = entries.filter(entry => {
+                    const vals = entry.values || entry;
+                    return Object.values(vals).some(v => String(v || '').toLowerCase().includes(q));
+                });
+                renderTable(filtered);
+            });
+        }
 
         // Update Sidebar User Info
         document.addEventListener('DOMContentLoaded', () => {
@@ -1020,39 +1179,27 @@
             if (agSection) agSection.style.display = isAg ? 'block' : 'none';
             if (agNav) agNav.style.display = isAg ? 'flex' : 'none';
 
-            // Vent/Anesthesia only
             const shipOutNav = document.getElementById('shipOutSidebarItem');
             if (shipOutNav) shipOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
             const accInNav = document.getElementById('accInSidebarItem');
             if (accInNav) accInNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const accOutNav = document.getElementById('accOutSidebarItem');
-            if (accOutNav) accOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const batteryNav = document.getElementById('batteryChargingSidebarItem');
-            if (batteryNav) batteryNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
             const subOutNav = document.getElementById('subOutSidebarItem');
             if (subOutNav) subOutNav.style.display = isVentOrAnesthesia ? '' : 'none';
-            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
-            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
 
-            // Vent/Anesthesia OR SHIPL
-            const shortshipmentNav = document.getElementById('shortshipmentSidebarItem');
-            if (shortshipmentNav) shortshipmentNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-            const dodNav = document.getElementById('dodSidebarItem');
-            if (dodNav) dodNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
-            const doaWfNav = document.getElementById('doaWfSidebarItem');
-            if (doaWfNav) doaWfNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
             const fieldReturnNav = document.getElementById('fieldReturnSidebarItem');
             if (fieldReturnNav) fieldReturnNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
 
-            // SHIPL only
+            const fieldReturnAccNav = document.getElementById('fieldReturnAccSidebarItem');
+            if (fieldReturnAccNav) fieldReturnAccNav.style.display = isVentOrAnesthesia ? '' : 'none';
+
             const aodNav = document.getElementById('aodSidebarItem');
             if (aodNav) aodNav.style.display = isShipl ? '' : 'none';
-            const dg400Nav = document.getElementById('dg400SidebarItem');
-            if (dg400Nav) dg400Nav.style.display = isShipl ? '' : 'none';
-            const dg400xNav = document.getElementById('dg400xSidebarItem');
-            if (dg400xNav) dg400xNav.style.display = isShipl ? '' : 'none';
+
             const changeDetailsNav = document.getElementById('changeDetailsSidebarItem');
-            if (changeDetailsNav) changeDetailsNav.style.display = isShipl ? '' : 'none';
+            if (changeDetailsNav) changeDetailsNav.style.display = (isVentOrAnesthesia || isShipl) ? '' : 'none';
+
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (!user.name) { window.location.href = 'login.html'; return; }
             const avatar = document.querySelector('.user-avatar');
@@ -1065,6 +1212,8 @@
             const h1 = document.querySelector('.topbar-left h1');
             if (h1) h1.textContent = 'Change Details - ' + activeDivision;
 
+            renderTableHead();
+            renderTable(entries);
             loadEntries();
         });
     </script>
